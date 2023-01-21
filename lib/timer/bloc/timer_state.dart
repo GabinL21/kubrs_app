@@ -15,3 +15,7 @@ class TimerInitial extends TimerState {
 class TimerRunning extends TimerState {
   const TimerRunning(super.duration);
 }
+
+class TimerComplete extends TimerState {
+  const TimerComplete(super.duration);
+}

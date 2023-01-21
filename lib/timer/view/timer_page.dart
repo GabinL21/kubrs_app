@@ -30,6 +30,7 @@ class TimerView extends StatelessWidget {
             child: Center(child: TimerText()),
           ),
           StartButton(),
+          StopButton(),
         ],
       ),
     );
@@ -59,8 +60,25 @@ class StartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       child: const Icon(Icons.play_arrow),
-      onPressed: () =>
-          context.read<TimerBloc>().add(const TimerStarted(duration: 0)),
+      onPressed: () => context.read<TimerBloc>().add(const TimerStarted()),
+    );
+  }
+}
+
+class StopButton extends StatelessWidget {
+  const StopButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, state) {
+        return FloatingActionButton(
+          child: const Icon(Icons.stop),
+          onPressed: () => context
+              .read<TimerBloc>()
+              .add(TimerStopped(duration: state.duration)),
+        );
+      },
     );
   }
 }

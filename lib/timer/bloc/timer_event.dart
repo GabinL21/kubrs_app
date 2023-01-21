@@ -5,11 +5,15 @@ abstract class TimerEvent {
 }
 
 class TimerStarted extends TimerEvent {
-  const TimerStarted({required this.duration});
-  final int duration;
+  const TimerStarted();
 }
 
 class _TimerTicked extends TimerEvent {
   const _TimerTicked({required this.duration});
+  final int duration;
+}
+
+class TimerStopped extends TimerEvent {
+  const TimerStopped({required this.duration});
   final int duration;
 }
