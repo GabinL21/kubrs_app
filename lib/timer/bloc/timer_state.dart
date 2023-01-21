@@ -1,6 +1,5 @@
 part of 'timer_bloc.dart';
 
-@immutable
 abstract class TimerState extends Equatable {
   const TimerState(this.duration);
   final int duration;
