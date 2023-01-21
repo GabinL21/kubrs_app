@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
-import 'package:kubrs_app/solve_timer/solve_timer.dart';
+import 'package:kubrs_app/timer/timer.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
-      home: const SolveTimerPage(),
+      home: const TimerPage(),
     );
   }
 }

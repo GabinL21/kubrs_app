@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kubrs_app/solve_timer/bloc/solve_timer_bloc.dart';
+import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 
-class SolveTimerPage extends StatelessWidget {
-  const SolveTimerPage({super.key});
+class TimerPage extends StatelessWidget {
+  const TimerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SolveTimerBloc(),
+      create: (_) => TimerBloc(),
       child: const SolveTimerView(),
     );
   }
