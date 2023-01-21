@@ -9,7 +9,6 @@ part 'timer_event.dart';
 part 'timer_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-
   TimerBloc({required Ticker ticker})
       : _ticker = ticker,
         super(const TimerInitial()) {
@@ -18,7 +17,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   final Ticker _ticker;
-  
+
   StreamSubscription<int>? _tickerSubscription;
 
   @override
