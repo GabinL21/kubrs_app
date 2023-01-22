@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kubrs_app/counter/counter.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
+import 'package:kubrs_app/timer/timer.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,7 +16,8 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      debugShowCheckedModeBanner: false,
+      home: const TimerPage(),
     );
   }
 }
