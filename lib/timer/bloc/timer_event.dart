@@ -18,6 +18,6 @@ class TimerStopped extends TimerEvent {
   final int duration;
 }
 
-class TimerReset extends TimerEvent  {
+class TimerReset extends TimerEvent {
   const TimerReset();
 }
