@@ -22,18 +22,44 @@ class TimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 100),
-            child: Center(child: TimerText()),
-          ),
-          StartButton(),
-          StopButton(),
-          ResetButton(),
-        ],
+      body: TimerGestureDetector(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 100),
+              child: Center(child: TimerText()),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class TimerGestureDetector extends StatelessWidget {
+  const TimerGestureDetector({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onLongPressStart: (_) =>
+              context.read<TimerBloc>().add(const TimerReset()),
+          onLongPressEnd: (_) =>
+              context.read<TimerBloc>().add(const TimerStarted()),
+          onTapDown: (_) => context
+              .read<TimerBloc>()
+              .add(TimerStopped(duration: state.duration)),
+          behavior: HitTestBehavior.opaque,
+          child: SizedBox(
+            child: child,
+          ),
+        );
+      },
     );
   }
 }
@@ -44,54 +70,15 @@ class TimerText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final duration = context.select((TimerBloc bloc) => bloc.state.duration);
-    final secondsStr = (duration / 1000).floor().toString().padLeft(2, '0');
+    final minutesStr = (duration / 1000 / 60).floor().toString();
+    final secondsStr = (duration / 1000 % 60).floor().toString().padLeft(2, '0');
     final millisecondsStr =
         (duration % 1000 / 10).floor().toString().padLeft(2, '0');
+    var textStr = '$secondsStr.$millisecondsStr';
+    if (duration > 60 * 1000) textStr = '$minutesStr:$textStr';
     return Text(
-      '$secondsStr.$millisecondsStr',
+      textStr,
       style: Theme.of(context).textTheme.headline1,
-    );
-  }
-}
-
-class StartButton extends StatelessWidget {
-  const StartButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: const Icon(Icons.play_arrow),
-      onPressed: () => context.read<TimerBloc>().add(const TimerStarted()),
-    );
-  }
-}
-
-class StopButton extends StatelessWidget {
-  const StopButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<TimerBloc, TimerState>(
-      builder: (context, state) {
-        return FloatingActionButton(
-          child: const Icon(Icons.stop),
-          onPressed: () => context
-              .read<TimerBloc>()
-              .add(TimerStopped(duration: state.duration)),
-        );
-      },
-    );
-  }
-}
-
-class ResetButton extends StatelessWidget {
-  const ResetButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: const Icon(Icons.refresh),
-      onPressed: () => context.read<TimerBloc>().add(const TimerReset()),
     );
   }
 }
