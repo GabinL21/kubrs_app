@@ -17,3 +17,7 @@ class TimerStopped extends TimerEvent {
   const TimerStopped({required this.duration});
   final int duration;
 }
+
+class TimerReset extends TimerEvent  {
+  const TimerReset();
+}

@@ -31,6 +31,7 @@ class TimerView extends StatelessWidget {
           ),
           StartButton(),
           StopButton(),
+          ResetButton(),
         ],
       ),
     );
@@ -79,6 +80,18 @@ class StopButton extends StatelessWidget {
               .add(TimerStopped(duration: state.duration)),
         );
       },
+    );
+  }
+}
+
+class ResetButton extends StatelessWidget {
+  const ResetButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: const Icon(Icons.refresh),
+      onPressed: () => context.read<TimerBloc>().add(const TimerReset()),
     );
   }
 }
