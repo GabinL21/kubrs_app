@@ -71,7 +71,8 @@ class TimerText extends StatelessWidget {
   Widget build(BuildContext context) {
     final duration = context.select((TimerBloc bloc) => bloc.state.duration);
     final minutesStr = (duration / 1000 / 60).floor().toString();
-    final secondsStr = (duration / 1000 % 60).floor().toString().padLeft(2, '0');
+    final secondsStr =
+        (duration / 1000 % 60).floor().toString().padLeft(2, '0');
     final millisecondsStr =
         (duration % 1000 / 10).floor().toString().padLeft(2, '0');
     var textStr = '$secondsStr.$millisecondsStr';
