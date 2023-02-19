@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/timer/timer.dart';
 
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: const Color(0xFF121212),
         ),
+        textTheme: GoogleFonts.montserratTextTheme(),
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
