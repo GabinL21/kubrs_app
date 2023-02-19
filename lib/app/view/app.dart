@@ -24,9 +24,6 @@ class App extends StatelessWidget {
           showSelectedLabels: false,
           showUnselectedLabels: false,
         ),
-        colorScheme: ColorScheme.fromSwatch(
-          backgroundColor: const Color(0xFF121212),
-        ),
         textTheme: GoogleFonts.montserratTextTheme(
           const TextTheme(
             headline1: TextStyle(
@@ -37,6 +34,7 @@ class App extends StatelessWidget {
             ),
           ),
         ),
+        scaffoldBackgroundColor: const Color(0xFF121212),
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
