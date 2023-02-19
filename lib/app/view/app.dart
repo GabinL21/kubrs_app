@@ -9,7 +9,18 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF0D0D0D), elevation: 0),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFF0D0D0D),
+          elevation: 0,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFF0D0D0D),
+          selectedItemColor: Color(0xFFFF8837),
+          unselectedItemColor: Color(0xFFFFFFFF),
+          elevation: 0,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: const Color(0xFF121212),
         ),

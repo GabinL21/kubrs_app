@@ -22,6 +22,23 @@ class TimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'History',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timer),
+            label: 'Timer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.query_stats),
+            label: 'Stats',
+          ),
+        ],
+        currentIndex: 1,
+      ),
       body: TimerGestureDetector(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
