@@ -10,35 +10,42 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const colorScheme = ColorScheme.dark(
+      background: Color(0xFF0D0D0D),
+      primary: Color(0xFF121212),
+      onPrimary: Color(0xFFFFFFFF),
+      tertiary: Color(0xFFC4B5FD),
+    );
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF0D0D0D),
+        colorScheme: colorScheme,
+        scaffoldBackgroundColor: colorScheme.background,
+        textTheme: GoogleFonts.montserratTextTheme(
+          TextTheme(
+            displayLarge: TextStyle(
+              color: colorScheme.onBackground,
+              fontSize: 64,
+              fontWeight: FontWeight.w700,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: colorScheme.primary,
           elevation: 0,
         ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFF0D0D0D),
-          selectedItemColor: Color(0xFFC4B5FD),
-          unselectedItemColor: Color(0xFFFFFFFF),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: colorScheme.primary,
+          selectedItemColor: colorScheme.tertiary,
+          unselectedItemColor: colorScheme.onPrimary,
           elevation: 0,
           showSelectedLabels: false,
           showUnselectedLabels: false,
         ),
-        drawerTheme: const DrawerThemeData(
-          backgroundColor: Color(0xFF0D0D0D),
+        drawerTheme: DrawerThemeData(
+          backgroundColor: colorScheme.primary,
           elevation: 0,
         ),
-        textTheme: GoogleFonts.montserratTextTheme(
-          const TextTheme(
-            headline1: TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontSize: 64,
-              fontWeight: FontWeight.w700,
-              fontFeatures: [FontFeature.tabularFigures()],
-            ),
-          ),
-        ),
-        scaffoldBackgroundColor: const Color(0xFF121212),
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

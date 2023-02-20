@@ -110,9 +110,9 @@ class TimerText extends StatelessWidget {
   }
 
   TextStyle _getTimerTextStyle(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.headline1!;
+    final textStyle = Theme.of(context).textTheme.displayLarge!;
     if (context.select((TimerBloc bloc) => bloc.state.reseted)) {
-      return textStyle.copyWith(color: const Color(0xFFC4B5FD));
+      return textStyle.copyWith(color: Theme.of(context).colorScheme.tertiary);
     }
     return textStyle;
   }
