@@ -69,9 +69,11 @@ class TimerGestureDetector extends StatelessWidget {
               context.read<TimerBloc>().add(const TimerReset()),
           onLongPressEnd: (_) =>
               context.read<TimerBloc>().add(const TimerStarted()),
-          onTapDown: (_) => context
-              .read<TimerBloc>()
-              .add(TimerStopped(duration: state.duration)),
+          onTapDown: (_) => state.duration > 0
+              ? context
+                  .read<TimerBloc>()
+                  .add(TimerStopped(duration: state.duration))
+              : null,
           behavior: HitTestBehavior.opaque,
           child: SizedBox(
             child: child,
@@ -88,6 +90,15 @@ class TimerText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final duration = context.select((TimerBloc bloc) => bloc.state.duration);
+    final textString = _getTimerTextString(duration);
+    final textStyle = _getTimerTextStyle(context);
+    return Text(
+      textString,
+      style: textStyle,
+    );
+  }
+
+  String _getTimerTextString(int duration) {
     final minutesStr = (duration / 1000 / 60).floor().toString();
     final secondsStr =
         (duration / 1000 % 60).floor().toString().padLeft(2, '0');
@@ -95,9 +106,14 @@ class TimerText extends StatelessWidget {
         (duration % 1000 / 10).floor().toString().padLeft(2, '0');
     var textStr = '$secondsStr.$millisecondsStr';
     if (duration > 60 * 1000) textStr = '$minutesStr:$textStr';
-    return Text(
-      textStr,
-      style: Theme.of(context).textTheme.headline1,
-    );
+    return textStr;
+  }
+
+  TextStyle _getTimerTextStyle(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.headline1!;
+    if (context.select((TimerBloc bloc) => bloc.state.reseted)) {
+      return textStyle.copyWith(color: const Color(0xFFC4B5FD));
+    }
+    return textStyle;
   }
 }

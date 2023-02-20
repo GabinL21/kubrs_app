@@ -45,7 +45,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   void _onReset(TimerReset event, Emitter<TimerState> emit) {
-    emit(const TimerInitial());
+    emit(const TimerReseted());
     _tickerSubscription?.cancel();
   }
 }
