@@ -39,6 +39,7 @@ class TimerView extends StatelessWidget {
         ],
         currentIndex: 1,
       ),
+      drawer: const Drawer(),
       body: TimerGestureDetector(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
