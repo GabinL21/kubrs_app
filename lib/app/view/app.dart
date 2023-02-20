@@ -13,12 +13,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          color: Color(0xFF0D0D0D),
+          backgroundColor: Color(0xFF0D0D0D),
           elevation: 0,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color(0xFF0D0D0D),
-          selectedItemColor: Color(0xFFFF8837),
+          selectedItemColor: Color(0xFFC4B5FD),
           unselectedItemColor: Color(0xFFFFFFFF),
           elevation: 0,
           showSelectedLabels: false,
