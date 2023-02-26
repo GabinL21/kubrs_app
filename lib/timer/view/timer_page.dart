@@ -55,10 +55,7 @@ class TimerView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 100),
-            child: Center(child: TimerText()),
-          ),
+          Center(child: TimerText()),
         ],
       ),
     );
