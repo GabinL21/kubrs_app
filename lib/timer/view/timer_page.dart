@@ -65,15 +65,10 @@ class TimerGestureDetector extends StatelessWidget {
     return BlocBuilder<TimerBloc, TimerState>(
       builder: (context, state) {
         return GestureDetector(
-          onLongPressStart: (_) =>
-              context.read<TimerBloc>().add(const TimerReset()),
-          onLongPressEnd: (_) =>
-              context.read<TimerBloc>().add(const TimerStarted()),
-          onTapDown: (_) => state.duration > 0
-              ? context
-                  .read<TimerBloc>()
-                  .add(TimerStopped(duration: state.duration))
-              : null,
+          onLongPressStart: (_) => _resetTimer(context),
+          onLongPressEnd: (_) => _startTimer(context),
+          onTapDown: (_) => _stopTimer(state, context),
+          onPanDown: (_) => _stopTimer(state, context),
           behavior: HitTestBehavior.opaque,
           child: SizedBox(
             child: child,
@@ -81,6 +76,20 @@ class TimerGestureDetector extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _resetTimer(BuildContext context) {
+    context.read<TimerBloc>().add(const TimerReset());
+  }
+
+  void _startTimer(BuildContext context) {
+    context.read<TimerBloc>().add(const TimerStarted());
+  }
+
+  void _stopTimer(TimerState state, BuildContext context) {
+    return state.duration > 0
+        ? context.read<TimerBloc>().add(TimerStopped(duration: state.duration))
+        : null;
   }
 }
 
