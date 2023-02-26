@@ -21,3 +21,7 @@ class TimerStopped extends TimerEvent {
 class TimerReset extends TimerEvent {
   const TimerReset();
 }
+
+class TimerDone extends TimerEvent {
+  const TimerDone();
+}
