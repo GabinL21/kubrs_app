@@ -20,6 +20,12 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.select((TimerBloc bloc) => bloc.state);
+    if (state is TimerReseted || state is TimerRunning) {
+      return Scaffold(
+        body: _getBody(),
+      );
+    }
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: BottomNavigationBar(
@@ -40,16 +46,20 @@ class TimerView extends StatelessWidget {
         currentIndex: 1,
       ),
       drawer: const Drawer(),
-      body: TimerGestureDetector(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 100),
-              child: Center(child: TimerText()),
-            ),
-          ],
-        ),
+      body: _getBody(),
+    );
+  }
+
+  TimerGestureDetector _getBody() {
+    return TimerGestureDetector(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 100),
+            child: Center(child: TimerText()),
+          ),
+        ],
       ),
     );
   }
@@ -119,7 +129,7 @@ class TimerText extends StatelessWidget {
 
   TextStyle _getTimerTextStyle(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.displayLarge!;
-    if (context.select((TimerBloc bloc) => bloc.state.reseted)) {
+    if (context.select((TimerBloc bloc) => bloc.state) is TimerReseted) {
       return textStyle.copyWith(color: Theme.of(context).colorScheme.tertiary);
     }
     return textStyle;
