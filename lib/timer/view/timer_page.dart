@@ -23,7 +23,14 @@ class TimerView extends StatelessWidget {
     final state = context.select((TimerBloc bloc) => bloc.state);
     if (state is TimerReseted || state is TimerRunning) {
       return Scaffold(
-        body: _getBody(),
+        body: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            children: [
+              Expanded(child: _getBody()),
+            ],
+          ),
+        ),
       );
     }
     return Scaffold(
@@ -46,7 +53,19 @@ class TimerView extends StatelessWidget {
         currentIndex: 1,
       ),
       drawer: const Drawer(),
-      body: _getBody(),
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          children: [
+            Text(
+              "D B' R2 U2 F U2 B D2 F' U2 B' L' U R D U2 L' U2 B' R",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            Expanded(child: _getBody()),
+          ],
+        ),
+      ),
     );
   }
 
