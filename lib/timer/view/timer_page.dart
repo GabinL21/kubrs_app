@@ -87,9 +87,8 @@ class TimerGestureDetector extends StatelessWidget {
   }
 
   void _stopTimer(TimerState state, BuildContext context) {
-    return state.duration > 0
-        ? context.read<TimerBloc>().add(TimerStopped(duration: state.duration))
-        : null;
+    if (state.duration <= 0) return;
+    context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
   }
 }
 
