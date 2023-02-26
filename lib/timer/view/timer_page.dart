@@ -20,6 +20,12 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.select((TimerBloc bloc) => bloc.state);
+    if (state is TimerReseted || state is TimerRunning) {
+      return Scaffold(
+        body: _getBody(),
+      );
+    }
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: BottomNavigationBar(
@@ -40,16 +46,17 @@ class TimerView extends StatelessWidget {
         currentIndex: 1,
       ),
       drawer: const Drawer(),
-      body: TimerGestureDetector(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 100),
-              child: Center(child: TimerText()),
-            ),
-          ],
-        ),
+      body: _getBody(),
+    );
+  }
+
+  TimerGestureDetector _getBody() {
+    return TimerGestureDetector(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          Center(child: TimerText()),
+        ],
       ),
     );
   }
@@ -65,15 +72,9 @@ class TimerGestureDetector extends StatelessWidget {
     return BlocBuilder<TimerBloc, TimerState>(
       builder: (context, state) {
         return GestureDetector(
-          onLongPressStart: (_) =>
-              context.read<TimerBloc>().add(const TimerReset()),
-          onLongPressEnd: (_) =>
-              context.read<TimerBloc>().add(const TimerStarted()),
-          onTapDown: (_) => state.duration > 0
-              ? context
-                  .read<TimerBloc>()
-                  .add(TimerStopped(duration: state.duration))
-              : null,
+          onLongPressStart: (_) => _handleLongPressStart(state, context),
+          onLongPressEnd: (_) => _handleLongPressEnd(state, context),
+          onPanDown: (_) => _handleOnPanDown(state, context),
           behavior: HitTestBehavior.opaque,
           child: SizedBox(
             child: child,
@@ -81,6 +82,25 @@ class TimerGestureDetector extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _handleLongPressStart(TimerState state, BuildContext context) {
+    if (state is! TimerInitial) return;
+    context.read<TimerBloc>().add(const TimerReset());
+  }
+
+  void _handleLongPressEnd(TimerState state, BuildContext context) {
+    if (state is! TimerReseted) return;
+    context.read<TimerBloc>().add(const TimerStarted());
+  }
+
+  void _handleOnPanDown(TimerState state, BuildContext context) {
+    if (state is TimerInitial) return;
+    if (state is TimerComplete) {
+      context.read<TimerBloc>().add(const TimerDone());
+    } else {
+      context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
+    }
   }
 }
 
@@ -111,8 +131,11 @@ class TimerText extends StatelessWidget {
 
   TextStyle _getTimerTextStyle(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.displayLarge!;
-    if (context.select((TimerBloc bloc) => bloc.state.reseted)) {
-      return textStyle.copyWith(color: Theme.of(context).colorScheme.tertiary);
+    if (context.select((TimerBloc bloc) => bloc.state) is TimerReseted) {
+      return textStyle.copyWith(
+        color: Theme.of(context).colorScheme.tertiary,
+        fontSize: Theme.of(context).textTheme.displayLarge!.fontSize! * 1.10,
+      );
     }
     return textStyle;
   }

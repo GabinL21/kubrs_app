@@ -1,12 +1,11 @@
 part of 'timer_bloc.dart';
 
 abstract class TimerState extends Equatable {
-  const TimerState(this.duration, {this.reseted = false});
+  const TimerState(this.duration);
   final int duration;
-  final bool reseted;
 
   @override
-  List<Object> get props => [duration, reseted];
+  List<Object> get props => [duration];
 }
 
 class TimerInitial extends TimerState {
@@ -22,5 +21,5 @@ class TimerComplete extends TimerState {
 }
 
 class TimerReseted extends TimerState {
-  const TimerReseted() : super(0, reseted: true);
+  const TimerReseted() : super(0);
 }
