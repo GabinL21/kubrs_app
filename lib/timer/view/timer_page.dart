@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
+import 'package:kubrs_app/timer/utils/scramble.dart';
 import 'package:kubrs_app/timer/utils/ticker.dart';
 
 class TimerPage extends StatelessWidget {
@@ -58,7 +59,7 @@ class TimerView extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "D B' R2 U2 F U2 B D2 F' U2 B' L' U R D U2 L' U2 B' R",
+              Scramble.generate(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),

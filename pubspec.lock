@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
+  cuber:
+    dependency: "direct main"
+    description:
+      name: cuber
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   diff_match_patch:
     dependency: transitive
     description:
