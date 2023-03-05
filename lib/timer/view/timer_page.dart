@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
+import 'package:kubrs_app/timer/utils/scramble.dart';
 import 'package:kubrs_app/timer/utils/ticker.dart';
 
 class TimerPage extends StatelessWidget {
@@ -21,9 +22,16 @@ class TimerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.select((TimerBloc bloc) => bloc.state);
-    if (state is TimerReseted || state is TimerRunning) {
+    if (state is! TimerInitial) {
       return Scaffold(
-        body: _getBody(),
+        body: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            children: [
+              Expanded(child: _getBody()),
+            ],
+          ),
+        ),
       );
     }
     return Scaffold(
@@ -46,7 +54,19 @@ class TimerView extends StatelessWidget {
         currentIndex: 1,
       ),
       drawer: const Drawer(),
-      body: _getBody(),
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          children: [
+            Text(
+              Scramble.generate(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            Expanded(child: _getBody()),
+          ],
+        ),
+      ),
     );
   }
 
@@ -75,6 +95,8 @@ class TimerGestureDetector extends StatelessWidget {
           onLongPressStart: (_) => _handleLongPressStart(state, context),
           onLongPressEnd: (_) => _handleLongPressEnd(state, context),
           onPanDown: (_) => _handleOnPanDown(state, context),
+          onTapUp: (_) => _handleOnTapUp(state, context),
+          onPanEnd: (_) => _handleOnPanEnd(state, context),
           behavior: HitTestBehavior.opaque,
           child: SizedBox(
             child: child,
@@ -90,6 +112,10 @@ class TimerGestureDetector extends StatelessWidget {
   }
 
   void _handleLongPressEnd(TimerState state, BuildContext context) {
+    if (state is TimerComplete) {
+      context.read<TimerBloc>().add(TimerDone(duration: state.duration));
+      return;
+    }
     if (state is! TimerReseted) return;
     context.read<TimerBloc>().add(const TimerStarted());
   }
@@ -97,9 +123,24 @@ class TimerGestureDetector extends StatelessWidget {
   void _handleOnPanDown(TimerState state, BuildContext context) {
     if (state is TimerInitial) return;
     if (state is TimerComplete) {
-      context.read<TimerBloc>().add(const TimerDone());
+      context.read<TimerBloc>().add(TimerDone(duration: state.duration));
     } else {
       context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
+    }
+  }
+
+  void _handleOnTapUp(TimerState state, BuildContext context) {
+    if (state is TimerInitial) return;
+    if (state is TimerComplete) {
+      context.read<TimerBloc>().add(TimerDone(duration: state.duration));
+    } else {
+      context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
+    }
+  }
+
+  void _handleOnPanEnd(TimerState state, BuildContext context) {
+    if (state is TimerComplete) {
+      context.read<TimerBloc>().add(TimerDone(duration: state.duration));
     }
   }
 }

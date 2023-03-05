@@ -28,6 +28,12 @@ class App extends StatelessWidget {
               fontWeight: FontWeight.w700,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
+            displayMedium: TextStyle(
+              color: colorScheme.onBackground,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
           ),
         ),
         appBarTheme: AppBarTheme(
