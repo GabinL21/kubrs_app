@@ -117,7 +117,7 @@ class TimerGestureDetector extends StatelessWidget {
   void _handleOnPanDown(TimerState state, BuildContext context) {
     if (state is TimerInitial) return;
     if (state is TimerComplete) {
-      context.read<TimerBloc>().add(const TimerDone());
+      context.read<TimerBloc>().add(TimerDone(duration: state.duration));
     } else {
       context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
     }
