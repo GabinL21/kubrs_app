@@ -35,7 +35,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -86,12 +86,12 @@ android {
         }
         staging {
             dimension "default"
-            applicationIdSuffix ".stg"
+            applicationIdSuffix ""
             manifestPlaceholders = [appName: "[STG] Kubrs App"]
         }
         development {
             dimension "default"
-            applicationIdSuffix ".dev"
+            applicationIdSuffix ""
             manifestPlaceholders = [appName: "[DEV] Kubrs App"]
         }
     }
