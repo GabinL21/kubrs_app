@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
 import 'package:kubrs_app/auth/repository/auth_repository.dart';
+import 'package:kubrs_app/timer/timer.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -28,28 +27,53 @@ class AuthView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Kubrs',
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            TextButton.icon(
-              onPressed: () => _authenticateWithGoogle(context),
-              icon: const Icon(
-                Icons.account_circle,
-                color: Colors.white,
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is Authenticated) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute<Widget>(
+                builder: (context) => const TimerPage(),
               ),
-              label: Text(
-                'Sign-in with Google',
-                style: Theme.of(context).textTheme.displayMedium,
-              ),
-            )
-          ],
-        ),
+            );
+          }
+          if (state is AuthError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is Unauthenticated) {
+            return Center(child: _getAuthForm(context));
+          }
+          return Container();
+        },
       ),
+    );
+  }
+
+  Widget _getAuthForm(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Kubrs',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+        TextButton.icon(
+          onPressed: () => _authenticateWithGoogle(context),
+          icon: const Icon(
+            Icons.account_circle,
+            color: Colors.white,
+          ),
+          label: Text(
+            'Sign-in with Google',
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+        )
+      ],
     );
   }
 
