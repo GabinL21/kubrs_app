@@ -2,7 +2,10 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
+import 'package:kubrs_app/auth/repository/auth_repository.dart';
 import 'package:kubrs_app/auth/view/auth_page.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/timer/timer.dart';
@@ -17,12 +20,20 @@ class App extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) return const TimerPage();
-          return const AuthPage();
-        },
+      home: RepositoryProvider(
+        create: (_) => AuthRepository(),
+        child: BlocProvider(
+          create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context),
+          ),
+          child: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) return const TimerPage();
+              return const AuthPage();
+            },
+          ),
+        ),
       ),
     );
   }
