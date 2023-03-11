@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "940539174983",
+    "project_id": "kubrs-a5890",
+    "storage_bucket": "kubrs-a5890.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940539174983:android:889b89f598440d9b8d5162",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.kubrs_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940539174983-mar4tnio5en1oscump0l4g95ptqibkhf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl8gSK3G_yIYsHgVX47RllgbXZzL1xQqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940539174983-mar4tnio5en1oscump0l4g95ptqibkhf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

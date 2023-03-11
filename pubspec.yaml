@@ -12,6 +12,7 @@ dependencies:
   collection: ^1.16.0
   cuber: ^0.3.0
   equatable: ^2.0.5
+  firebase_core: ^2.7.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
