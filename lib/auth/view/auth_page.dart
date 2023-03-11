@@ -37,8 +37,11 @@ class AuthView extends StatelessWidget {
             );
           }
           if (state is AuthError) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Authentication failed, check your network'),
+              ),
+            );
           }
         },
         builder: (context, state) {
