@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
@@ -21,6 +22,7 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     final state = context.select((TimerBloc bloc) => bloc.state);
     if (state is! TimerInitial) {
       return Scaffold(
@@ -53,7 +55,7 @@ class TimerView extends StatelessWidget {
         ],
         currentIndex: 1,
       ),
-      drawer: const Drawer(),
+      drawer: _getDrawer(context, user),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
@@ -77,6 +79,18 @@ class TimerView extends StatelessWidget {
         children: const <Widget>[
           Center(child: TimerText()),
         ],
+      ),
+    );
+  }
+
+  Drawer _getDrawer(BuildContext context, User user) {
+    return Drawer(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(32, 64, 32, 64),
+        child: Text(
+          'Hello ${user.displayName}!',
+          style: Theme.of(context).textTheme.displayMedium,
+        ),
       ),
     );
   }
