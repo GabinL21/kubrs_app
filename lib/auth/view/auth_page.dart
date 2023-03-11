@@ -1,26 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
+import 'package:kubrs_app/auth/repository/auth_repository.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final googleAuth = await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider(
+      create: (_) => AuthRepository(),
+      child: BlocProvider(
+        create: (context) => AuthBloc(
+          authRepository: RepositoryProvider.of<AuthRepository>(context),
+        ),
+        child: const AuthView(),
+      ),
     );
-
-    // Once signed in, return the UserCredential
-    return FirebaseAuth.instance.signInWithCredential(credential);
   }
+}
+
+class AuthView extends StatelessWidget {
+  const AuthView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class AuthPage extends StatelessWidget {
               style: Theme.of(context).textTheme.displayLarge,
             ),
             TextButton.icon(
-              onPressed: signInWithGoogle,
+              onPressed: () => _authenticateWithGoogle(context),
               icon: const Icon(
                 Icons.account_circle,
                 color: Colors.white,
@@ -47,6 +50,12 @@ class AuthPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _authenticateWithGoogle(BuildContext context) {
+    BlocProvider.of<AuthBloc>(context).add(
+      GoogleSignInRequested(),
     );
   }
 }
