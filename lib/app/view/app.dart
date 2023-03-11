@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kubrs_app/auth/view/auth_page.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
-import 'package:kubrs_app/timer/timer.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -56,7 +56,7 @@ class App extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
-      home: const TimerPage(),
+      home: const AuthPage(),
     );
   }
 }

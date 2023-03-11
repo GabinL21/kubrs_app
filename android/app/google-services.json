@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "940539174983-mar4tnio5en1oscump0l4g95ptqibkhf.apps.googleusercontent.com",
+          "client_id": "940539174983-ak3gi1ea3cvvfgakcuemkb87bc2sljg5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.verygoodcore.kubrs_app",
+            "certificate_hash": "038ae789ccd0769b42749327d74727cabc851cd7"
+          }
+        },
+        {
+          "client_id": "940539174983-466f9qqekskdgp5qqptfc2p168nm1jjq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "940539174983-mar4tnio5en1oscump0l4g95ptqibkhf.apps.googleusercontent.com",
+              "client_id": "940539174983-466f9qqekskdgp5qqptfc2p168nm1jjq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "940539174983-i91ej0c18hb3dq7d750q72upnar2e55u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.verygoodcore.kubrs-app"
+              }
             }
           ]
         }
