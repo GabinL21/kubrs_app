@@ -9,9 +9,11 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
+  cloud_firestore: ^4.4.4
   collection: ^1.16.0
   cuber: ^0.3.0
   equatable: ^2.0.5
+  firebase_app_check: ^0.1.1+13
   firebase_auth: ^4.2.10
   firebase_core: ^2.7.1
   flutter:
