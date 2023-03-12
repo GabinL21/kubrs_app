@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/auth/auth.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/utils/scramble.dart';
 import 'package:kubrs_app/timer/utils/ticker.dart';
@@ -86,10 +87,24 @@ class TimerView extends StatelessWidget {
   Drawer _getDrawer(BuildContext context, User user) {
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(32, 64, 32, 64),
-        child: Text(
-          'Hello ${user.displayName}!',
-          style: Theme.of(context).textTheme.displayMedium,
+        padding: const EdgeInsets.fromLTRB(32, 96, 32, 64),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Hello ${user.displayName}!',
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<AuthBloc>().add(SignOutRequested());
+              },
+              child: Text(
+                'Sign out',
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+            )
+          ],
         ),
       ),
     );

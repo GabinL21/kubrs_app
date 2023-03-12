@@ -5,19 +5,20 @@ class AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
 
   Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
     final googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
     final googleAuth = await googleUser?.authentication;
-
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
-    // Once signed in, return the UserCredential
     return _firebaseAuth.signInWithCredential(credential);
+  }
+
+  Future<void> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
