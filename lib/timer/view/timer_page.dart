@@ -3,12 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/utils/scramble.dart';
 import 'package:kubrs_app/timer/utils/ticker.dart';
+import 'package:kubrs_app/user/bloc/user_bloc.dart';
+import 'package:kubrs_app/user/user.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    if (userBloc.state is UserInitial) userBloc.add(UserRequested());
     return BlocProvider(
       create: (_) => TimerBloc(ticker: const Ticker()),
       child: const TimerView(),
@@ -53,7 +57,7 @@ class TimerView extends StatelessWidget {
         ],
         currentIndex: 1,
       ),
-      drawer: const Drawer(),
+      drawer: const UserDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(

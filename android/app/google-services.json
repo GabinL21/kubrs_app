@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "940539174983",
+    "project_id": "kubrs-a5890",
+    "storage_bucket": "kubrs-a5890.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940539174983:android:889b89f598440d9b8d5162",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.kubrs_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940539174983-ak3gi1ea3cvvfgakcuemkb87bc2sljg5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.verygoodcore.kubrs_app",
+            "certificate_hash": "038ae789ccd0769b42749327d74727cabc851cd7"
+          }
+        },
+        {
+          "client_id": "940539174983-466f9qqekskdgp5qqptfc2p168nm1jjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl8gSK3G_yIYsHgVX47RllgbXZzL1xQqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940539174983-466f9qqekskdgp5qqptfc2p168nm1jjq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "940539174983-i91ej0c18hb3dq7d750q72upnar2e55u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.verygoodcore.kubrs-app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
