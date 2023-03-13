@@ -12,6 +12,7 @@ class UserDrawer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(32, 96, 32, 64),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BlocBuilder<UserBloc, UserState>(
@@ -31,7 +32,9 @@ class UserDrawer extends StatelessWidget {
               },
               child: Text(
                 'Sign out',
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
               ),
             )
           ],

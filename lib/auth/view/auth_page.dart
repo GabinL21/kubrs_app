@@ -56,17 +56,20 @@ class AuthView extends StatelessWidget {
           'Kubrs',
           style: Theme.of(context).textTheme.displayLarge,
         ),
+        const SizedBox(
+          height: 256,
+        ),
         TextButton.icon(
           onPressed: () => _authenticateWithGoogle(context),
-          icon: const Icon(
+          icon: Icon(
             Icons.account_circle,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
           label: Text(
             'Sign-in with Google',
             style: Theme.of(context).textTheme.displayMedium,
           ),
-        )
+        ),
       ],
     );
   }

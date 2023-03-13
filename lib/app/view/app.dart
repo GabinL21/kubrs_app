@@ -50,10 +50,11 @@ class App extends StatelessWidget {
 
   ThemeData _getThemeData() {
     const colorScheme = ColorScheme.dark(
-      background: Color(0xFF0D0D0D),
-      primary: Color(0xFF121212),
-      onPrimary: Color(0xFFFFFFFF),
-      tertiary: Color.fromARGB(255, 247, 241, 149),
+      background: Color.fromRGBO(13, 13, 13, 1),
+      primary: Color.fromRGBO(18, 18, 18, 1),
+      onPrimary: Color.fromRGBO(255, 255, 255, 1),
+      tertiary: Color.fromRGBO(247, 241, 149, 1),
+      error: Color.fromRGBO(247, 149, 149, 1),
     );
     return ThemeData(
       colorScheme: colorScheme,
