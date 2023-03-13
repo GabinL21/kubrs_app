@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
-import 'package:kubrs_app/auth/repository/auth_repository.dart';
 import 'package:kubrs_app/timer/timer.dart';
 
 class AuthPage extends StatelessWidget {
