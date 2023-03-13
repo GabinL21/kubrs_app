@@ -1,16 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kubrs_app/auth/auth.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/utils/scramble.dart';
 import 'package:kubrs_app/timer/utils/ticker.dart';
+import 'package:kubrs_app/user/bloc/user_bloc.dart';
+import 'package:kubrs_app/user/user.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    if (userBloc.state is UserInitial) userBloc.add(UserRequested());
     return BlocProvider(
       create: (_) => TimerBloc(ticker: const Ticker()),
       child: const TimerView(),
@@ -23,7 +25,6 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
     final state = context.select((TimerBloc bloc) => bloc.state);
     if (state is! TimerInitial) {
       return Scaffold(
@@ -56,7 +57,7 @@ class TimerView extends StatelessWidget {
         ],
         currentIndex: 1,
       ),
-      drawer: _getDrawer(context, user),
+      drawer: const UserDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
@@ -80,32 +81,6 @@ class TimerView extends StatelessWidget {
         children: const <Widget>[
           Center(child: TimerText()),
         ],
-      ),
-    );
-  }
-
-  Drawer _getDrawer(BuildContext context, User user) {
-    return Drawer(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(32, 96, 32, 64),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Hello ${user.displayName}!',
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-            TextButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(SignOutRequested());
-              },
-              child: Text(
-                'Sign out',
-                style: Theme.of(context).textTheme.displayMedium,
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

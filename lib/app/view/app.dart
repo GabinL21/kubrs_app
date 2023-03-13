@@ -9,6 +9,8 @@ import 'package:kubrs_app/auth/repository/auth_repository.dart';
 import 'package:kubrs_app/auth/view/auth_page.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/timer/timer.dart';
+import 'package:kubrs_app/user/bloc/user_bloc.dart';
+import 'package:kubrs_app/user/repository/user_repository.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -26,12 +28,20 @@ class App extends StatelessWidget {
           create: (context) => AuthBloc(
             authRepository: RepositoryProvider.of<AuthRepository>(context),
           ),
-          child: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) return const TimerPage();
-              return const AuthPage();
-            },
+          child: RepositoryProvider(
+            create: (_) => UserRepository(),
+            child: BlocProvider(
+              create: (context) => UserBloc(
+                userRepository: RepositoryProvider.of<UserRepository>(context),
+              ),
+              child: StreamBuilder<User?>(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) return const TimerPage();
+                  return const AuthPage();
+                },
+              ),
+            ),
           ),
         ),
       ),
