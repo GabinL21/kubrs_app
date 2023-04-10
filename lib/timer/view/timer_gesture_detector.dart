@@ -34,7 +34,6 @@ class TimerGestureDetector extends StatelessWidget {
   void _handleLongPressEnd(TimerState state, BuildContext context) {
     if (state is TimerComplete) {
       context.read<TimerBloc>().add(TimerDone(duration: state.duration));
-      return;
     }
     if (state is! TimerReseted) return;
     context.read<TimerBloc>().add(const TimerStarted());
