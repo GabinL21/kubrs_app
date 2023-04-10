@@ -21,29 +21,35 @@ class AuthView extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute<Widget>(
-                builder: (context) => const TimerPage(),
-              ),
-            );
-          }
-          if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Authentication failed, check your network'),
-              ),
-            );
+            _navigateToTimerPage(context);
+          } else if (state is AuthError) {
+            _showAuthenticationError(context);
           }
         },
         builder: (context, state) {
           if (state is AuthLoading) {
             return const Center(child: CircularProgressIndicator());
-          }
-          if (state is Unauthenticated) {
+          } else if (state is Unauthenticated) {
             return Center(child: _getAuthForm(context));
           }
           return Container();
         },
+      ),
+    );
+  }
+
+  void _navigateToTimerPage(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<Widget>(
+        builder: (context) => const TimerPage(),
+      ),
+    );
+  }
+
+  void _showAuthenticationError(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Authentication failed, check your network'),
       ),
     );
   }
@@ -59,15 +65,21 @@ class AuthView extends StatelessWidget {
         const SizedBox(
           height: 256,
         ),
-        TextButton.icon(
-          onPressed: () => _authenticateWithGoogle(context),
-          icon: Icon(
-            Icons.account_circle,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          label: Text(
-            'Sign-in with Google',
-            style: Theme.of(context).textTheme.displayMedium,
+        SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextButton.icon(
+              onPressed: () => _authenticateWithGoogle(context),
+              icon: Icon(
+                Icons.account_circle,
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+              label: Text(
+                'Sign-in with Google',
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+            ),
           ),
         ),
       ],
@@ -75,8 +87,12 @@ class AuthView extends StatelessWidget {
   }
 
   void _authenticateWithGoogle(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context).add(
-      GoogleSignInRequested(),
-    );
+    try {
+      BlocProvider.of<AuthBloc>(context).add(
+        GoogleSignInRequested(),
+      );
+    } catch (e) {
+      _showAuthenticationError(context);
+    }
   }
 }
