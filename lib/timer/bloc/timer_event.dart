@@ -10,12 +10,12 @@ class TimerStarted extends TimerEvent {
 
 class TimerTicked extends TimerEvent {
   const TimerTicked({required this.duration});
-  final int duration;
+  final Duration duration;
 }
 
 class TimerStopped extends TimerEvent {
   const TimerStopped({required this.duration});
-  final int duration;
+  final Duration duration;
 }
 
 class TimerReset extends TimerEvent {
@@ -24,5 +24,5 @@ class TimerReset extends TimerEvent {
 
 class TimerDone extends TimerEvent {
   const TimerDone({required this.duration});
-  final int duration;
+  final Duration duration;
 }

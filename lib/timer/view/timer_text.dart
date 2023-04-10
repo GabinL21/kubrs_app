@@ -16,14 +16,16 @@ class TimerText extends StatelessWidget {
     );
   }
 
-  String _getTimerTextString(int duration) {
-    final minutesStr = (duration / 1000 / 60).floor().toString();
+  String _getTimerTextString(Duration duration) {
+    final minutesStr = duration.inMinutes.toString();
     final secondsStr =
-        (duration / 1000 % 60).floor().toString().padLeft(2, '0');
-    final millisecondsStr =
-        (duration % 1000 / 10).floor().toString().padLeft(2, '0');
+        duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    final millisecondsStr = (duration.inMilliseconds.remainder(1000) / 10)
+        .floor()
+        .toString()
+        .padLeft(2, '0');
     var textStr = '$secondsStr.$millisecondsStr';
-    if (duration > 60 * 1000) textStr = '$minutesStr:$textStr';
+    if (duration > const Duration(minutes: 1)) textStr = '$minutesStr:$textStr';
     return textStr;
   }
 
