@@ -8,8 +8,13 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc({required this.userRepository}) : super(UserInitial()) {
     on<UserRequested>((event, emit) async {
-      final userName = await userRepository.getUserName();
-      emit(UserLoaded(userName));
+      emit(UserLoading());
+      try {
+        final userName = await userRepository.getUserName();
+        emit(UserLoaded(userName));
+      } catch (e) {
+        emit(UserError('An error occurred: $e'));
+      }
     });
   }
   final UserRepository userRepository;

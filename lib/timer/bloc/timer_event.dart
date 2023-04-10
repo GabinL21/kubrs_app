@@ -8,8 +8,8 @@ class TimerStarted extends TimerEvent {
   const TimerStarted();
 }
 
-class _TimerTicked extends TimerEvent {
-  const _TimerTicked({required this.duration});
+class TimerTicked extends TimerEvent {
+  const TimerTicked({required this.duration});
   final int duration;
 }
 

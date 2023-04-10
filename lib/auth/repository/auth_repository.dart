@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
+  final _firebaseFirestore = FirebaseFirestore.instance;
 
   Future<UserCredential> signInWithGoogle() async {
     final googleUser = await GoogleSignIn().signIn();
@@ -16,22 +17,14 @@ class AuthRepository {
   }
 
   Future<void> signOut() async {
-    try {
-      await _firebaseAuth.signOut();
-    } catch (e) {
-      throw Exception(e);
-    }
+    await _firebaseAuth.signOut();
   }
 
   Future<void> persistUserInFirestore() async {
     final user = _firebaseAuth.currentUser!;
-    final userDoc =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
+    final userDoc = _firebaseFirestore.collection('users').doc(user.uid);
     if ((await userDoc.get()).exists) return;
-    try {
-      await userDoc.set({'name': user.displayName});
-    } catch (e) {
-      throw Exception(e);
-    }
+    final creationDateTime = DateTime.now();
+    await userDoc.set({'name': user.displayName, 'creation': creationDateTime});
   }
 }

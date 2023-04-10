@@ -22,3 +22,12 @@ class UserLoaded extends UserState {
   @override
   List<Object?> get props => [userName];
 }
+
+class UserError extends UserState {
+  const UserError(this.message);
+
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
+}
