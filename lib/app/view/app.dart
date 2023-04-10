@@ -37,7 +37,13 @@ class App extends StatelessWidget {
               child: StreamBuilder<User?>(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) return const TimerPage();
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasData) {
+                    return const TimerPage();
+                  }
                   return const AuthPage();
                 },
               ),
