@@ -49,6 +49,11 @@ class AppTheme {
     elevation: 0,
   );
 
+  static final ProgressIndicatorThemeData _progressIndicatorTheme =
+      ProgressIndicatorThemeData(
+    color: _colorScheme.onPrimary,
+  );
+
   static ThemeData get themeData {
     return ThemeData(
       colorScheme: _colorScheme,
@@ -57,6 +62,7 @@ class AppTheme {
       appBarTheme: _appBarTheme,
       bottomNavigationBarTheme: _bottomNavigationBarTheme,
       drawerTheme: _drawerTheme,
+      progressIndicatorTheme: _progressIndicatorTheme,
     );
   }
 }
