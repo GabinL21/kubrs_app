@@ -12,7 +12,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       : _ticker = ticker,
         super(const TimerInitial(0)) {
     on<TimerStarted>(_onStarted);
-    on<_TimerTicked>(_onTicked);
+    on<TimerTicked>(_onTicked);
     on<TimerStopped>(_onStopped);
     on<TimerReset>(_onReset);
     on<TimerDone>(_onDone);
@@ -33,10 +33,10 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     _tickerSubscription?.cancel();
     _tickerSubscription = _ticker
         .tick()
-        .listen((duration) => add(_TimerTicked(duration: duration)));
+        .listen((duration) => add(TimerTicked(duration: duration)));
   }
 
-  void _onTicked(_TimerTicked event, Emitter<TimerState> emit) {
+  void _onTicked(TimerTicked event, Emitter<TimerState> emit) {
     emit(TimerRunning(event.duration));
   }
 
