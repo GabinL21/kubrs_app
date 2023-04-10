@@ -1,16 +1,12 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kubrs_app/timer/utils/ticker.dart';
+import 'package:flutter/scheduler.dart';
 
 part 'timer_event.dart';
 part 'timer_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  TimerBloc({required Ticker ticker})
-      : _ticker = ticker,
-        super(const TimerInitial(0)) {
+  TimerBloc() : super(const TimerInitial(0)) {
     on<TimerStarted>(_onStarted);
     on<TimerTicked>(_onTicked);
     on<TimerStopped>(_onStopped);
@@ -18,22 +14,15 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<TimerDone>(_onDone);
   }
 
-  final Ticker _ticker;
-
-  StreamSubscription<int>? _tickerSubscription;
-
-  @override
-  Future<void> close() {
-    _tickerSubscription?.cancel();
-    return super.close();
-  }
+  late Ticker _ticker;
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit) {
     emit(const TimerRunning(0));
-    _tickerSubscription?.cancel();
-    _tickerSubscription = _ticker
-        .tick()
-        .listen((duration) => add(TimerTicked(duration: duration)));
+    _ticker = Ticker((elapsed) {
+      final duration = elapsed.inMilliseconds;
+      add(TimerTicked(duration: duration));
+    });
+    _ticker.start();
   }
 
   void _onTicked(TimerTicked event, Emitter<TimerState> emit) {
@@ -42,15 +31,21 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   void _onStopped(TimerStopped event, Emitter<TimerState> emit) {
     emit(TimerComplete(event.duration));
-    _tickerSubscription?.cancel();
+    _ticker.dispose();
   }
 
   void _onReset(TimerReset event, Emitter<TimerState> emit) {
     emit(const TimerReseted());
-    _tickerSubscription?.cancel();
+    _ticker.dispose();
   }
 
   void _onDone(TimerDone event, Emitter<TimerState> emit) {
     emit(TimerInitial(event.duration));
+  }
+
+  @override
+  Future<void> close() {
+    _ticker.dispose();
+    return super.close();
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/utils/scramble.dart';
-import 'package:kubrs_app/timer/utils/ticker.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
@@ -16,7 +15,7 @@ class TimerPage extends StatelessWidget {
     final userBloc = BlocProvider.of<UserBloc>(context);
     if (userBloc.state is UserInitial) userBloc.add(UserRequested());
     return BlocProvider(
-      create: (_) => TimerBloc(ticker: const Ticker()),
+      create: (_) => TimerBloc(),
       child: const TimerView(),
     );
   }
