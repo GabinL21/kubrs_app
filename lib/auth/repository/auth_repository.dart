@@ -25,11 +25,13 @@ class AuthRepository {
 
   Future<void> persistUserInFirestore() async {
     final user = _firebaseAuth.currentUser!;
-    final userDoc =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
+    final firestore = FirebaseFirestore.instance;
+    final userDoc = firestore.collection('users').doc(user.uid);
     if ((await userDoc.get()).exists) return;
+    final creationDateTime = DateTime.now();
     try {
-      await userDoc.set({'name': user.displayName});
+      await userDoc
+          .set({'name': user.displayName, 'creation': creationDateTime});
     } catch (e) {
       throw Exception(e);
     }
