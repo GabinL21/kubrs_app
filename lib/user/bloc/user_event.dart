@@ -6,3 +6,9 @@ abstract class UserEvent extends Equatable {
 }
 
 class UserRequested extends UserEvent {}
+
+class UserSolve extends UserEvent {
+  UserSolve({required this.solve});
+
+  final Solve solve;
+}
