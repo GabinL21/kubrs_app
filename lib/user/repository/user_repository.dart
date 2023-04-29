@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kubrs_app/timer/model/solve.dart';
 
 class UserRepository {
   final _auth = FirebaseAuth.instance;
@@ -16,9 +15,5 @@ class UserRepository {
     if (userData == null) return 'Error';
     final userName = userData['name'];
     return userName as String;
-  }
-
-  Future<void> storeSolve(Solve solve) async {
-    await _firestore.collection('solves').add(solve.toMap());
   }
 }

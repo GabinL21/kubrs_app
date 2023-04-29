@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
+import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
-import 'package:kubrs_app/timer/model/solve.dart';
-import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
 class TimerGestureDetector extends StatelessWidget {
   const TimerGestureDetector({super.key, required this.child});
@@ -70,7 +70,7 @@ class TimerGestureDetector extends StatelessWidget {
     context.read<TimerBloc>().add(TimerDone(duration: state.duration));
     final scramble = context.read<ScrambleBloc>().state.scramble;
     final solve = Solve(time: state.duration, scramble: scramble);
-    context.read<UserBloc>().add(UserSolve(solve: solve));
+    context.read<SolveBloc>().add(AddSolve(solve: solve));
     context.read<ScrambleBloc>().add(GenerateScrambleEvent());
   }
 }
