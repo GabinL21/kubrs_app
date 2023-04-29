@@ -1,6 +1,6 @@
 {
-    "name": "Kubrs App",
-    "short_name": "Kubrs App",
+    "name": "Kubrs",
+    "short_name": "Kubrs",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
