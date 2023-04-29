@@ -23,7 +23,10 @@ class UserDrawer extends StatelessWidget {
                     style: Theme.of(context).textTheme.displayMedium,
                   );
                 }
-                return const CircularProgressIndicator();
+                return Text(
+                  'Loading...',
+                  style: Theme.of(context).textTheme.displayMedium,
+                );
               },
             ),
             TextButton(

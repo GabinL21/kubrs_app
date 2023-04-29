@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
-import 'package:kubrs_app/timer/utils/scramble.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
@@ -14,9 +16,24 @@ class TimerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final userBloc = BlocProvider.of<UserBloc>(context);
     if (userBloc.state is UserInitial) userBloc.add(UserRequested());
-    return BlocProvider(
-      create: (_) => TimerBloc(),
-      child: const TimerView(),
+    return RepositoryProvider(
+      create: (_) => SolveRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => TimerBloc(),
+          ),
+          BlocProvider(
+            create: (_) => ScrambleBloc(),
+          ),
+          BlocProvider(
+            create: (context) => SolveBloc(
+              solveRepository: RepositoryProvider.of<SolveRepository>(context),
+            ),
+          ),
+        ],
+        child: const TimerView(),
+      ),
     );
   }
 }
@@ -64,7 +81,7 @@ class TimerView extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              Scramble.generate(),
+              context.select((ScrambleBloc bloc) => bloc.state.scramble),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),

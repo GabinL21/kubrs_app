@@ -2,13 +2,18 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:cuber/cuber.dart';
+import 'package:flutter/foundation.dart';
 
 class Scramble {
-  static String generate() {
+  static Future<String> generate() async {
     final cube = _getRandomStateCube();
-    final solution = cube.solve();
+    final solution = await compute(_solveCube, cube);
     if (solution == null) return 'Scramble failed to load';
     return solution.toString();
+  }
+
+  static Solution? _solveCube(Cube cube) {
+    return cube.solve();
   }
 
   static Cube _getRandomStateCube() {
