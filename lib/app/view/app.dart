@@ -7,7 +7,7 @@ import 'package:kubrs_app/auth/repository/auth_repository.dart';
 import 'package:kubrs_app/auth/view/auth_page.dart';
 import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
-import 'package:kubrs_app/timer/timer.dart';
+import 'package:kubrs_app/nav/bloc/navigation_bloc.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 import 'package:kubrs_app/user/repository/user_repository.dart';
 import 'package:kubrs_app/user/view/user_drawer.dart';
@@ -43,9 +43,6 @@ class App extends StatelessWidget {
                 userRepository: RepositoryProvider.of<UserRepository>(context),
               ),
             ),
-            BlocProvider(
-              create: (_) => GuiBloc(),
-            ),
           ],
           child: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
@@ -65,36 +62,60 @@ class App extends StatelessWidget {
   }
 
   Widget _getScaffold(BuildContext context) {
-    return BlocBuilder<GuiBloc, GuiState>(
-      builder: (_, state) {
-        return Scaffold(
-          appBar: state is GuiShowed ? AppBar() : null,
-          bottomNavigationBar:
-              state is GuiShowed ? _getBottomNavigationBar() : null,
-          drawer: const UserDrawer(),
-          body: const TimerPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => GuiBloc(),
+        ),
+        BlocProvider(
+          create: (_) => NavigationBloc(),
+        ),
+      ],
+      child: BlocBuilder<GuiBloc, GuiState>(
+        builder: (_, state) {
+          return Scaffold(
+            appBar: state is GuiShowed ? AppBar() : null,
+            bottomNavigationBar:
+                state is GuiShowed ? _getBottomNavigationBar() : null,
+            drawer: const UserDrawer(),
+            body: _getPage(),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _getBottomNavigationBar() {
+    return BlocBuilder<NavigationBloc, NavigationState>(
+      builder: (context, state) {
+        final navigationBloc = BlocProvider.of<NavigationBloc>(context);
+        return BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'History',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.timer),
+              label: 'Timer',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.query_stats),
+              label: 'Stats',
+            ),
+          ],
+          currentIndex: state.index,
+          onTap: (index) => navigationBloc.add(NavigateToIndex(index)),
         );
       },
     );
   }
 
-  BottomNavigationBar _getBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.history),
-          label: 'History',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.timer),
-          label: 'Timer',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.query_stats),
-          label: 'Stats',
-        ),
-      ],
-      currentIndex: 1,
+  Widget _getPage() {
+    return BlocBuilder<NavigationBloc, NavigationState>(
+      builder: (_, state) {
+        return state.page;
+      },
     );
   }
 }
