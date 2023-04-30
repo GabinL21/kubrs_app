@@ -8,9 +8,14 @@ part 'solve_state.dart';
 
 class SolveBloc extends Bloc<SolveEvent, SolveState> {
   SolveBloc({required this.solveRepository}) : super(SolveInitial()) {
-    on<AddSolve>((event, emit) async {
+    on<AddSolve>((event, _) async {
       final solve = event.solve;
       await solveRepository.addSolve(solve);
+    });
+    on<GetSolves>((_, emit) async {
+      emit(SolveLoading());
+      final solves = await solveRepository.getLastFiveSolves();
+      emit(SolveLoaded(solves));
     });
   }
   final SolveRepository solveRepository;

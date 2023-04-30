@@ -2,9 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveRepository {
-  final _firestore = FirebaseFirestore.instance;
+  final _solvesCollection = FirebaseFirestore.instance.collection('solves');
 
   Future<void> addSolve(Solve solve) async {
-    await _firestore.collection('solves').add(solve.toMap());
+    await _solvesCollection.add(solve.toJson());
+  }
+
+  Future<List<Solve>> getLastFiveSolves() async {
+    final snapshot = await _solvesCollection
+        .orderBy('timestamp', descending: true)
+        .limit(5)
+        .get();
+    return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 }
