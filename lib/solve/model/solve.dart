@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Solve {
@@ -22,7 +23,7 @@ class Solve {
   factory Solve.fromJson(Map<String, dynamic> map) {
     return Solve(
       uid: map['uid'] as String,
-      timestamp: map['timestamp'] as DateTime,
+      timestamp: (map['timestamp'] as Timestamp).toDate(),
       time: Duration(milliseconds: map['time'] as int),
       scramble: map['scramble'] as String,
     );
