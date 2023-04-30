@@ -5,10 +5,12 @@ import 'package:kubrs_app/app/view/app_theme.dart';
 import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
 import 'package:kubrs_app/auth/repository/auth_repository.dart';
 import 'package:kubrs_app/auth/view/auth_page.dart';
+import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/timer/timer.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 import 'package:kubrs_app/user/repository/user_repository.dart';
+import 'package:kubrs_app/user/view/user_drawer.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -41,6 +43,9 @@ class App extends StatelessWidget {
                 userRepository: RepositoryProvider.of<UserRepository>(context),
               ),
             ),
+            BlocProvider(
+              create: (_) => GuiBloc(),
+            ),
           ],
           child: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
@@ -49,14 +54,47 @@ class App extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (snapshot.hasData) {
-                return const TimerPage();
               }
+              if (snapshot.hasData) return _getScaffold(context);
               return const AuthPage();
             },
           ),
         ),
       ),
+    );
+  }
+
+  Widget _getScaffold(BuildContext context) {
+    return BlocBuilder<GuiBloc, GuiState>(
+      builder: (_, state) {
+        return Scaffold(
+          appBar: state is GuiShowed ? AppBar() : null,
+          bottomNavigationBar:
+              state is GuiShowed ? _getBottomNavigationBar() : null,
+          drawer: const UserDrawer(),
+          body: const TimerPage(),
+        );
+      },
+    );
+  }
+
+  BottomNavigationBar _getBottomNavigationBar() {
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history),
+          label: 'History',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.timer),
+          label: 'Timer',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.query_stats),
+          label: 'Stats',
+        ),
+      ],
+      currentIndex: 1,
     );
   }
 }
