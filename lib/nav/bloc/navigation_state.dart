@@ -10,7 +10,7 @@ abstract class NavigationState extends Equatable {
 }
 
 class NavigationHistory extends NavigationState {
-  const NavigationHistory() : super(0, const Text('History'));
+  const NavigationHistory() : super(0, const HistoryPage());
 }
 
 class NavigationTimer extends NavigationState {
