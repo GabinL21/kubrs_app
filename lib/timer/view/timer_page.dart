@@ -24,9 +24,6 @@ class TimerPage extends StatelessWidget {
             create: (_) => TimerBloc(),
           ),
           BlocProvider(
-            create: (_) => ScrambleBloc(),
-          ),
-          BlocProvider(
             create: (context) => SolveBloc(
               solveRepository: RepositoryProvider.of<SolveRepository>(context),
             ),

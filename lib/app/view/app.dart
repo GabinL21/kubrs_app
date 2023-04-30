@@ -8,6 +8,7 @@ import 'package:kubrs_app/auth/view/auth_page.dart';
 import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/nav/bloc/navigation_bloc.dart';
+import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 import 'package:kubrs_app/user/repository/user_repository.dart';
 import 'package:kubrs_app/user/view/user_drawer.dart';
@@ -69,6 +70,10 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => NavigationBloc(),
+        ),
+        BlocProvider(
+          // Keeps the same scramble even if you switch to another page
+          create: (_) => ScrambleBloc(),
         ),
       ],
       child: BlocBuilder<GuiBloc, GuiState>(
