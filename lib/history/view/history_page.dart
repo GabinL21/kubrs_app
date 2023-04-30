@@ -26,6 +26,8 @@ class HistoryPage extends StatelessWidget {
 class HistoryView extends StatelessWidget {
   const HistoryView({super.key});
 
+  static final DateFormat _dateFormat = DateFormat('dd/MM');
+
   @override
   Widget build(BuildContext context) {
     context.read<SolveBloc>().add(GetSolves());
@@ -65,7 +67,7 @@ class HistoryView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Center(
             child: Text(
-              DateFormat('dd/MM').format(solve.timestamp),
+              _dateFormat.format(solve.timestamp),
               style: Theme.of(context).textTheme.displayMedium,
             ),
           ),

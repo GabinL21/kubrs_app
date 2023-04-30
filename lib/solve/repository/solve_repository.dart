@@ -10,11 +10,11 @@ class SolveRepository {
     await _solvesCollection.add(solve.toJson());
   }
 
-  Future<List<Solve>> getLastFiveSolves() async {
+  Future<List<Solve>> getLastSolves() async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
         .orderBy('timestamp', descending: true)
-        .limit(5)
+        .limit(10)
         .get();
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }

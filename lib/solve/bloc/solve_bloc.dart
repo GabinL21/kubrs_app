@@ -14,7 +14,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
     });
     on<GetSolves>((_, emit) async {
       emit(SolveLoading());
-      final solves = await solveRepository.getLastFiveSolves();
+      final solves = await solveRepository.getLastSolves();
       emit(SolveLoaded(solves));
     });
   }
