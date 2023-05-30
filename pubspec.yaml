@@ -13,7 +13,7 @@ dependencies:
   collection: ^1.16.0
   cuber: ^0.3.0
   equatable: ^2.0.5
-  firebase_app_check: ^0.1.2
+  firebase_app_check: ^0.1.4+2
   firebase_auth: ^4.4.2
   firebase_core: ^2.10.0
   flutter:
