@@ -11,10 +11,10 @@ dependencies:
   bloc: ^8.1.1
   cloud_firestore: ^4.5.3
   collection: ^1.16.0
-  cuber: ^0.3.0
+  cuber: ^0.4.0
   equatable: ^2.0.5
   firebase_app_check: ^0.1.5
-  firebase_auth: ^4.4.2
+  firebase_auth: ^4.6.3
   firebase_core: ^2.10.0
   flutter:
     sdk: flutter
