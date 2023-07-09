@@ -8,3 +8,11 @@ abstract class SolveState extends Equatable {
 }
 
 class SolveInitial extends SolveState {}
+
+class SolveLoading extends SolveState {}
+
+class SolveLoaded extends SolveState {
+  const SolveLoaded(this.solves);
+
+  final List<Solve> solves;
+}

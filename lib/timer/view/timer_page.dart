@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
@@ -7,7 +8,6 @@ import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
-import 'package:kubrs_app/user/user.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
@@ -22,9 +22,6 @@ class TimerPage extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (_) => TimerBloc(),
-          ),
-          BlocProvider(
-            create: (_) => ScrambleBloc(),
           ),
           BlocProvider(
             create: (context) => SolveBloc(
@@ -43,40 +40,21 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((TimerBloc bloc) => bloc.state);
-    if (state is! TimerInitial) {
-      return Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            children: [
-              Expanded(child: _getBody()),
-            ],
-          ),
+    final timerState = context.select((TimerBloc bloc) => bloc.state);
+    final guiBloc = BlocProvider.of<GuiBloc>(context);
+    if (timerState is! TimerInitial) {
+      guiBloc.add(HideGui());
+      return Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          children: [
+            Expanded(child: _getBody()),
+          ],
         ),
       );
-    }
-    return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer),
-            label: 'Timer',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.query_stats),
-            label: 'Stats',
-          ),
-        ],
-        currentIndex: 1,
-      ),
-      drawer: const UserDrawer(),
-      body: Padding(
+    } else {
+      guiBloc.add(ShowGui());
+      return Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           children: [
@@ -88,8 +66,8 @@ class TimerView extends StatelessWidget {
             Expanded(child: _getBody()),
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 
   Widget _getBody() {

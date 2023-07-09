@@ -12,3 +12,5 @@ class AddSolve extends SolveEvent {
 
   final Solve solve;
 }
+
+class GetSolves extends SolveEvent {}

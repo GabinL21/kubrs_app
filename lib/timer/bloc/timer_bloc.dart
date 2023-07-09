@@ -14,14 +14,13 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<TimerDone>(_onDone);
   }
 
-  late Ticker _ticker;
+  Ticker? _ticker;
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit) {
     emit(const TimerRunning(Duration.zero));
     _ticker = Ticker(
       (elapsed) => add(TimerTicked(duration: elapsed)),
-    );
-    _ticker.start();
+    )..start();
   }
 
   void _onTicked(TimerTicked event, Emitter<TimerState> emit) {
@@ -30,21 +29,25 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   void _onStopped(TimerStopped event, Emitter<TimerState> emit) {
     emit(TimerComplete(event.duration));
-    _ticker.dispose();
+    _dispose();
   }
 
   void _onReset(TimerReset event, Emitter<TimerState> emit) {
     emit(const TimerReseted());
-    _ticker.dispose();
+    _dispose();
   }
 
   void _onDone(TimerDone event, Emitter<TimerState> emit) {
     emit(TimerInitial(event.duration));
   }
 
+  void _dispose() {
+    _ticker?.dispose();
+  }
+
   @override
   Future<void> close() {
-    _ticker.dispose();
+    _dispose();
     return super.close();
   }
 }
