@@ -141,10 +141,10 @@ packages:
     dependency: "direct main"
     description:
       name: cuber
-      sha256: "4ed80ee301c31be8210adb522ae86bb0e4dfb56d81ba21475e6c6fda1e5b29a9"
+      sha256: ccb4accbc221fcfcd00a11a6172871f14e794954942818a502b46cc24af46251
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0"
   diff_match_patch:
     dependency: transitive
     description:
