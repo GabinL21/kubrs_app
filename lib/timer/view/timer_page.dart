@@ -63,6 +63,11 @@ class TimerView extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),
+            IconButton(
+              onPressed: () =>
+                  context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
+              icon: const Icon(Icons.cached_rounded),
+            ),
             Expanded(child: _getBody()),
           ],
         ),
