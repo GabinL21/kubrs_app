@@ -10,7 +10,7 @@ abstract class ScrambleState extends Equatable {
 }
 
 class ScrambleLoading extends ScrambleState {
-  const ScrambleLoading() : super('...');
+  const ScrambleLoading() : super('...\n'); // New line to maintain text size
 }
 
 class ScrambleLoaded extends ScrambleState {
