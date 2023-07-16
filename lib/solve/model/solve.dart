@@ -7,6 +7,7 @@ class Solve {
     required this.timestamp,
     required this.time,
     required this.scramble,
+    required this.dnf,
   });
 
   factory Solve.create({required Duration time, required String scramble}) {
@@ -17,6 +18,7 @@ class Solve {
       timestamp: timestamp,
       time: time,
       scramble: scramble,
+      dnf: false,
     );
   }
 
@@ -26,6 +28,7 @@ class Solve {
       timestamp: (map['timestamp'] as Timestamp).toDate(),
       time: Duration(milliseconds: map['time'] as int),
       scramble: map['scramble'] as String,
+      dnf: map['dnf'] as bool,
     );
   }
 
@@ -33,6 +36,7 @@ class Solve {
   final DateTime timestamp;
   final Duration time;
   final String scramble;
+  final bool dnf;
 
   Map<String, dynamic> toJson() {
     return {
@@ -40,6 +44,7 @@ class Solve {
       'timestamp': timestamp,
       'time': time.inMilliseconds,
       'scramble': scramble,
+      'dnf': dnf,
     };
   }
 }
