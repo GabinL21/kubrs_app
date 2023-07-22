@@ -42,27 +42,22 @@ class TimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final timerState = context.select((TimerBloc bloc) => bloc.state);
     final guiBloc = BlocProvider.of<GuiBloc>(context);
-    if (timerState is! TimerInitial) {
-      guiBloc.add(HideGui());
-      return Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Expanded(child: _getBody()),
-          ],
-        ),
-      );
-    } else {
+    if (timerState is TimerInitial) {
       guiBloc.add(ShowGui());
-      return Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
+    } else {
+      guiBloc.add(HideGui());
+    }
+    return Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        children: [
+          if (timerState is TimerInitial)
             Text(
               context.select((ScrambleBloc bloc) => bloc.state.scramble),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),
+          if (timerState is TimerInitial)
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(
@@ -71,14 +66,13 @@ class TimerView extends StatelessWidget {
                 icon: const Icon(Icons.cached_rounded),
               ),
             ),
-            Expanded(child: _getBody()),
-          ],
-        ),
-      );
-    }
+          Expanded(child: _getTimerBody()),
+        ],
+      ),
+    );
   }
 
-  Widget _getBody() {
+  Widget _getTimerBody() {
     return TimerGestureDetector(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
