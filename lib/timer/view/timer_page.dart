@@ -60,7 +60,10 @@ class TimerView extends StatelessWidget {
               child: IconButton(
                 onPressed: () =>
                     context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
-                icon: const Icon(Icons.cached_rounded),
+                icon: Icon(
+                  Icons.cached_rounded,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
             ),
           Expanded(child: _getTimerBody(solveState)),
@@ -76,10 +79,14 @@ class TimerView extends StatelessWidget {
         children: <Widget>[
           const Center(child: TimerText()),
           if (solveState is SolveDone)
-            Row(
-              children: const [
-                ToggleDNFTagButton(),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  ToggleDNFTagButton(),
+                ],
+              ),
             )
         ],
       ),

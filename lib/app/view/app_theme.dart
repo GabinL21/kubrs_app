@@ -8,6 +8,7 @@ class AppTheme {
     background: Color.fromRGBO(13, 13, 13, 1),
     primary: Color.fromRGBO(18, 18, 18, 1),
     onPrimary: Color.fromRGBO(255, 255, 255, 1),
+    secondary: Color.fromRGBO(166, 166, 166, 1),
     tertiary: Color.fromRGBO(247, 241, 149, 1),
     error: Color.fromRGBO(247, 149, 149, 1),
   );

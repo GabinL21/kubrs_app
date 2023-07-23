@@ -28,11 +28,10 @@ class ToggleDNFTagButton extends StatelessWidget {
 
   TextStyle _getTextStyle(BuildContext context, Solve solve) {
     final textStyle = Theme.of(context).textTheme.displayMedium!;
-    if (solve.dnf == true) {
-      return textStyle.copyWith(
-        color: Theme.of(context).colorScheme.tertiary,
-      );
-    }
-    return textStyle;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = solve.dnf ? colorScheme.tertiary : colorScheme.secondary;
+    return textStyle.copyWith(
+      color: color,
+    );
   }
 }
