@@ -18,6 +18,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
       final solve = event.solve;
       final newSolve = Solve.cloneAndToggleDNF(solve: solve);
       emit(SolveDone(newSolve));
+      await solveRepository.updateLastSolve(newSolve);
     });
     on<GetSolves>((_, emit) async {
       emit(SolveLoading());
