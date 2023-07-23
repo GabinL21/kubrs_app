@@ -4,25 +4,25 @@ abstract class TimerEvent {
   const TimerEvent();
 }
 
-class TimerStarted extends TimerEvent {
-  const TimerStarted();
+class ResetTimer extends TimerEvent {
+  const ResetTimer();
 }
 
-class TimerTicked extends TimerEvent {
-  const TimerTicked({required this.duration});
+class StartTimer extends TimerEvent {
+  const StartTimer();
+}
+
+class TickTimer extends TimerEvent {
+  const TickTimer({required this.duration});
   final Duration duration;
 }
 
-class TimerStopped extends TimerEvent {
-  const TimerStopped({required this.duration});
+class StopTimer extends TimerEvent {
+  const StopTimer({required this.duration});
   final Duration duration;
 }
 
-class TimerReset extends TimerEvent {
-  const TimerReset();
-}
-
-class TimerDone extends TimerEvent {
-  const TimerDone({required this.duration});
+class EndTimer extends TimerEvent {
+  const EndTimer({required this.duration});
   final Duration duration;
 }

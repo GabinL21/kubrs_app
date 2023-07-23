@@ -12,65 +12,43 @@ class TimerGestureDetector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TimerBloc, TimerState>(
-      builder: (context, state) {
-        return GestureDetector(
-          onLongPressStart: (_) => _handleLongPressStart(state, context),
-          onLongPressEnd: (_) => _handleLongPressEnd(state, context),
-          onPanDown: (_) => _handleOnPanDown(state, context),
-          onTapUp: (_) => _handleOnTapUp(state, context),
-          onPanEnd: (_) => _handleOnPanEnd(state, context),
-          behavior: HitTestBehavior.opaque,
-          child: SizedBox(
-            child: child,
-          ),
-        );
-      },
+    final state = BlocProvider.of<TimerBloc>(context).state;
+    return GestureDetector(
+      onLongPressStart: (_) => _resetTimer(state, context),
+      onLongPressEnd: (_) => _startTimer(state, context),
+      onPanDown: (_) => _stopTimer(state, context),
+      onTapUp: (_) => _endTimer(state, context),
+      onPanEnd: (_) => _endTimer(state, context),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        child: child,
+      ),
     );
   }
 
-  void _handleLongPressStart(TimerState state, BuildContext context) {
-    if (state is! TimerInitial) return;
-    context.read<TimerBloc>().add(const TimerReset());
+  void _resetTimer(TimerState state, BuildContext context) {
+    if (state is! TimerInitial && state is! TimerDone) return;
+    context.read<TimerBloc>().add(const ResetTimer());
+    context.read<SolveBloc>().add(const ResetSolve());
   }
 
-  void _handleLongPressEnd(TimerState state, BuildContext context) {
-    if (state is TimerComplete) {
-      _endTimer(context, state);
-    }
+  void _startTimer(TimerState state, BuildContext context) {
+    if (state is TimerStopped) _endTimer(state, context);
     if (state is! TimerReseted) return;
-    context.read<TimerBloc>().add(const TimerStarted());
+    context.read<TimerBloc>().add(const StartTimer());
   }
 
-  void _handleOnPanDown(TimerState state, BuildContext context) {
-    if (state is TimerInitial) return;
-    if (state is TimerComplete) {
-      _endTimer(context, state);
-    } else {
-      context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
-    }
-  }
-
-  void _handleOnTapUp(TimerState state, BuildContext context) {
-    if (state is TimerInitial) return;
-    if (state is TimerComplete) {
-      _endTimer(context, state);
-    } else {
-      context.read<TimerBloc>().add(TimerStopped(duration: state.duration));
-    }
-  }
-
-  void _handleOnPanEnd(TimerState state, BuildContext context) {
-    if (state is TimerComplete) {
-      _endTimer(context, state);
-    }
-  }
-
-  void _endTimer(BuildContext context, TimerComplete state) {
-    context.read<TimerBloc>().add(TimerDone(duration: state.duration));
+  void _stopTimer(TimerState state, BuildContext context) {
+    if (state is! TimerRunning) return;
+    context.read<TimerBloc>().add(StopTimer(duration: state.duration));
     final scramble = context.read<ScrambleBloc>().state.scramble;
     final solve = Solve.create(time: state.duration, scramble: scramble);
     context.read<SolveBloc>().add(AddSolve(solve: solve));
     context.read<ScrambleBloc>().add(GenerateScrambleEvent());
+  }
+
+  void _endTimer(TimerState state, BuildContext context) {
+    if (state is! TimerStopped) return;
+    context.read<TimerBloc>().add(EndTimer(duration: state.duration));
   }
 }
