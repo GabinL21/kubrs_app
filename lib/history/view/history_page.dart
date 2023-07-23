@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
+import 'package:kubrs_app/history/bloc/history_bloc.dart';
+import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
-import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/utils/duration_formatter.dart';
 
 class HistoryPage extends StatelessWidget {
@@ -12,10 +12,10 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (_) => SolveRepository(),
+      create: (_) => HistoryRepository(),
       child: BlocProvider(
-        create: (context) => SolveBloc(
-          solveRepository: RepositoryProvider.of<SolveRepository>(context),
+        create: (context) => HistoryBloc(
+          historyRepository: RepositoryProvider.of<HistoryRepository>(context),
         ),
         child: const HistoryView(),
       ),
@@ -30,15 +30,15 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SolveBloc>().add(GetSolves());
-    return BlocBuilder<SolveBloc, SolveState>(
+    context.read<HistoryBloc>().add(const GetHistory());
+    return BlocBuilder<HistoryBloc, HistoryState>(
       builder: (_, state) {
-        if (state is SolveInitial || state is SolveLoading) {
+        if (state is HistoryInitial || state is HistoryLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        final solves = (state as SolveLoaded).solves;
+        final solves = state.solves;
         return _getSolvesTable(solves, context);
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/utils/duration_formatter.dart';
 
@@ -8,13 +9,27 @@ class TimerText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final duration = context.select((TimerBloc bloc) => bloc.state.duration);
-    final textString = DurationFormatter.format(duration);
-    final textStyle = _getTimerTextStyle(context);
-    return Text(
-      textString,
-      style: textStyle,
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, timerState) {
+        return BlocBuilder<SolveBloc, SolveState>(
+          builder: (context, solveState) {
+            return Text(
+              _getTimerTextString(timerState, solveState),
+              style: _getTimerTextStyle(context),
+            );
+          },
+        );
+      },
     );
+  }
+
+  String _getTimerTextString(TimerState timerState, SolveState solveState) {
+    if (solveState is! SolveDone) {
+      return DurationFormatter.format(timerState.duration);
+    }
+    final solve = solveState.solve;
+    if (solve.dnf) return 'DNF';
+    return DurationFormatter.format(solve.time);
   }
 
   TextStyle _getTimerTextStyle(BuildContext context) {

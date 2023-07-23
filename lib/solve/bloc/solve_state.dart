@@ -9,10 +9,11 @@ abstract class SolveState extends Equatable {
 
 class SolveInitial extends SolveState {}
 
-class SolveLoading extends SolveState {}
+class SolveDone extends SolveState {
+  const SolveDone(this.solve);
 
-class SolveLoaded extends SolveState {
-  const SolveLoaded(this.solves);
+  final Solve solve;
 
-  final List<Solve> solves;
+  @override
+  List<Object> get props => [solve];
 }

@@ -7,6 +7,7 @@ import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
+import 'package:kubrs_app/timer/view/toggle_dnf_tag_button.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
 class TimerPage extends StatelessWidget {
@@ -18,17 +19,8 @@ class TimerPage extends StatelessWidget {
     if (userBloc.state is UserInitial) userBloc.add(UserRequested());
     return RepositoryProvider(
       create: (_) => SolveRepository(),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => TimerBloc(),
-          ),
-          BlocProvider(
-            create: (context) => SolveBloc(
-              solveRepository: RepositoryProvider.of<SolveRepository>(context),
-            ),
-          ),
-        ],
+      child: BlocProvider(
+        create: (_) => TimerBloc(),
         child: const TimerView(),
       ),
     );
@@ -41,49 +33,61 @@ class TimerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timerState = context.select((TimerBloc bloc) => bloc.state);
+    final solveState = context.select((SolveBloc bloc) => bloc.state);
     final guiBloc = BlocProvider.of<GuiBloc>(context);
-    if (timerState is! TimerInitial) {
+    if (timerState is TimerReseted || timerState is TimerRunning) {
       guiBloc.add(HideGui());
-      return Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Expanded(child: _getBody()),
-          ],
-        ),
-      );
     } else {
       guiBloc.add(ShowGui());
-      return Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Text(
-              context.select((ScrambleBloc bloc) => bloc.state.scramble),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayMedium,
+    }
+    return Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        children: [
+          if (timerState is! TimerReseted && timerState is! TimerRunning)
+            BlocBuilder<ScrambleBloc, ScrambleState>(
+              builder: (context, state) {
+                return Text(
+                  state.scramble,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayMedium,
+                );
+              },
             ),
+          if (timerState is! TimerReseted && timerState is! TimerRunning)
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(
                 onPressed: () =>
                     context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
-                icon: const Icon(Icons.cached_rounded),
+                icon: Icon(
+                  Icons.cached_rounded,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
             ),
-            Expanded(child: _getBody()),
-          ],
-        ),
-      );
-    }
+          Expanded(child: _getTimerBody(solveState)),
+        ],
+      ),
+    );
   }
 
-  Widget _getBody() {
+  Widget _getTimerBody(SolveState solveState) {
     return TimerGestureDetector(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Center(child: TimerText()),
+        children: <Widget>[
+          const Center(child: TimerText()),
+          if (solveState is SolveDone)
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  ToggleDNFTagButton(),
+                ],
+              ),
+            )
         ],
       ),
     );
