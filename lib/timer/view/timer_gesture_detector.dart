@@ -12,20 +12,17 @@ class TimerGestureDetector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TimerBloc, TimerState>(
-      builder: (context, state) {
-        return GestureDetector(
-          onLongPressStart: (_) => _resetTimer(state, context),
-          onLongPressEnd: (_) => _startTimer(state, context),
-          onPanDown: (_) => _stopTimer(state, context),
-          onTapUp: (_) => _endTimer(state, context),
-          onPanEnd: (_) => _endTimer(state, context),
-          behavior: HitTestBehavior.opaque,
-          child: SizedBox(
-            child: child,
-          ),
-        );
-      },
+    final state = BlocProvider.of<TimerBloc>(context).state;
+    return GestureDetector(
+      onLongPressStart: (_) => _resetTimer(state, context),
+      onLongPressEnd: (_) => _startTimer(state, context),
+      onPanDown: (_) => _stopTimer(state, context),
+      onTapUp: (_) => _endTimer(state, context),
+      onPanEnd: (_) => _endTimer(state, context),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        child: child,
+      ),
     );
   }
 
