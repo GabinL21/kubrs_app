@@ -6,39 +6,39 @@ part 'timer_event.dart';
 part 'timer_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  TimerBloc() : super(const TimerInitial(Duration.zero)) {
-    on<TimerStarted>(_onStarted);
-    on<TimerTicked>(_onTicked);
-    on<TimerStopped>(_onStopped);
-    on<TimerReset>(_onReset);
-    on<TimerDone>(_onDone);
+  TimerBloc() : super(const TimerInitial()) {
+    on<ResetTimer>(_onReset);
+    on<StartTimer>(_onStart);
+    on<TickTimer>(_onTick);
+    on<StopTimer>(_onStop);
+    on<EndTimer>(_onEnd);
   }
 
   Ticker? _ticker;
 
-  void _onStarted(TimerStarted event, Emitter<TimerState> emit) {
-    emit(const TimerRunning(Duration.zero));
-    _ticker = Ticker(
-      (elapsed) => add(TimerTicked(duration: elapsed)),
-    )..start();
-  }
-
-  void _onTicked(TimerTicked event, Emitter<TimerState> emit) {
-    emit(TimerRunning(event.duration));
-  }
-
-  void _onStopped(TimerStopped event, Emitter<TimerState> emit) {
-    emit(TimerComplete(event.duration));
-    _dispose();
-  }
-
-  void _onReset(TimerReset event, Emitter<TimerState> emit) {
+  void _onReset(ResetTimer event, Emitter<TimerState> emit) {
     emit(const TimerReseted());
     _dispose();
   }
 
-  void _onDone(TimerDone event, Emitter<TimerState> emit) {
-    emit(TimerInitial(event.duration));
+  void _onStart(StartTimer event, Emitter<TimerState> emit) {
+    emit(const TimerRunning(Duration.zero));
+    _ticker = Ticker(
+      (elapsed) => add(TickTimer(duration: elapsed)),
+    )..start();
+  }
+
+  void _onTick(TickTimer event, Emitter<TimerState> emit) {
+    emit(TimerRunning(event.duration));
+  }
+
+  void _onStop(StopTimer event, Emitter<TimerState> emit) {
+    emit(TimerStopped(event.duration));
+    _dispose();
+  }
+
+  void _onEnd(EndTimer event, Emitter<TimerState> emit) {
+    emit(TimerDone(event.duration));
   }
 
   void _dispose() {

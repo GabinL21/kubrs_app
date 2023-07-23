@@ -42,22 +42,22 @@ class TimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final timerState = context.select((TimerBloc bloc) => bloc.state);
     final guiBloc = BlocProvider.of<GuiBloc>(context);
-    if (timerState is TimerInitial) {
-      guiBloc.add(ShowGui());
-    } else {
+    if (timerState is TimerReseted || timerState is TimerRunning) {
       guiBloc.add(HideGui());
+    } else {
+      guiBloc.add(ShowGui());
     }
     return Padding(
       padding: const EdgeInsets.all(32),
       child: Column(
         children: [
-          if (timerState is TimerInitial)
+          if (timerState is! TimerReseted && timerState is! TimerRunning)
             Text(
               context.select((ScrambleBloc bloc) => bloc.state.scramble),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),
-          if (timerState is TimerInitial)
+          if (timerState is! TimerReseted && timerState is! TimerRunning)
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(

@@ -9,17 +9,21 @@ abstract class TimerState extends Equatable {
 }
 
 class TimerInitial extends TimerState {
-  const TimerInitial(super.duration);
+  const TimerInitial() : super(Duration.zero);
+}
+
+class TimerReseted extends TimerState {
+  const TimerReseted() : super(Duration.zero);
 }
 
 class TimerRunning extends TimerState {
   const TimerRunning(super.duration);
 }
 
-class TimerComplete extends TimerState {
-  const TimerComplete(super.duration);
+class TimerStopped extends TimerState {
+  const TimerStopped(super.duration);
 }
 
-class TimerReseted extends TimerState {
-  const TimerReseted() : super(Duration.zero);
+class TimerDone extends TimerState {
+  const TimerDone(super.duration);
 }
