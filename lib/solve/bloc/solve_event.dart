@@ -14,3 +14,5 @@ class AddSolve extends SolveEvent {
 }
 
 class GetSolves extends SolveEvent {}
+
+class ToggleDNFTag extends SolveEvent {}

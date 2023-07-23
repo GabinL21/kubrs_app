@@ -7,6 +7,7 @@ import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
+import 'package:kubrs_app/timer/view/toggle_dnf_tag_button.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
 class TimerPage extends StatelessWidget {
@@ -66,18 +67,24 @@ class TimerView extends StatelessWidget {
                 icon: const Icon(Icons.cached_rounded),
               ),
             ),
-          Expanded(child: _getTimerBody()),
+          Expanded(child: _getTimerBody(timerState)),
         ],
       ),
     );
   }
 
-  Widget _getTimerBody() {
+  Widget _getTimerBody(TimerState timerState) {
     return TimerGestureDetector(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Center(child: TimerText()),
+        children: <Widget>[
+          const Center(child: TimerText()),
+          if (timerState is TimerStopped || timerState is TimerDone)
+            Row(
+              children: const [
+                ToggleDNFTagButton(),
+              ],
+            )
         ],
       ),
     );
