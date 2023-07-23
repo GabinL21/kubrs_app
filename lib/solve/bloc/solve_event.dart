@@ -13,6 +13,10 @@ class AddSolve extends SolveEvent {
   final Solve solve;
 }
 
-class GetSolves extends SolveEvent {}
+class ToggleDNFTag extends SolveEvent {
+  const ToggleDNFTag({required this.solve});
 
-class ToggleDNFTag extends SolveEvent {}
+  final Solve solve;
+}
+
+class GetSolves extends SolveEvent {}

@@ -22,6 +22,16 @@ class Solve {
     );
   }
 
+  factory Solve.cloneAndToggleDNF({required Solve solve}) {
+    return Solve(
+      uid: solve.uid,
+      timestamp: solve.timestamp,
+      time: solve.time,
+      scramble: solve.scramble,
+      dnf: !solve.dnf,
+    );
+  }
+
   factory Solve.fromJson(Map<String, dynamic> map) {
     return Solve(
       uid: map['uid'] as String,
