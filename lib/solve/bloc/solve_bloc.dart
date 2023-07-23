@@ -17,16 +17,10 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
       await solveRepository.addSolve(solve);
     });
     on<ToggleDNFTag>((event, emit) async {
-      emit(SolveLoading());
       final solve = event.solve;
       final newSolve = Solve.cloneAndToggleDNF(solve: solve);
       emit(SolveDone(newSolve));
       await solveRepository.updateLastSolve(newSolve);
-    });
-    on<GetSolves>((_, emit) async {
-      emit(SolveLoading());
-      final solves = await solveRepository.getLastSolves();
-      emit(SolveLoaded(solves));
     });
   }
   final SolveRepository solveRepository;

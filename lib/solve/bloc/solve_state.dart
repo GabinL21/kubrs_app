@@ -17,14 +17,3 @@ class SolveDone extends SolveState {
   @override
   List<Object> get props => [solve];
 }
-
-class SolveLoading extends SolveState {}
-
-class SolveLoaded extends SolveState {
-  const SolveLoaded(this.solves);
-
-  final List<Solve> solves;
-
-  @override
-  List<Object> get props => [solves];
-}

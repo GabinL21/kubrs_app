@@ -22,7 +22,3 @@ class ToggleDNFTag extends SolveEvent {
 
   final Solve solve;
 }
-
-class GetSolves extends SolveEvent {
-  const GetSolves();
-}
