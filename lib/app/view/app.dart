@@ -9,6 +9,8 @@ import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/nav/bloc/navigation_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 import 'package:kubrs_app/user/repository/user_repository.dart';
 import 'package:kubrs_app/user/view/user_drawer.dart';
@@ -30,6 +32,9 @@ class App extends StatelessWidget {
           ),
           RepositoryProvider<UserRepository>(
             create: (_) => UserRepository(),
+          ),
+          RepositoryProvider<SolveRepository>(
+            create: (_) => SolveRepository(),
           ),
         ],
         child: MultiBlocProvider(
@@ -74,6 +79,12 @@ class App extends StatelessWidget {
         BlocProvider(
           // Keeps the same scramble even if you switch to another page
           create: (_) => ScrambleBloc(),
+        ),
+        BlocProvider(
+          // Keeps the same solve even if you switch to another page
+          create: (_) => SolveBloc(
+            solveRepository: RepositoryProvider.of<SolveRepository>(context),
+          ),
         ),
       ],
       child: BlocBuilder<GuiBloc, GuiState>(

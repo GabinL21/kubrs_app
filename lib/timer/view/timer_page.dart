@@ -19,17 +19,8 @@ class TimerPage extends StatelessWidget {
     if (userBloc.state is UserInitial) userBloc.add(UserRequested());
     return RepositoryProvider(
       create: (_) => SolveRepository(),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => TimerBloc(),
-          ),
-          BlocProvider(
-            create: (context) => SolveBloc(
-              solveRepository: RepositoryProvider.of<SolveRepository>(context),
-            ),
-          ),
-        ],
+      child: BlocProvider(
+        create: (_) => TimerBloc(),
         child: const TimerView(),
       ),
     );
@@ -42,6 +33,7 @@ class TimerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timerState = context.select((TimerBloc bloc) => bloc.state);
+    final solveState = context.select((SolveBloc bloc) => bloc.state);
     final guiBloc = BlocProvider.of<GuiBloc>(context);
     if (timerState is TimerReseted || timerState is TimerRunning) {
       guiBloc.add(HideGui());
@@ -71,19 +63,19 @@ class TimerView extends StatelessWidget {
                 icon: const Icon(Icons.cached_rounded),
               ),
             ),
-          Expanded(child: _getTimerBody(timerState)),
+          Expanded(child: _getTimerBody(solveState)),
         ],
       ),
     );
   }
 
-  Widget _getTimerBody(TimerState timerState) {
+  Widget _getTimerBody(SolveState solveState) {
     return TimerGestureDetector(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Center(child: TimerText()),
-          if (timerState is TimerStopped || timerState is TimerDone)
+          if (solveState is SolveDone)
             Row(
               children: const [
                 ToggleDNFTagButton(),
