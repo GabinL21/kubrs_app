@@ -7,6 +7,10 @@ abstract class SolveEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ResetSolve extends SolveEvent {
+  const ResetSolve();
+}
+
 class AddSolve extends SolveEvent {
   const AddSolve({required this.solve});
 
@@ -19,4 +23,6 @@ class ToggleDNFTag extends SolveEvent {
   final Solve solve;
 }
 
-class GetSolves extends SolveEvent {}
+class GetSolves extends SolveEvent {
+  const GetSolves();
+}

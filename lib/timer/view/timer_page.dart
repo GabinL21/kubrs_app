@@ -53,10 +53,14 @@ class TimerView extends StatelessWidget {
       child: Column(
         children: [
           if (timerState is! TimerReseted && timerState is! TimerRunning)
-            Text(
-              context.select((ScrambleBloc bloc) => bloc.state.scramble),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayMedium,
+            BlocBuilder<ScrambleBloc, ScrambleState>(
+              builder: (context, state) {
+                return Text(
+                  state.scramble,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayMedium,
+                );
+              },
             ),
           if (timerState is! TimerReseted && timerState is! TimerRunning)
             Align(

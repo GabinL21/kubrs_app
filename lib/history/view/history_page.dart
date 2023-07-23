@@ -30,7 +30,7 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SolveBloc>().add(GetSolves());
+    context.read<SolveBloc>().add(const GetSolves());
     return BlocBuilder<SolveBloc, SolveState>(
       builder: (_, state) {
         if (state is SolveInitial || state is SolveLoading) {
