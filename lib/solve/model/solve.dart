@@ -32,7 +32,7 @@ class Solve {
       time: solve.time,
       scramble: solve.scramble,
       plusTwo: !solve.plusTwo,
-      dnf: solve.dnf,
+      dnf: false,
     );
   }
 
@@ -42,7 +42,7 @@ class Solve {
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
-      plusTwo: solve.plusTwo,
+      plusTwo: false,
       dnf: !solve.dnf,
     );
   }
