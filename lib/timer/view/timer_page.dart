@@ -8,6 +8,7 @@ import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
 import 'package:kubrs_app/timer/view/toggle_dnf_tag_button.dart';
+import 'package:kubrs_app/timer/view/toggle_plus_two_tag_button.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
 class TimerPage extends StatelessWidget {
@@ -84,6 +85,7 @@ class TimerView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
+                  TogglePlusTwoTagButton(),
                   ToggleDNFTagButton(),
                 ],
               ),
