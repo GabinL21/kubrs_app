@@ -7,6 +7,7 @@ class Solve {
     required this.timestamp,
     required this.time,
     required this.scramble,
+    required this.plusTwo,
     required this.dnf,
   });
 
@@ -18,6 +19,7 @@ class Solve {
       timestamp: timestamp,
       time: time,
       scramble: scramble,
+      plusTwo: false,
       dnf: false,
     );
   }
@@ -28,6 +30,7 @@ class Solve {
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
+      plusTwo: solve.plusTwo,
       dnf: !solve.dnf,
     );
   }
@@ -38,7 +41,8 @@ class Solve {
       timestamp: (map['timestamp'] as Timestamp).toDate(),
       time: Duration(milliseconds: map['time'] as int),
       scramble: map['scramble'] as String,
-      dnf: map['dnf'] as bool,
+      plusTwo: (map['plusTwo'] ?? false) as bool,
+      dnf: (map['dnf'] ?? false) as bool,
     );
   }
 
@@ -46,6 +50,7 @@ class Solve {
   final DateTime timestamp;
   final Duration time;
   final String scramble;
+  final bool plusTwo;
   final bool dnf;
 
   Map<String, dynamic> toJson() {
@@ -54,6 +59,7 @@ class Solve {
       'timestamp': timestamp,
       'time': time.inMilliseconds,
       'scramble': scramble,
+      'plusTwo': plusTwo,
       'dnf': dnf,
     };
   }
