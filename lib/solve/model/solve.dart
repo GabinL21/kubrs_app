@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kubrs_app/timer/utils/duration_formatter.dart';
 
 class Solve {
   Solve({
@@ -79,5 +80,11 @@ class Solve {
   Duration getEffectiveTime() {
     if (plusTwo) return time + plusTwoDuration;
     return time;
+  }
+
+  String getTimeToDisplay() {
+    if (dnf) return 'DNF';
+    final effectiveTime = getEffectiveTime();
+    return DurationFormatter.format(effectiveTime);
   }
 }

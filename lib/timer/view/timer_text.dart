@@ -28,8 +28,7 @@ class TimerText extends StatelessWidget {
       return DurationFormatter.format(timerState.duration);
     }
     final solve = solveState.solve;
-    if (solve.dnf) return 'DNF';
-    return DurationFormatter.format(solve.getEffectiveTime());
+    return solve.getTimeToDisplay();
   }
 
   TextStyle _getTimerTextStyle(BuildContext context) {
