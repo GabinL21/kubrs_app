@@ -57,6 +57,7 @@ class Solve {
     );
   }
 
+  static const Duration plusTwoDuration = Duration(seconds: 2);
   final String uid;
   final DateTime timestamp;
   final Duration time;
@@ -73,5 +74,10 @@ class Solve {
       'plusTwo': plusTwo,
       'dnf': dnf,
     };
+  }
+
+  Duration getEffectiveTime() {
+    if (plusTwo) return time + plusTwoDuration;
+    return time;
   }
 }

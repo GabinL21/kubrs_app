@@ -76,7 +76,7 @@ class HistoryView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Center(
             child: Text(
-              DurationFormatter.format(solve.time),
+              DurationFormatter.format(solve.getEffectiveTime()),
               style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
