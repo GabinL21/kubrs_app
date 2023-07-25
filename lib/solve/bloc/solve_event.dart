@@ -17,6 +17,12 @@ class AddSolve extends SolveEvent {
   final Solve solve;
 }
 
+class TogglePlusTwoTag extends SolveEvent {
+  const TogglePlusTwoTag({required this.solve});
+
+  final Solve solve;
+}
+
 class ToggleDNFTag extends SolveEvent {
   const ToggleDNFTag({required this.solve});
 

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:kubrs_app/history/bloc/history_bloc.dart';
 import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
-import 'package:kubrs_app/timer/utils/duration_formatter.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -76,7 +75,7 @@ class HistoryView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Center(
             child: Text(
-              DurationFormatter.format(solve.time),
+              solve.getTimeToDisplay(),
               style: Theme.of(context).textTheme.displayMedium,
             ),
           ),

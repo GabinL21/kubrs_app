@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
 class Solve {
   Solve({
@@ -7,6 +8,7 @@ class Solve {
     required this.timestamp,
     required this.time,
     required this.scramble,
+    required this.plusTwo,
     required this.dnf,
   });
 
@@ -18,6 +20,18 @@ class Solve {
       timestamp: timestamp,
       time: time,
       scramble: scramble,
+      plusTwo: false,
+      dnf: false,
+    );
+  }
+
+  factory Solve.cloneAndTogglePlusTwo({required Solve solve}) {
+    return Solve(
+      uid: solve.uid,
+      timestamp: solve.timestamp,
+      time: solve.time,
+      scramble: solve.scramble,
+      plusTwo: !solve.plusTwo,
       dnf: false,
     );
   }
@@ -28,6 +42,7 @@ class Solve {
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
+      plusTwo: false,
       dnf: !solve.dnf,
     );
   }
@@ -38,14 +53,17 @@ class Solve {
       timestamp: (map['timestamp'] as Timestamp).toDate(),
       time: Duration(milliseconds: map['time'] as int),
       scramble: map['scramble'] as String,
-      dnf: map['dnf'] as bool,
+      plusTwo: (map['plusTwo'] ?? false) as bool,
+      dnf: (map['dnf'] ?? false) as bool,
     );
   }
 
+  static const Duration plusTwoDuration = Duration(seconds: 2);
   final String uid;
   final DateTime timestamp;
   final Duration time;
   final String scramble;
+  final bool plusTwo;
   final bool dnf;
 
   Map<String, dynamic> toJson() {
@@ -54,7 +72,19 @@ class Solve {
       'timestamp': timestamp,
       'time': time.inMilliseconds,
       'scramble': scramble,
+      'plusTwo': plusTwo,
       'dnf': dnf,
     };
+  }
+
+  Duration getEffectiveTime() {
+    if (plusTwo) return time + plusTwoDuration;
+    return time;
+  }
+
+  String getTimeToDisplay() {
+    if (dnf) return 'DNF';
+    final effectiveTime = getEffectiveTime();
+    return DurationFormatter.format(effectiveTime);
   }
 }

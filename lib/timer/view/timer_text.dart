@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
+import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
-import 'package:kubrs_app/timer/utils/duration_formatter.dart';
 
 class TimerText extends StatelessWidget {
   const TimerText({super.key});
@@ -28,8 +28,7 @@ class TimerText extends StatelessWidget {
       return DurationFormatter.format(timerState.duration);
     }
     final solve = solveState.solve;
-    if (solve.dnf) return 'DNF';
-    return DurationFormatter.format(solve.time);
+    return solve.getTimeToDisplay();
   }
 
   TextStyle _getTimerTextStyle(BuildContext context) {
