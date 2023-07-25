@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kubrs_app/timer/utils/duration_formatter.dart';
+import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
 void main() {
   group('DurationFormatter', () {
