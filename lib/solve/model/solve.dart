@@ -24,6 +24,17 @@ class Solve {
     );
   }
 
+  factory Solve.cloneAndTogglePlusTwo({required Solve solve}) {
+    return Solve(
+      uid: solve.uid,
+      timestamp: solve.timestamp,
+      time: solve.time,
+      scramble: solve.scramble,
+      plusTwo: !solve.plusTwo,
+      dnf: solve.dnf,
+    );
+  }
+
   factory Solve.cloneAndToggleDNF({required Solve solve}) {
     return Solve(
       uid: solve.uid,

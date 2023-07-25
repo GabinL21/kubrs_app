@@ -16,7 +16,7 @@ class TogglePlusTwoTagButton extends StatelessWidget {
       builder: (context, state) {
         if (state is! SolveDone) return Container();
         return TextButton(
-          onPressed: () => {},
+          onPressed: () => solveBloc.add(TogglePlusTwoTag(solve: state.solve)),
           child: Text(
             '+2',
             style: _getTextStyle(context, state.solve),
