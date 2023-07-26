@@ -84,7 +84,8 @@ class Solve {
 
   String getTimeToDisplay() {
     if (dnf) return 'DNF';
-    final effectiveTime = getEffectiveTime();
-    return DurationFormatter.format(effectiveTime);
+    final formattedTime = DurationFormatter.format(time);
+    if (plusTwo) return '$formattedTime+2';
+    return formattedTime;
   }
 }
