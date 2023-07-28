@@ -81,11 +81,16 @@ class HistoryView extends StatelessWidget {
             children: [
               Text(
                 solve.getTimeToDisplay(),
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
               ),
+              const SizedBox(height: 4),
               Text(
                 _dateFormat.format(solve.timestamp),
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
               ),
             ],
           )
