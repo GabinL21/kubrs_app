@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:kubrs_app/history/bloc/history_bloc.dart';
 import 'package:kubrs_app/history/repository/history_repository.dart';
+import 'package:kubrs_app/history/view/solve_tile.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class HistoryPage extends StatelessWidget {
@@ -24,8 +24,6 @@ class HistoryPage extends StatelessWidget {
 
 class HistoryView extends StatelessWidget {
   const HistoryView({super.key});
-
-  static final DateFormat _dateFormat = DateFormat('dd/MM');
 
   @override
   Widget build(BuildContext context) {
@@ -59,43 +57,9 @@ class HistoryView extends StatelessWidget {
       itemCount: nbSolves,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: _getSolveTile(solves[index], context),
-        );
+        return SolveTile(solve: solves[index]);
       },
       separatorBuilder: (context, index) => const SizedBox(height: 16),
-    );
-  }
-
-  Widget _getSolveTile(Solve solve, BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                solve.getTimeToDisplay(),
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                _dateFormat.format(solve.timestamp),
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-              ),
-            ],
-          )
-        ],
-      ),
     );
   }
 }
