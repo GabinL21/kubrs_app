@@ -15,7 +15,7 @@ class SolveTile extends StatelessWidget {
         color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(16),
       ),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           _getLeftColumn(context),
