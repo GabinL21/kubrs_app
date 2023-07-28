@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/history/bloc/history_bloc.dart';
 import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/history/view/solve_tile.dart';
-import 'package:kubrs_app/solve/model/solve.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -28,39 +27,73 @@ class HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<HistoryBloc>().add(const GetHistory());
+    return const Padding(
+      padding: EdgeInsets.all(24),
+      child: Center(
+        child: SolvesList(),
+      ),
+    );
+  }
+}
+
+class SolvesList extends StatefulWidget {
+  const SolvesList({super.key});
+
+  @override
+  State<SolvesList> createState() => _SolvesListState();
+}
+
+class _SolvesListState extends State<SolvesList> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<HistoryBloc, HistoryState>(
-      builder: (_, state) {
+      builder: (context, state) {
         if (state is HistoryInitial || state is HistoryLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
         final solves = state.solves;
-        return _getBody(solves, context);
+        final nbSolves = solves.length;
+        if (nbSolves == 0) return const Text('No solves');
+        return ListView.separated(
+          itemCount: nbSolves,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          controller: _scrollController,
+          itemBuilder: (context, index) {
+            return SolveTile(solve: solves[index]);
+          },
+          separatorBuilder: (context, index) => const SizedBox(height: 16),
+        );
       },
     );
   }
 
-  Widget _getBody(List<Solve> solves, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Center(
-        child: _getSolvesList(solves, context),
-      ),
-    );
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
   }
 
-  Widget _getSolvesList(List<Solve> solves, BuildContext context) {
-    final nbSolves = solves.length;
-    if (nbSolves == 0) return const Text('No solves');
-    return ListView.separated(
-      itemCount: nbSolves,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, index) {
-        return SolveTile(solve: solves[index]);
-      },
-      separatorBuilder: (context, index) => const SizedBox(height: 16),
-    );
+  void _onScroll() {
+    if (_isBottom) context.read<HistoryBloc>().add(const GetHistory());
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 }
