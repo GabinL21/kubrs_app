@@ -38,49 +38,59 @@ class HistoryView extends StatelessWidget {
           );
         }
         final solves = state.solves;
-        return _getSolvesTable(solves, context);
+        return _getBody(solves, context);
       },
     );
   }
 
-  Widget _getSolvesTable(List<Solve> solves, BuildContext context) {
-    final tableRows =
-        solves.map((solve) => _getSolveRow(solve, context)).toList();
+  Widget _getBody(List<Solve> solves, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Table(
-            children: tableRows,
-          ),
-        ],
+      padding: const EdgeInsets.all(24),
+      child: Center(
+        child: _getSolvesList(solves, context),
       ),
     );
   }
 
-  TableRow _getSolveRow(Solve solve, BuildContext context) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Center(
-            child: Text(
-              _dateFormat.format(solve.timestamp),
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Center(
-            child: Text(
-              solve.getTimeToDisplay(),
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-        ),
-      ],
+  Widget _getSolvesList(List<Solve> solves, BuildContext context) {
+    final nbSolves = solves.length;
+    if (nbSolves == 0) return const Text('No solves');
+    return ListView.separated(
+      itemCount: nbSolves,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: _getSolveTile(solves[index], context),
+        );
+      },
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
+    );
+  }
+
+  Widget _getSolveTile(Solve solve, BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                solve.getTimeToDisplay(),
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+              Text(
+                _dateFormat.format(solve.timestamp),
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
