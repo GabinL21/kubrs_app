@@ -30,9 +30,9 @@ class HistoryRepository {
         .startAfterDocument(lastDocument)
         .limit(pageSize)
         .get();
-    final nextSolves =
-        snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
-    final newLastDocument = snapshot.docs.last;
+    final docs = snapshot.docs;
+    final nextSolves = docs.map((doc) => Solve.fromJson(doc.data())).toList();
+    final newLastDocument = docs.isNotEmpty ? docs.last : lastDocument;
     return History(solves..addAll(nextSolves), newLastDocument);
   }
 }
