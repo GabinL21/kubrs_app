@@ -56,6 +56,7 @@ class HistoryView extends StatelessWidget {
     return ListView.separated(
       itemCount: nbSolves,
       shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return SolveTile(solve: solves[index]);
       },
