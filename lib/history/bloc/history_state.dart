@@ -16,6 +16,14 @@ class HistoryLoading extends HistoryState {
   HistoryLoading() : super(List.empty());
 }
 
+class HistoryLoadingNext extends HistoryState {
+  const HistoryLoadingNext(super.solves);
+}
+
 class HistoryLoaded extends HistoryState {
-  const HistoryLoaded(super.solves);
+  const HistoryLoaded(super.solves, this.lastDocument);
+  final DocumentSnapshot lastDocument;
+
+  @override
+  List<Object> get props => [solves, lastDocument];
 }
