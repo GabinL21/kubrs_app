@@ -39,12 +39,18 @@ class _SolvesListState extends State<SolvesList> {
             style: Theme.of(context).textTheme.displayMedium,
           );
         }
+        final nbItems = state is HistoryLoadingNext ? nbSolves + 1 : nbSolves;
         return ListView.separated(
-          itemCount: nbSolves,
+          itemCount: nbItems,
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           controller: _scrollController,
           itemBuilder: (context, index) {
+            if (state is HistoryLoadingNext && index == nbItems - 1) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return SolveTile(solve: solves[index]);
           },
           separatorBuilder: (context, index) => const SizedBox(height: 16),
