@@ -26,7 +26,7 @@ class _SolvesListState extends State<SolvesList> {
         if (state is HistoryInitial) {
           context.read<HistoryBloc>().add(const GetFirstHistory());
         }
-        if (state is HistoryLoading) {
+        if (state is HistoryInitial || state is HistoryLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
