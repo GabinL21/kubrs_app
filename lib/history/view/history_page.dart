@@ -26,7 +26,6 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HistoryBloc>().add(const GetFirstHistory());
     return const Padding(
       padding: EdgeInsets.all(24),
       child: Center(

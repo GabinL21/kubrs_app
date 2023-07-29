@@ -5,5 +5,5 @@ class History {
   History(this.solves, this.lastDocument);
 
   final List<Solve> solves;
-  final DocumentSnapshot lastDocument;
+  final DocumentSnapshot? lastDocument;
 }

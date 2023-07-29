@@ -14,9 +14,9 @@ class HistoryRepository {
         .orderBy('timestamp', descending: true)
         .limit(pageSize)
         .get();
-    final solves =
-        snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
-    final lastDocument = snapshot.docs.last;
+    final docs = snapshot.docs;
+    final solves = docs.map((doc) => Solve.fromJson(doc.data())).toList();
+    final lastDocument = docs.isNotEmpty ? docs.last : null;
     return History(solves, lastDocument);
   }
 

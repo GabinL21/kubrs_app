@@ -23,14 +23,22 @@ class _SolvesListState extends State<SolvesList> {
   Widget build(BuildContext context) {
     return BlocBuilder<HistoryBloc, HistoryState>(
       builder: (context, state) {
-        if (state is HistoryInitial || state is HistoryLoading) {
+        if (state is HistoryInitial) {
+          context.read<HistoryBloc>().add(const GetFirstHistory());
+        }
+        if (state is HistoryLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
         final solves = state.solves;
         final nbSolves = solves.length;
-        if (nbSolves == 0) return const Text('No solves');
+        if (nbSolves == 0) {
+          return Text(
+            'No solves',
+            style: Theme.of(context).textTheme.displayMedium,
+          );
+        }
         return ListView.separated(
           itemCount: nbSolves,
           shrinkWrap: true,
@@ -54,7 +62,11 @@ class _SolvesListState extends State<SolvesList> {
   }
 
   void _onScroll() {
-    if (_isBottom) context.read<HistoryBloc>().add(const GetNextHistory());
+    final historyBloc = context.read<HistoryBloc>();
+    if (historyBloc.state is! HistoryLoaded) return;
+    if (_isBottom) {
+      context.read<HistoryBloc>().add(const GetNextHistory());
+    }
   }
 
   bool get _isBottom {
