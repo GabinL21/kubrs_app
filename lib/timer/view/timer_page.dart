@@ -80,11 +80,11 @@ class TimerView extends StatelessWidget {
         children: <Widget>[
           const Center(child: TimerText()),
           if (solveState is SolveDone)
-            Padding(
-              padding: const EdgeInsets.all(16),
+            const Padding(
+              padding: EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   PlusTwoTagToggleButton(),
                   DNFTagToggleButton(),
                 ],
