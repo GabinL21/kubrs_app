@@ -305,10 +305,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: "2776c66b3e97c6cdd58d1bd3281548b074b64f1fd5c8f82391f7456e38849567"
+      sha256: e20ff62b158b96f392bfc8afe29dee1503c94fbea2cbe8186fd59b756b8ae982
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.5"
+    version: "5.1.0"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -449,10 +449,10 @@ packages:
     dependency: "direct dev"
     description:
       name: mocktail
-      sha256: "80a996cd9a69284b3dc521ce185ffe9150cde69767c2d3a0720147d93c0cef53"
+      sha256: "9503969a7c2c78c7292022c70c0289ed6241df7a9ba720010c0b215af29a5a58"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "1.0.0"
   nested:
     dependency: transitive
     description:
@@ -718,10 +718,10 @@ packages:
     dependency: "direct dev"
     description:
       name: very_good_analysis
-      sha256: "4815adc7ded57657038d2bb2a7f332c50e3c8152f7d3c6acf8f6b7c0cc81e5e2"
+      sha256: "5e4ea72d2a9188630f0dd8f120a541de730090ef8863243fedca8267a84508b8"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "5.0.0+1"
   vm_service:
     dependency: transitive
     description:
