@@ -10,12 +10,12 @@ environment:
 dependencies:
   bloc: ^8.1.2
   clock: ^1.1.1
-  cloud_firestore: ^4.8.3
+  cloud_firestore: ^4.8.4
   collection: ^1.17.1
   cuber: ^0.4.0
   equatable: ^2.0.5
   firebase_app_check: ^0.1.5
-  firebase_auth: ^4.7.1
+  firebase_auth: ^4.7.2
   firebase_core: ^2.14.0
   flutter:
     sdk: flutter
