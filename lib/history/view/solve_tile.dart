@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:kubrs_app/history/utils/date_time_formatter.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveTile extends StatelessWidget {
   const SolveTile({super.key, required this.solve});
 
-  static final DateFormat _dateFormat = DateFormat('dd/MM');
   final Solve solve;
 
   @override
@@ -46,10 +45,8 @@ class SolveTile extends StatelessWidget {
 
   Text _getTimestampText(BuildContext context) {
     return Text(
-      _dateFormat.format(solve.timestamp),
-      style: Theme.of(context).textTheme.displayMedium?.copyWith(
-            color: Theme.of(context).colorScheme.secondary,
-          ),
+      DateTimeFormatter.format(solve.timestamp),
+      style: Theme.of(context).textTheme.displaySmall,
     );
   }
 }
