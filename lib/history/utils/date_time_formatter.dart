@@ -1,6 +1,8 @@
+import 'package:clock/clock.dart';
+
 class DateTimeFormatter {
   static String format(DateTime dateTime) {
-    final now = DateTime.now();
+    final now = clock.now();
     final duration = now.difference(dateTime);
     final years = duration.inDays ~/ 365;
     if (years != 0) return '$years year${_unitSuffix(years)} ago';
