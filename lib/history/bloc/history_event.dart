@@ -7,6 +7,10 @@ abstract class HistoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetHistory extends HistoryEvent {
-  const GetHistory();
+class GetFirstHistory extends HistoryEvent {
+  const GetFirstHistory();
+}
+
+class GetNextHistory extends HistoryEvent {
+  const GetNextHistory();
 }

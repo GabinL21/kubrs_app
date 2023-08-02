@@ -27,6 +27,12 @@ class AppTheme {
         fontWeight: FontWeight.w500,
         fontFeatures: const [FontFeature.tabularFigures()],
       ),
+      displaySmall: TextStyle(
+        color: _colorScheme.secondary,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
     ),
   );
 
