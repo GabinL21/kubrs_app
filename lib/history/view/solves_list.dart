@@ -40,10 +40,13 @@ class _SolvesListState extends State<SolvesList> {
           );
         }
         final nbItems = state is HistoryLoadingNext ? nbSolves + 1 : nbSolves;
+        final scrollPhysics = state is HistoryLoadingNext
+            ? const ClampingScrollPhysics()
+            : const BouncingScrollPhysics();
         return ListView.separated(
           itemCount: nbItems,
           shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
+          physics: scrollPhysics,
           controller: _scrollController,
           itemBuilder: (context, index) {
             if (state is HistoryLoadingNext && index == nbItems - 1) {
