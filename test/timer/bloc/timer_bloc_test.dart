@@ -6,6 +6,12 @@ import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 void main() {
   group('TimerBloc', () {
     blocTest<TimerBloc, TimerState>(
+      'emits initial state when timer is created',
+      build: TimerBloc.new,
+      verify: (bloc) => bloc.state == const TimerInitial(),
+    );
+
+    blocTest<TimerBloc, TimerState>(
       'emits reset state when timer is reseted',
       build: TimerBloc.new,
       act: (bloc) => bloc.add(const ResetTimer()),
