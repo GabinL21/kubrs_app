@@ -73,9 +73,7 @@ class _SolvesListState extends State<SolvesList> {
   void _onScroll() {
     final historyBloc = context.read<HistoryBloc>();
     if (historyBloc.state is! HistoryLoaded) return;
-    if (_isBottom) {
-      context.read<HistoryBloc>().add(const GetNextHistory());
-    }
+    if (_isBottom) historyBloc.add(const GetNextHistory());
   }
 
   bool get _isBottom {

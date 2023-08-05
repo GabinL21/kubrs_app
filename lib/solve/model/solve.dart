@@ -8,8 +8,8 @@ class Solve {
     required this.timestamp,
     required this.time,
     required this.scramble,
-    required this.plusTwo,
-    required this.dnf,
+    this.plusTwo = false,
+    this.dnf = false,
   });
 
   factory Solve.create({required Duration time, required String scramble}) {
@@ -20,8 +20,6 @@ class Solve {
       timestamp: timestamp,
       time: time,
       scramble: scramble,
-      plusTwo: false,
-      dnf: false,
     );
   }
 
@@ -32,7 +30,6 @@ class Solve {
       time: solve.time,
       scramble: solve.scramble,
       plusTwo: !solve.plusTwo,
-      dnf: false,
     );
   }
 
@@ -42,7 +39,6 @@ class Solve {
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
-      plusTwo: false,
       dnf: !solve.dnf,
     );
   }
