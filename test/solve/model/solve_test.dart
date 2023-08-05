@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
-final _currentDateTime = DateTime(2000);
-
 void main() {
   final solve = Solve(
     uid: '',
@@ -10,6 +8,7 @@ void main() {
     time: const Duration(seconds: 10),
     scramble: '',
   );
+
   group('Solve', () {
     test('returns correct effective time without +2', () {
       expect(solve.getEffectiveTime(), const Duration(seconds: 10));
