@@ -13,9 +13,12 @@ class TimerText extends StatelessWidget {
       builder: (context, timerState) {
         return BlocBuilder<SolveBloc, SolveState>(
           builder: (context, solveState) {
-            return Text(
-              _getTimerTextString(timerState, solveState),
-              style: _getTimerTextStyle(context),
+            return FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                _getTimerTextString(timerState, solveState),
+                style: _getTimerTextStyle(context),
+              ),
             );
           },
         );
