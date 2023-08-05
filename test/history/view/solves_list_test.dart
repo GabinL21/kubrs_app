@@ -35,6 +35,16 @@ void main() {
     ),
   );
 
+  final mockExtraSolves = List.generate(
+    10,
+    (_) => Solve(
+      uid: '',
+      timestamp: DateTime(2000),
+      time: const Duration(seconds: 10),
+      scramble: '',
+    ),
+  );
+
   late HistoryBloc historyBloc;
 
   setUp(() {
@@ -71,6 +81,33 @@ void main() {
       when(() => historyBloc.state).thenReturn(HistoryLoaded(mockSolves, null));
       await tester.pumpSolvesList(historyBloc);
       expect(find.byType(SolveTile), findsNWidgets(mockSolves.length));
+    });
+
+    testWidgets('fetches first solves when history state is initial',
+        (tester) async {
+      when(() => historyBloc.state).thenReturn(HistoryInitial());
+      await tester.pumpSolvesList(historyBloc);
+      verify(() => historyBloc.add(const GetFirstHistory())).called(1);
+    });
+
+    testWidgets('fetches more solves when scrolled to the bottom',
+        (tester) async {
+      when(() => historyBloc.state)
+          .thenReturn(HistoryLoaded(mockExtraSolves, null));
+      await tester.pumpSolvesList(historyBloc);
+      await tester.drag(find.byType(SolvesList), const Offset(0, -2000));
+      verify(() => historyBloc.add(const GetNextHistory())).called(1);
+    });
+
+    testWidgets(
+        'fetches no solves '
+        'when scrolled to the bottom and history is fully loaded',
+        (tester) async {
+      when(() => historyBloc.state)
+          .thenReturn(HistoryFullyLoaded(mockExtraSolves, null));
+      await tester.pumpSolvesList(historyBloc);
+      await tester.drag(find.byType(SolvesList), const Offset(0, -2000));
+      verifyNever(() => historyBloc.add(const GetNextHistory()));
     });
   });
 }
