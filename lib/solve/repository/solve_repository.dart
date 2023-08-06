@@ -19,13 +19,26 @@ class SolveRepository {
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
-  Future<void> updateLastSolve(Solve solve) async {
+  Future<void> updateLastSolve(Solve updatedSolve) async {
+    final lastSolveDocId =
+        await _getLastSolveDocumentId(updatedSolve.timestamp);
+    if (lastSolveDocId == null) return;
+    await _solvesCollection.doc(lastSolveDocId).set(updatedSolve.toJson());
+  }
+
+  Future<void> deleteLastSolve(Solve lastSolve) async {
+    final lastSolveDocId = await _getLastSolveDocumentId(lastSolve.timestamp);
+    if (lastSolveDocId == null) return;
+    await _solvesCollection.doc(lastSolveDocId).delete();
+  }
+
+  Future<String?> _getLastSolveDocumentId(DateTime lastSolveTimestamp) async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
-        .where('timestamp', isEqualTo: solve.timestamp)
+        .where('timestamp', isEqualTo: lastSolveTimestamp)
         .limit(1)
         .get();
-    final lastSolveDocId = snapshot.docs.first.id;
-    await _solvesCollection.doc(lastSolveDocId).set(solve.toJson());
+    if (snapshot.docs.isEmpty) return null;
+    return snapshot.docs.first.id;
   }
 }

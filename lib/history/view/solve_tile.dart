@@ -46,7 +46,9 @@ class SolveTile extends StatelessWidget {
   Text _getTimestampText(BuildContext context) {
     return Text(
       DateTimeFormatter.format(solve.timestamp),
-      style: Theme.of(context).textTheme.displaySmall,
+      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
     );
   }
 }

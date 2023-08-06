@@ -28,3 +28,9 @@ class ToggleDNFTag extends SolveEvent {
 
   final Solve solve;
 }
+
+class DeleteSolve extends SolveEvent {
+  const DeleteSolve({required this.solve});
+
+  final Solve solve;
+}

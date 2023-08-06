@@ -1,22 +1,22 @@
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
-import 'package:kubrs_app/timer/view/tags/tag_toggle_button.dart';
+import 'package:kubrs_app/timer/view/button/tag/tag_toggle_button.dart';
 
-class DNFTagToggleButton extends TagToggleButton {
-  const DNFTagToggleButton({super.key});
+class PlusTwoTagToggleButton extends TagToggleButton {
+  const PlusTwoTagToggleButton({super.key});
 
   @override
   String getButtonText() {
-    return 'DNF';
+    return '+2';
   }
 
   @override
   SolveEvent getSolveEvent(Solve solve) {
-    return ToggleDNFTag(solve: solve);
+    return TogglePlusTwoTag(solve: solve);
   }
 
   @override
   bool isButtonActivated(Solve solve) {
-    return solve.dnf;
+    return solve.plusTwo;
   }
 }

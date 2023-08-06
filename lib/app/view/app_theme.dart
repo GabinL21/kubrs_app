@@ -28,7 +28,7 @@ class AppTheme {
         fontFeatures: const [FontFeature.tabularFigures()],
       ),
       displaySmall: TextStyle(
-        color: _colorScheme.secondary,
+        color: _colorScheme.onBackground,
         fontSize: 16,
         fontWeight: FontWeight.w500,
         fontFeatures: const [FontFeature.tabularFigures()],
@@ -61,6 +61,11 @@ class AppTheme {
     color: _colorScheme.onPrimary,
   );
 
+  static final DialogTheme _dialogTheme = DialogTheme(
+    backgroundColor: _colorScheme.primary,
+    contentTextStyle: _textTheme.displaySmall,
+  );
+
   static ThemeData get themeData {
     return ThemeData(
       colorScheme: _colorScheme,
@@ -70,6 +75,7 @@ class AppTheme {
       bottomNavigationBarTheme: _bottomNavigationBarTheme,
       drawerTheme: _drawerTheme,
       progressIndicatorTheme: _progressIndicatorTheme,
+      dialogTheme: _dialogTheme,
     );
   }
 }
