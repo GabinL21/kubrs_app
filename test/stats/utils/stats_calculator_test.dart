@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/stats/model/mean_stat.dart';
 import 'package:kubrs_app/stats/utils/stats_calculator.dart';
 
 void main() {
@@ -13,7 +14,8 @@ void main() {
     ];
 
     test('compute mean with +2 correctly', () {
-      expect(StatsCalculator.computeMean(solvesWithPlusTwo), equals(10000));
+      final meanStat = StatsCalculator.computeMean(solvesWithPlusTwo);
+      expect(meanStat, MeanStat(5, 10000));
     });
   });
 }
