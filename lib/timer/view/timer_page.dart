@@ -5,11 +5,13 @@ import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
-import 'package:kubrs_app/timer/view/tags/dnf_tag_toggle_button.dart';
-import 'package:kubrs_app/timer/view/tags/plus_two_tag_toggle_button.dart';
+import 'package:kubrs_app/timer/view/button/tag/dnf_tag_toggle_button.dart';
+import 'package:kubrs_app/timer/view/button/tag/plus_two_tag_toggle_button.dart';
 import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
+
+import 'button/delete_button.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
@@ -85,6 +87,7 @@ class TimerView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  DeleteButton(),
                   PlusTwoTagToggleButton(),
                   DNFTagToggleButton(),
                 ],
