@@ -12,8 +12,39 @@ class DeleteButton extends StatelessWidget {
       icon: const Icon(Icons.close_rounded),
       color: Theme.of(context).colorScheme.secondary,
       onPressed: () {
+        _showConfirmationDialog(context);
+      },
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    final cancelButton = TextButton(
+      child: const Text('Cancel'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    final continueButton = TextButton(
+      child: const Text('Delete'),
+      onPressed: () {
         _deleteLastSolve(context);
         _reinitializeTimer(context);
+        Navigator.of(context).pop();
+      },
+    );
+    final alert = AlertDialog(
+      content: const Text(
+        'Delete your last solve?',
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
