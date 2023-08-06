@@ -12,6 +12,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<TickTimer>(_onTick);
     on<StopTimer>(_onStop);
     on<EndTimer>(_onEnd);
+    on<ReinitializeTimer>(_onReinitialize);
   }
 
   Ticker? _ticker;
@@ -39,6 +40,10 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   void _onEnd(EndTimer event, Emitter<TimerState> emit) {
     emit(TimerDone(event.duration));
+  }
+
+  void _onReinitialize(ReinitializeTimer event, Emitter<TimerState> emit) {
+    emit(const TimerInitial());
   }
 
   void _dispose() {

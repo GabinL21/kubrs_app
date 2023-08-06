@@ -28,6 +28,10 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
       emit(SolveDone(newSolve));
       await solveRepository.updateLastSolve(newSolve);
     });
+    on<DeleteSolve>((event, emit) async {
+      await solveRepository.deleteLastSolve(event.solve);
+      emit(SolveInitial());
+    });
   }
   final SolveRepository solveRepository;
 }

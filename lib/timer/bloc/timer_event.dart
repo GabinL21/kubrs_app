@@ -26,3 +26,7 @@ class EndTimer extends TimerEvent {
   const EndTimer({required this.duration});
   final Duration duration;
 }
+
+class ReinitializeTimer extends TimerEvent {
+  const ReinitializeTimer();
+}

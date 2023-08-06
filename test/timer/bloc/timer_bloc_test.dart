@@ -55,5 +55,13 @@ void main() {
       act: (bloc) => bloc.add(const EndTimer(duration: Duration(seconds: 10))),
       expect: () => const <TimerState>[TimerDone(Duration(seconds: 10))],
     );
+
+    blocTest<TimerBloc, TimerState>(
+      'emits initial state when timer is reinitialized',
+      build: TimerBloc.new,
+      seed: () => const TimerDone(Duration(seconds: 10)),
+      act: (bloc) => bloc.add(const ReinitializeTimer()),
+      expect: () => const <TimerState>[TimerInitial()],
+    );
   });
 }
