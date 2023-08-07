@@ -19,6 +19,14 @@ class SolveRepository {
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
+  Future<List<Solve>> getSolvesSince(DateTime dateTime) async {
+    final snapshot = await _solvesCollection
+        .where('uid', isEqualTo: _uid)
+        .orderBy('timestamp', descending: true)
+        .endAt([dateTime]).get();
+    return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
+  }
+
   Future<void> updateLastSolve(Solve updatedSolve) async {
     final lastSolveDocId =
         await _getLastSolveDocumentId(updatedSolve.timestamp);

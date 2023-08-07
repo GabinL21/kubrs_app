@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/session/view/session_stats.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
@@ -69,6 +70,7 @@ class TimerView extends StatelessWidget {
               ),
             ),
           Expanded(child: _getTimerBody(solveState)),
+          _getFooter(),
         ],
       ),
     );
@@ -97,6 +99,12 @@ class TimerView extends StatelessWidget {
           DNFTagToggleButton(),
         ],
       ),
+    );
+  }
+
+  Widget _getFooter() {
+    return const Row(
+      children: [SessionStats()],
     );
   }
 }
