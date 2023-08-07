@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/session/bloc/session_bloc.dart';
+import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/stats/utils/stats_calculator.dart';
 
 class SessionStats extends StatelessWidget {
   const SessionStats({super.key});
@@ -9,13 +11,41 @@ class SessionStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SessionBloc, SessionState>(
       builder: (context, timerState) {
-        return Text(
-          '# Solves: ${timerState.solves.length}',
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+        final solves = timerState.solves;
+        final textStyle = _getTextStyle(context);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _getNumberText(solves, textStyle),
+            _getAverageText(solves, textStyle),
+          ],
         );
       },
+    );
+  }
+
+  TextStyle? _getTextStyle(BuildContext context) {
+    return Theme.of(context).textTheme.displaySmall?.copyWith(
+          color: Theme.of(context).colorScheme.secondary,
+        );
+  }
+
+  Widget _getNumberText(List<Solve> solves, TextStyle? textStyle) {
+    final number = solves.length;
+    return Text(
+      '# Solves: $number',
+      style: textStyle,
+    );
+  }
+
+  Widget _getAverageText(List<Solve> solves, TextStyle? textStyle) {
+    final lastFiveSolves = solves.take(5).toList();
+    final scoreText = lastFiveSolves.length >= 5
+        ? StatsCalculator.computeAverage(lastFiveSolves).getDisplayedScore()
+        : '-';
+    return Text(
+      'Last Ao5: $scoreText',
+      style: textStyle,
     );
   }
 }
