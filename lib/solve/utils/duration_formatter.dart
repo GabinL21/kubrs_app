@@ -4,7 +4,7 @@ class DurationFormatter {
     final secondsStr =
         duration.inSeconds.remainder(60).toString().padLeft(2, '0');
     final millisecondsStr = (duration.inMilliseconds.remainder(1000) / 10)
-        .floor()
+        .round()
         .toString()
         .padLeft(2, '0');
     var textStr = '$secondsStr.$millisecondsStr';
