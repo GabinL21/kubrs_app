@@ -14,14 +14,32 @@ void main() {
       _buildSolve(11000),
     ];
 
-    test('compute mean with +2 correctly', () {
+    final solvesWithLastDigits = [
+      _buildSolve(10001),
+      _buildSolve(10003),
+      _buildSolve(10006),
+      _buildSolve(10008),
+      _buildSolve(10009),
+    ];
+
+    test('computes mean with +2 correctly', () {
       final meanStat = StatsCalculator.computeMean(solvesWithPlusTwo);
       expect(meanStat, MeanStat(5, 10000));
     });
 
-    test('compute average with +2 correctly', () {
+    test('computes average with +2 correctly', () {
       final averageStat = StatsCalculator.computeAverage(solvesWithPlusTwo);
       expect(averageStat, AverageStat(5, 10667));
+    });
+
+    test('truncates last digits when computing mean', () {
+      final meanStat = StatsCalculator.computeMean(solvesWithLastDigits);
+      expect(meanStat, MeanStat(5, 10000));
+    });
+
+    test('truncates last digits when computing average', () {
+      final averageStat = StatsCalculator.computeAverage(solvesWithLastDigits);
+      expect(averageStat, AverageStat(5, 10000));
     });
   });
 }
