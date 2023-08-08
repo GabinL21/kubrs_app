@@ -13,7 +13,10 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     solveBloc.stream.listen((_) => add(const RefreshSessionSolves()));
     on<RefreshSessionSolves>((event, emit) async {
       emit(SessionLoading(state.solves));
-      final sessionSolves = await solveRepository.getSolvesSince(sessionStart);
+      final sessionSolves = await solveRepository.getSolvesSince(
+        sessionStart,
+        offline: true, // Limit Firestore server calls
+      );
       emit(SessionLoaded(sessionSolves));
     });
   }

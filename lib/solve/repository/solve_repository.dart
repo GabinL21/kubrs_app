@@ -19,11 +19,15 @@ class SolveRepository {
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
-  Future<List<Solve>> getSolvesSince(DateTime dateTime) async {
+  Future<List<Solve>> getSolvesSince(
+    DateTime dateTime, {
+    bool offline = false,
+  }) async {
+    final source = offline ? Source.cache : Source.serverAndCache;
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
         .orderBy('timestamp', descending: true)
-        .endAt([dateTime]).get();
+        .endAt([dateTime]).get(GetOptions(source: source));
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
