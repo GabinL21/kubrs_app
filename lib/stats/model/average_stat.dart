@@ -3,10 +3,10 @@ import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 import 'package:kubrs_app/stats/model/stat.dart';
 
 class AverageStat extends Stat with EquatableMixin {
-  AverageStat(this._nbSolves, this._score);
+  AverageStat(this._nbSolves, this._value);
 
   final int _nbSolves;
-  final int _score;
+  final int _value;
 
   @override
   String getDisplayedName() {
@@ -15,9 +15,9 @@ class AverageStat extends Stat with EquatableMixin {
 
   @override
   String getDisplayedScore() {
-    return DurationFormatter.format(Duration(milliseconds: _score));
+    return DurationFormatter.format(Duration(milliseconds: _value));
   }
 
   @override
-  List<Object?> get props => [_nbSolves, _score];
+  List<Object?> get props => [_nbSolves, _value];
 }

@@ -1,14 +1,20 @@
 import 'package:collection/collection.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/stats/model/average_stat.dart';
+import 'package:kubrs_app/stats/model/max_stat.dart';
 import 'package:kubrs_app/stats/model/mean_stat.dart';
 import 'package:kubrs_app/stats/model/stat.dart';
 
 class StatsCalculator {
+  static Stat computeBest(List<Solve> solves) {
+    final times = _getTimes(solves);
+    return BestStat(times.min);
+  }
+
   static Stat computeMean(List<Solve> solves) {
     final times = _getTimes(solves);
-    final score = times.average.round();
-    return MeanStat(solves.length, score);
+    final mean = times.average.round();
+    return MeanStat(solves.length, mean);
   }
 
   static Stat computeAverage(List<Solve> solves) {

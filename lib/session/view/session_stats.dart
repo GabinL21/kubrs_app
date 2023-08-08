@@ -18,6 +18,7 @@ class SessionStats extends StatelessWidget {
           children: [
             _getNumberText(solves, textStyle),
             _getAverageText(solves, textStyle),
+            _getBestText(solves, textStyle),
           ],
         );
       },
@@ -40,11 +41,21 @@ class SessionStats extends StatelessWidget {
 
   Widget _getAverageText(List<Solve> solves, TextStyle? textStyle) {
     final lastFiveSolves = solves.take(5).toList();
-    final scoreText = lastFiveSolves.length >= 5
+    final valueText = lastFiveSolves.length >= 5
         ? StatsCalculator.computeAverage(lastFiveSolves).getDisplayedScore()
         : '-';
     return Text(
-      'Last Ao5: $scoreText',
+      'Last Ao5: $valueText',
+      style: textStyle,
+    );
+  }
+
+  Widget _getBestText(List<Solve> solves, TextStyle? textStyle) {
+    final best = solves.isEmpty
+        ? '-'
+        : StatsCalculator.computeBest(solves).getDisplayedScore();
+    return Text(
+      'Best: $best',
       style: textStyle,
     );
   }
