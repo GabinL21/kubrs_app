@@ -15,10 +15,9 @@ class StatsCalculator {
     final times =
         solves.map((s) => s.getEffectiveTime().inMilliseconds).toList();
     final minTimeIndex = times.indexOf(times.min);
+    times.removeAt(minTimeIndex);
     final maxTimeIndex = times.indexOf(times.max);
-    times
-      ..removeAt(minTimeIndex)
-      ..removeAt(maxTimeIndex);
+    times.removeAt(maxTimeIndex);
     return AverageStat(solves.length, times.average.round());
   }
 }
