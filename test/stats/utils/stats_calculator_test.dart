@@ -24,22 +24,22 @@ void main() {
 
     test('computes mean with +2 correctly', () {
       final meanStat = StatsCalculator.computeMean(solvesWithPlusTwo);
-      expect(meanStat, MeanStat(5, 10000));
+      expect(meanStat, MeanStat(10000, 5));
     });
 
     test('computes average with +2 correctly', () {
       final averageStat = StatsCalculator.computeAverage(solvesWithPlusTwo);
-      expect(averageStat, AverageStat(5, 10667));
+      expect(averageStat, AverageStat(10667, 5));
     });
 
     test('truncates last digits when computing mean', () {
       final meanStat = StatsCalculator.computeMean(solvesWithLastDigits);
-      expect(meanStat, MeanStat(5, 10000));
+      expect(meanStat, MeanStat(10000, 5));
     });
 
     test('truncates last digits when computing average', () {
       final averageStat = StatsCalculator.computeAverage(solvesWithLastDigits);
-      expect(averageStat, AverageStat(5, 10000));
+      expect(averageStat, AverageStat(10000, 5));
     });
   });
 }

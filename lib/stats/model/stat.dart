@@ -1,11 +1,11 @@
 abstract class Stat {
   String getDisplayedName();
-  String getDisplayedScore();
+  String getDisplayedValue();
 
   @override
   String toString() {
     final name = getDisplayedName();
-    final score = getDisplayedScore();
+    final score = getDisplayedValue();
     return '$name: $score';
   }
 }
