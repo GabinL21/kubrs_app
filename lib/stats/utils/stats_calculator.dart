@@ -1,15 +1,22 @@
 import 'package:collection/collection.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/stats/model/average_stat.dart';
-import 'package:kubrs_app/stats/model/max_stat.dart';
+import 'package:kubrs_app/stats/model/best_stat.dart';
 import 'package:kubrs_app/stats/model/mean_stat.dart';
 import 'package:kubrs_app/stats/model/stat.dart';
+import 'package:kubrs_app/stats/model/worst_stat.dart';
 
 class StatsCalculator {
   static Stat computeBest(List<Solve> solves) {
     if (solves.isEmpty) return BestStat.empty();
     final times = _getTimes(solves);
     return BestStat(times.min);
+  }
+
+  static Stat computeWorst(List<Solve> solves) {
+    if (solves.isEmpty) return WorstStat.empty();
+    final times = _getTimes(solves);
+    return WorstStat(times.max);
   }
 
   static Stat computeMean(List<Solve> solves, [int? nbSolves]) {

@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/stats/model/average_stat.dart';
-import 'package:kubrs_app/stats/model/max_stat.dart';
+import 'package:kubrs_app/stats/model/best_stat.dart';
 import 'package:kubrs_app/stats/model/mean_stat.dart';
+import 'package:kubrs_app/stats/model/worst_stat.dart';
 import 'package:kubrs_app/stats/utils/stats_calculator.dart';
 
 void main() {
@@ -38,6 +39,18 @@ void main() {
       test('computes best with +2 correctly', () {
         final bestStat = StatsCalculator.computeBest(solvesWithPlusTwo);
         expect(bestStat, BestStat(7000));
+      });
+    });
+
+    group('WorstStat', () {
+      test('returns empty worst when solves are empty', () {
+        final worstStat = StatsCalculator.computeWorst(List.empty());
+        expect(worstStat, WorstStat.empty());
+      });
+
+      test('computes worst with +2 correctly', () {
+        final worstStat = StatsCalculator.computeWorst(solvesWithPlusTwo);
+        expect(worstStat, WorstStat(11000));
       });
     });
 
