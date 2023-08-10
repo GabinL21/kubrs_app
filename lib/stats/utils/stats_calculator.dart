@@ -24,11 +24,12 @@ class StatsCalculator {
 
   static Stat computeMean(List<Solve> solves, [int? nbSolves]) {
     nbSolves ??= solves.length;
-    if (nbSolves <= 0 || nbSolves > solves.length) {
+    if (solves.every((s) => s.dnf)) return MeanStat.dnf(nbSolves);
+    final nonDnfSolves = solves.where((s) => !s.dnf);
+    if (nbSolves <= 0 || nbSolves > nonDnfSolves.length) {
       return MeanStat.empty(nbSolves);
     }
-    if (solves.every((s) => s.dnf)) return MeanStat.dnf(nbSolves);
-    final times = _getTimes(solves.take(nbSolves));
+    final times = _getTimes(nonDnfSolves.take(nbSolves));
     final mean = times.average.round();
     return MeanStat(mean, nbSolves);
   }

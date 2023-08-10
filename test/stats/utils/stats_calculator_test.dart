@@ -93,6 +93,11 @@ void main() {
         expect(meanStat, MeanStat.dnf(dnfSolves.length));
       });
 
+      test('filters DNF solves when not every solve is DNF', () {
+        final meanStat = StatsCalculator.computeMean(solvesWithDnf, 5);
+        expect(meanStat, MeanStat(10000, 5));
+      });
+
       test('computes mean with +2 correctly', () {
         final meanStat = StatsCalculator.computeMean(solvesWithPlusTwo);
         expect(meanStat, MeanStat(10000, 5));
@@ -118,6 +123,11 @@ void main() {
       test('returns DNF average when every solve is DNF', () {
         final averageStat = StatsCalculator.computeAverage(dnfSolves);
         expect(averageStat, AverageStat.dnf(dnfSolves.length));
+      });
+
+      test('returns DNF average when more than 1 solve is DNF', () {
+        final averageStat = StatsCalculator.computeAverage(solvesWithDnf, 7);
+        expect(averageStat, AverageStat.dnf(solvesWithDnf.length));
       });
 
       test('computes average with +2 correctly', () {
