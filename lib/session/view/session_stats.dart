@@ -17,9 +17,10 @@ class SessionStats extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _getNumberText(solves, textStyle),
-            _getLastAverageText(solves, textStyle),
             _getBestText(solves, textStyle),
             _getWorstText(solves, textStyle),
+            _getMeanText(solves, textStyle),
+            _getLastAverageText(solves, textStyle),
           ],
         );
       },
@@ -40,16 +41,6 @@ class SessionStats extends StatelessWidget {
     );
   }
 
-  Widget _getLastAverageText(List<Solve> solves, TextStyle? textStyle) {
-    final averageStat = StatsCalculator.computeAverage(solves, 5);
-    final statName = averageStat.getDisplayedName();
-    final statValue = averageStat.getDisplayedValue();
-    return Text(
-      'Last $statName: $statValue',
-      style: textStyle,
-    );
-  }
-
   Widget _getBestText(List<Solve> solves, TextStyle? textStyle) {
     final bestStat = StatsCalculator.computeBest(solves);
     final statName = bestStat.getDisplayedName();
@@ -66,6 +57,25 @@ class SessionStats extends StatelessWidget {
     final statValue = worstStat.getDisplayedValue();
     return Text(
       '$statName: $statValue',
+      style: textStyle,
+    );
+  }
+
+  Widget _getMeanText(List<Solve> solves, TextStyle? textStyle) {
+    final meanStat = StatsCalculator.computeMean(solves);
+    final statValue = meanStat.getDisplayedValue();
+    return Text(
+      'Mean: $statValue',
+      style: textStyle,
+    );
+  }
+
+  Widget _getLastAverageText(List<Solve> solves, TextStyle? textStyle) {
+    final averageStat = StatsCalculator.computeAverage(solves, 5);
+    final statName = averageStat.getDisplayedName();
+    final statValue = averageStat.getDisplayedValue();
+    return Text(
+      'Last $statName: $statValue',
       style: textStyle,
     );
   }
