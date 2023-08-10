@@ -120,24 +120,27 @@ void main() {
         expect(averageStat, AverageStat.empty(5));
       });
 
-      test('returns DNF average when every solve is DNF', () {
-        final averageStat = StatsCalculator.computeAverage(dnfSolves);
-        expect(averageStat, AverageStat.dnf(dnfSolves.length));
-      });
-
       test('returns DNF average when more than 1 solve is DNF', () {
         final averageStat = StatsCalculator.computeAverage(solvesWithDnf, 7);
         expect(averageStat, AverageStat.dnf(solvesWithDnf.length));
       });
 
+      test(
+          'returns correct average when more than 1 solve is DNF '
+          'but not in the average of range', () {
+        final averageStat = StatsCalculator.computeAverage(solvesWithDnf, 5);
+        expect(averageStat, AverageStat(10667, 5));
+      });
+
       test('computes average with +2 correctly', () {
-        final averageStat = StatsCalculator.computeAverage(solvesWithPlusTwo);
+        final averageStat =
+            StatsCalculator.computeAverage(solvesWithPlusTwo, 5);
         expect(averageStat, AverageStat(10667, 5));
       });
 
       test('truncates last digits when computing average', () {
         final averageStat =
-            StatsCalculator.computeAverage(solvesWithLastDigits);
+            StatsCalculator.computeAverage(solvesWithLastDigits, 5);
         expect(averageStat, AverageStat(10000, 5));
       });
 

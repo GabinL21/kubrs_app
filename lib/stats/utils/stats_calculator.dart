@@ -34,13 +34,16 @@ class StatsCalculator {
     return MeanStat(mean, nbSolves);
   }
 
-  static Stat computeAverage(List<Solve> solves, [int? nbSolves]) {
-    nbSolves ??= solves.length;
-    if (nbSolves <= 0 || nbSolves > solves.length) {
+  static Stat computeAverage(List<Solve> solves, int nbSolves) {
+    if (nbSolves < 3 || nbSolves > solves.length) {
       return AverageStat.empty(nbSolves);
     }
-    if (solves.every((s) => s.dnf)) return AverageStat.dnf(nbSolves);
-    final times = _getTimes(solves.take(nbSolves));
+    final averageSolves = solves.take(nbSolves);
+    final nbDnfSolves = averageSolves.where((s) => s.dnf).length;
+    if (nbDnfSolves >= 2) {
+      return AverageStat.dnf(nbSolves);
+    }
+    final times = _getTimes(averageSolves);
     final minTimeIndex = times.indexOf(times.min);
     times.removeAt(minTimeIndex);
     final maxTimeIndex = times.indexOf(times.max);
