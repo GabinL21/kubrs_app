@@ -16,10 +16,10 @@ class SessionStats extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _getNumberText(solves, textStyle),
-            _getBestText(solves, textStyle),
-            _getWorstText(solves, textStyle),
-            _getMeanText(solves, textStyle),
+            _getSolveCountStatText(solves, textStyle),
+            _getBestSolveText(solves, textStyle),
+            _getWorstSolveText(solves, textStyle),
+            _getSolveMeanText(solves, textStyle),
             _getLastAverageText(solves, textStyle),
           ],
         );
@@ -33,15 +33,15 @@ class SessionStats extends StatelessWidget {
         );
   }
 
-  Widget _getNumberText(List<Solve> solves, TextStyle? textStyle) {
-    final number = solves.length;
+  Widget _getSolveCountStatText(List<Solve> solves, TextStyle? textStyle) {
+    final count = solves.length;
     return Text(
-      '# Solves: $number',
+      'Count: $count',
       style: textStyle,
     );
   }
 
-  Widget _getBestText(List<Solve> solves, TextStyle? textStyle) {
+  Widget _getBestSolveText(List<Solve> solves, TextStyle? textStyle) {
     final bestStat = StatsCalculator.computeBest(solves);
     final statName = bestStat.getDisplayedName();
     final statValue = bestStat.getDisplayedValue();
@@ -51,7 +51,7 @@ class SessionStats extends StatelessWidget {
     );
   }
 
-  Widget _getWorstText(List<Solve> solves, TextStyle? textStyle) {
+  Widget _getWorstSolveText(List<Solve> solves, TextStyle? textStyle) {
     final worstStat = StatsCalculator.computeWorst(solves);
     final statName = worstStat.getDisplayedName();
     final statValue = worstStat.getDisplayedValue();
@@ -61,7 +61,7 @@ class SessionStats extends StatelessWidget {
     );
   }
 
-  Widget _getMeanText(List<Solve> solves, TextStyle? textStyle) {
+  Widget _getSolveMeanText(List<Solve> solves, TextStyle? textStyle) {
     final meanStat = StatsCalculator.computeMean(solves);
     final statValue = meanStat.getDisplayedValue();
     return Text(
