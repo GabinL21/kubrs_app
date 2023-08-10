@@ -17,7 +17,8 @@ class StatsCalculator {
   static Stat computeWorst(List<Solve> solves) {
     if (solves.isEmpty) return WorstStat.empty();
     if (solves.every((s) => s.dnf)) return WorstStat.dnf();
-    final times = _getTimes(solves);
+    final nonDnfSolves = solves.where((s) => !s.dnf);
+    final times = _getTimes(nonDnfSolves);
     return WorstStat(times.max);
   }
 

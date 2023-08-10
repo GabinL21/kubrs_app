@@ -74,6 +74,7 @@ class Solve {
   }
 
   Duration getEffectiveTime() {
+    if (dnf) return const Duration(minutes: 10);
     if (plusTwo) return time + plusTwoDuration;
     return time;
   }

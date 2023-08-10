@@ -16,6 +16,14 @@ void main() {
       _buildSolve(11000),
     ];
 
+    final dnfSolves = List.generate(5, (_) => _buildDnfSolve(60000));
+
+    final solvesWithDnf = <Solve>[
+      ...solvesWithPlusTwo,
+      _buildDnfSolve(5000),
+      _buildDnfSolve(15000),
+    ];
+
     final sevenSolves = <Solve>[
       ...solvesWithPlusTwo,
       _buildPlusTwoSolve(12000),
@@ -30,8 +38,6 @@ void main() {
       _buildSolve(10009),
     ];
 
-    final dnfSolves = List.generate(5, (_) => _buildDnfSolve());
-
     group('BestStat', () {
       test('returns empty best when solves are empty', () {
         final bestStat = StatsCalculator.computeBest(List.empty());
@@ -41,6 +47,11 @@ void main() {
       test('returns DNF best when every solve is DNF', () {
         final bestStat = StatsCalculator.computeBest(dnfSolves);
         expect(bestStat, BestStat.dnf());
+      });
+
+      test('filters DNF solves when not every solve is DNF', () {
+        final bestStat = StatsCalculator.computeBest(solvesWithDnf);
+        expect(bestStat, BestStat(7000));
       });
 
       test('computes best with +2 correctly', () {
@@ -58,6 +69,11 @@ void main() {
       test('returns DNF worst when every solve is DNF', () {
         final worstStat = StatsCalculator.computeWorst(dnfSolves);
         expect(worstStat, WorstStat.dnf());
+      });
+
+      test('filters DNF solves when not every solve is DNF', () {
+        final worstStat = StatsCalculator.computeWorst(solvesWithDnf);
+        expect(worstStat, WorstStat(11000));
       });
 
       test('computes worst with +2 correctly', () {
@@ -142,11 +158,11 @@ Solve _buildPlusTwoSolve(int timeInMillis) {
   );
 }
 
-Solve _buildDnfSolve() {
+Solve _buildDnfSolve(int timeInMillis) {
   return Solve(
     uid: '',
     timestamp: DateTime(2000),
-    time: const Duration(minutes: 10),
+    time: Duration(milliseconds: timeInMillis),
     scramble: '',
     dnf: true,
   );
