@@ -30,10 +30,17 @@ void main() {
       _buildSolve(10009),
     ];
 
+    final dnfSolves = List.generate(5, (_) => _buildDnfSolve());
+
     group('BestStat', () {
       test('returns empty best when solves are empty', () {
         final bestStat = StatsCalculator.computeBest(List.empty());
         expect(bestStat, BestStat.empty());
+      });
+
+      test('returns DNF best when every solve is DNF', () {
+        final bestStat = StatsCalculator.computeBest(dnfSolves);
+        expect(bestStat, BestStat.dnf());
       });
 
       test('computes best with +2 correctly', () {
@@ -48,6 +55,11 @@ void main() {
         expect(worstStat, WorstStat.empty());
       });
 
+      test('returns DNF worst when every solve is DNF', () {
+        final worstStat = StatsCalculator.computeWorst(dnfSolves);
+        expect(worstStat, WorstStat.dnf());
+      });
+
       test('computes worst with +2 correctly', () {
         final worstStat = StatsCalculator.computeWorst(solvesWithPlusTwo);
         expect(worstStat, WorstStat(11000));
@@ -58,6 +70,11 @@ void main() {
       test('returns empty mean when solves are empty', () {
         final meanStat = StatsCalculator.computeMean(List.empty(), 5);
         expect(meanStat, MeanStat.empty(5));
+      });
+
+      test('returns DNF mean when every solve is DNF', () {
+        final meanStat = StatsCalculator.computeMean(dnfSolves);
+        expect(meanStat, MeanStat.dnf(dnfSolves.length));
       });
 
       test('computes mean with +2 correctly', () {
@@ -80,6 +97,11 @@ void main() {
       test('returns empty average when solves are empty', () {
         final averageStat = StatsCalculator.computeAverage(List.empty(), 5);
         expect(averageStat, AverageStat.empty(5));
+      });
+
+      test('returns DNF average when every solve is DNF', () {
+        final averageStat = StatsCalculator.computeAverage(dnfSolves);
+        expect(averageStat, AverageStat.dnf(dnfSolves.length));
       });
 
       test('computes average with +2 correctly', () {
@@ -117,5 +139,15 @@ Solve _buildPlusTwoSolve(int timeInMillis) {
     time: Duration(milliseconds: timeInMillis),
     scramble: '',
     plusTwo: true,
+  );
+}
+
+Solve _buildDnfSolve() {
+  return Solve(
+    uid: '',
+    timestamp: DateTime(2000),
+    time: const Duration(minutes: 10),
+    scramble: '',
+    dnf: true,
   );
 }

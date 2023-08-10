@@ -3,11 +3,17 @@ import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 import 'package:kubrs_app/stats/model/stat.dart';
 
 class MeanStat extends Stat with EquatableMixin {
-  MeanStat(this._value, this._nbSolves);
-  MeanStat.empty(this._nbSolves) : _value = null;
+  MeanStat(this._value, this._nbSolves) : _dnf = false;
+  MeanStat.empty(this._nbSolves)
+      : _value = null,
+        _dnf = false;
+  MeanStat.dnf(this._nbSolves)
+      : _value = null,
+        _dnf = true;
 
   final int? _value;
   final int _nbSolves;
+  final bool _dnf;
 
   @override
   String getDisplayedName() {
@@ -16,6 +22,7 @@ class MeanStat extends Stat with EquatableMixin {
 
   @override
   String getDisplayedValue() {
+    if (_dnf) return 'DNF';
     if (_value == null) return '-';
     final duration = Duration(milliseconds: _value!);
     return DurationFormatter.format(duration);

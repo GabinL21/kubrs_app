@@ -9,12 +9,14 @@ import 'package:kubrs_app/stats/model/worst_stat.dart';
 class StatsCalculator {
   static Stat computeBest(List<Solve> solves) {
     if (solves.isEmpty) return BestStat.empty();
+    if (solves.every((s) => s.dnf)) return BestStat.dnf();
     final times = _getTimes(solves);
     return BestStat(times.min);
   }
 
   static Stat computeWorst(List<Solve> solves) {
     if (solves.isEmpty) return WorstStat.empty();
+    if (solves.every((s) => s.dnf)) return WorstStat.dnf();
     final times = _getTimes(solves);
     return WorstStat(times.max);
   }
@@ -24,6 +26,7 @@ class StatsCalculator {
     if (nbSolves <= 0 || nbSolves > solves.length) {
       return MeanStat.empty(nbSolves);
     }
+    if (solves.every((s) => s.dnf)) return MeanStat.dnf(nbSolves);
     final times = _getTimes(solves.take(nbSolves));
     final mean = times.average.round();
     return MeanStat(mean, nbSolves);
@@ -34,6 +37,7 @@ class StatsCalculator {
     if (nbSolves <= 0 || nbSolves > solves.length) {
       return AverageStat.empty(nbSolves);
     }
+    if (solves.every((s) => s.dnf)) return AverageStat.dnf(nbSolves);
     final times = _getTimes(solves.take(nbSolves));
     final minTimeIndex = times.indexOf(times.min);
     times.removeAt(minTimeIndex);

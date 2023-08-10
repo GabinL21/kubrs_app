@@ -3,10 +3,16 @@ import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 import 'package:kubrs_app/stats/model/stat.dart';
 
 class WorstStat extends Stat with EquatableMixin {
-  WorstStat(this._value);
-  WorstStat.empty() : _value = null;
+  WorstStat(this._value) : _dnf = false;
+  WorstStat.empty()
+      : _value = null,
+        _dnf = false;
+  WorstStat.dnf()
+      : _value = null,
+        _dnf = true;
 
   final int? _value;
+  final bool _dnf;
 
   @override
   String getDisplayedName() {
@@ -15,6 +21,7 @@ class WorstStat extends Stat with EquatableMixin {
 
   @override
   String getDisplayedValue() {
+    if (_dnf) return 'DNF';
     if (_value == null) return '-';
     final duration = Duration(milliseconds: _value!);
     return DurationFormatter.format(duration);
