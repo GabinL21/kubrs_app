@@ -98,6 +98,11 @@ void main() {
         expect(meanStat, MeanStat(10000, 5));
       });
 
+      test('returns empty mean when solves without DNFs are not enough', () {
+        final meanStat = StatsCalculator.computeMean(solvesWithDnf, 7);
+        expect(meanStat, MeanStat.empty(7));
+      });
+
       test('computes mean with +2 correctly', () {
         final meanStat = StatsCalculator.computeMean(solvesWithPlusTwo);
         expect(meanStat, MeanStat(10000, 5));
