@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kubrs_app/scramble/utils/scramble.dart';
+import 'package:kubrs_app/scramble/utils/scramble_generator.dart';
 
 part 'scramble_event.dart';
 part 'scramble_state.dart';
@@ -9,7 +9,7 @@ class ScrambleBloc extends Bloc<ScrambleEvent, ScrambleState> {
   ScrambleBloc() : super(const ScrambleLoading()) {
     on<GenerateScrambleEvent>((event, emit) async {
       emit(const ScrambleLoading());
-      final scramble = await Scramble.generate();
+      final scramble = await ScrambleGenerator.generate();
       emit(ScrambleLoaded(scramble));
     });
     add(GenerateScrambleEvent()); // Initialize the first scramble
