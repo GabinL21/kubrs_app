@@ -108,9 +108,9 @@ void main() {
         expect(meanStat, MeanStat(10000, 5));
       });
 
-      test('truncates last digits when computing mean', () {
+      test('rounds last digits when computing mean', () {
         final meanStat = StatsCalculator.computeMean(solvesWithLastDigits);
-        expect(meanStat, MeanStat(10000, 5));
+        expect(meanStat, MeanStat(10006, 5));
       });
 
       test('computes mean of 5 with more than 5 solves correctly', () {
@@ -143,10 +143,10 @@ void main() {
         expect(averageStat, AverageStat(10667, 5));
       });
 
-      test('truncates last digits when computing average', () {
+      test('rounds last digits when computing average', () {
         final averageStat =
             StatsCalculator.computeAverage(solvesWithLastDigits, 5);
-        expect(averageStat, AverageStat(10000, 5));
+        expect(averageStat, AverageStat(10007, 5));
       });
 
       test('computes average of 5 with more than 5 solves correctly', () {

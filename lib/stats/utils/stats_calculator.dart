@@ -56,8 +56,8 @@ class StatsCalculator {
   static List<int> _getTimes(Iterable<Solve> solves) {
     return solves
         .map((s) => s.effectiveTime.inMilliseconds)
-        // Truncate last digit to compute rounding properly
-        .map((t) => t - (t % 10))
+        // Round last digit to compute rounding properly
+        .map((t) => (t / 10).round() * 10)
         .toList();
   }
 }
