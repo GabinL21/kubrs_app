@@ -24,6 +24,7 @@ class StatsCalculator {
 
   static Stat computeMean(List<Solve> solves, [int? nbSolves]) {
     nbSolves ??= solves.length;
+    if (solves.isEmpty) return MeanStat.empty(nbSolves);
     if (solves.every((s) => s.dnf)) return MeanStat.dnf(nbSolves);
     final nonDnfSolves = solves.where((s) => !s.dnf);
     if (nbSolves <= 0 || nbSolves > nonDnfSolves.length) {

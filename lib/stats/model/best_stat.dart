@@ -28,5 +28,5 @@ class BestStat extends Stat with EquatableMixin {
   }
 
   @override
-  List<Object?> get props => [_value];
+  List<Object?> get props => [_value, _dnf];
 }

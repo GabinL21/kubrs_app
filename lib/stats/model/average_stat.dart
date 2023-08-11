@@ -29,5 +29,5 @@ class AverageStat extends Stat with EquatableMixin {
   }
 
   @override
-  List<Object?> get props => [_nbSolves, _value];
+  List<Object?> get props => [_nbSolves, _value, _dnf];
 }

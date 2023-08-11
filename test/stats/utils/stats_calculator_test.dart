@@ -84,8 +84,8 @@ void main() {
 
     group('MeanStat', () {
       test('returns empty mean when solves are empty', () {
-        final meanStat = StatsCalculator.computeMean(List.empty(), 5);
-        expect(meanStat, MeanStat.empty(5));
+        final meanStat = StatsCalculator.computeMean(List.empty());
+        expect(meanStat, MeanStat.empty(0));
       });
 
       test('returns DNF mean when every solve is DNF', () {
