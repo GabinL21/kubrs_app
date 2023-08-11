@@ -16,12 +16,12 @@ class MeanStat extends Stat with EquatableMixin {
   final bool _dnf;
 
   @override
-  String getDisplayedName() {
+  String get displayedName {
     return 'Mo$_nbSolves';
   }
 
   @override
-  String getDisplayedValue() {
+  String get displayedValue {
     if (_dnf) return 'DNF';
     if (_value == null) return '-';
     final duration = Duration(milliseconds: _value!);

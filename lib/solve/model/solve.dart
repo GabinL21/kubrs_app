@@ -62,6 +62,19 @@ class Solve {
   final bool plusTwo;
   final bool dnf;
 
+  Duration get effectiveTime {
+    if (dnf) return const Duration(minutes: 10);
+    if (plusTwo) return time + plusTwoDuration;
+    return time;
+  }
+
+  String get timeToDisplay {
+    if (dnf) return 'DNF';
+    final formattedTime = DurationFormatter.format(time);
+    if (plusTwo) return '$formattedTime+2';
+    return formattedTime;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
@@ -71,18 +84,5 @@ class Solve {
       'plusTwo': plusTwo,
       'dnf': dnf,
     };
-  }
-
-  Duration getEffectiveTime() {
-    if (dnf) return const Duration(minutes: 10);
-    if (plusTwo) return time + plusTwoDuration;
-    return time;
-  }
-
-  String getTimeToDisplay() {
-    if (dnf) return 'DNF';
-    final formattedTime = DurationFormatter.format(time);
-    if (plusTwo) return '$formattedTime+2';
-    return formattedTime;
   }
 }
