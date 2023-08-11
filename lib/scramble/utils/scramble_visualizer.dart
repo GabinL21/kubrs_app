@@ -47,7 +47,12 @@ class ScrambleVisualizer {
 
   static Widget _getSquare(Color color) {
     final boxColor = switch (color) {
-      _ => Colors.white,
+      Color.up => Colors.white,
+      Color.down => Colors.yellow,
+      Color.front => Colors.green,
+      Color.bottom => Colors.blue,
+      Color.right => Colors.red,
+      Color.left => Colors.orange,
     };
     return Container(
       width: 8,
