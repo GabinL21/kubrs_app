@@ -36,7 +36,7 @@ class SolveTile extends StatelessWidget {
 
   Text _getTimeText(BuildContext context) {
     return Text(
-      solve.getTimeToDisplay(),
+      solve.timeToDisplay,
       style: Theme.of(context).textTheme.displayMedium?.copyWith(
             fontWeight: FontWeight.w700,
           ),

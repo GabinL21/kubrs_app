@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/session/view/session_stats.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
@@ -46,30 +47,47 @@ class TimerView extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       child: Column(
         children: [
-          if (timerState is! TimerReseted && timerState is! TimerRunning)
-            BlocBuilder<ScrambleBloc, ScrambleState>(
-              builder: (context, state) {
-                return Text(
-                  state.scramble,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displayMedium,
-                );
-              },
-            ),
-          if (timerState is! TimerReseted && timerState is! TimerRunning)
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                onPressed: () =>
-                    context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
-                icon: Icon(
-                  Icons.cached_rounded,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-            ),
+          _getHeader(context, timerState),
           Expanded(child: _getTimerBody(solveState)),
+          _getFooter(timerState),
         ],
+      ),
+    );
+  }
+
+  Widget _getHeader(BuildContext context, TimerState timerState) {
+    return Column(
+      children: [
+        if (timerState is! TimerReseted && timerState is! TimerRunning)
+          _getScrambleText(),
+        if (timerState is! TimerReseted && timerState is! TimerRunning)
+          Align(
+            alignment: Alignment.centerRight,
+            child: _getRefreshScrambleButton(context),
+          ),
+      ],
+    );
+  }
+
+  Widget _getScrambleText() {
+    return BlocBuilder<ScrambleBloc, ScrambleState>(
+      builder: (context, state) {
+        return Text(
+          state.scramble,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.displayMedium,
+        );
+      },
+    );
+  }
+
+  Widget _getRefreshScrambleButton(BuildContext context) {
+    return IconButton(
+      onPressed: () =>
+          context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
+      icon: Icon(
+        Icons.cached_rounded,
+        color: Theme.of(context).colorScheme.secondary,
       ),
     );
   }
@@ -80,20 +98,32 @@ class TimerView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Center(child: TimerText()),
-          if (solveState is SolveDone)
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DeleteSolveButton(),
-                  PlusTwoTagToggleButton(),
-                  DNFTagToggleButton(),
-                ],
-              ),
-            )
+          if (solveState is SolveDone) _getActionButtons(),
         ],
       ),
+    );
+  }
+
+  Widget _getActionButtons() {
+    return const Padding(
+      padding: EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          DeleteSolveButton(),
+          PlusTwoTagToggleButton(),
+          DNFTagToggleButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _getFooter(TimerState timerState) {
+    return Row(
+      children: [
+        if (timerState is! TimerReseted && timerState is! TimerRunning)
+          const SessionStats()
+      ],
     );
   }
 }

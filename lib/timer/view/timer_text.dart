@@ -31,7 +31,7 @@ class TimerText extends StatelessWidget {
       return DurationFormatter.format(timerState.duration);
     }
     final solve = solveState.solve;
-    return solve.getTimeToDisplay();
+    return solve.timeToDisplay;
   }
 
   TextStyle? _getTimerTextStyle(BuildContext context) {

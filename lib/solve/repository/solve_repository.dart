@@ -19,6 +19,27 @@ class SolveRepository {
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
+  Future<List<Solve>> getSolvesSince(
+    DateTime dateTime, {
+    bool offline = false,
+  }) async {
+    final source = offline ? Source.cache : Source.serverAndCache;
+    final snapshot = await _solvesCollection
+        .where('uid', isEqualTo: _uid)
+        .orderBy('timestamp', descending: true)
+        .endAt([dateTime]).get(GetOptions(source: source));
+    return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getStreamOfSolvesSince(
+    DateTime dateTime,
+  ) {
+    return _solvesCollection
+        .where('uid', isEqualTo: _uid)
+        .orderBy('timestamp', descending: true)
+        .endAt([dateTime]).snapshots();
+  }
+
   Future<void> updateLastSolve(Solve updatedSolve) async {
     final lastSolveDocId =
         await _getLastSolveDocumentId(updatedSolve.timestamp);

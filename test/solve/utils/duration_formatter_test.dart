@@ -37,5 +37,15 @@ void main() {
       const duration = Duration(hours: 1);
       expect(DurationFormatter.format(duration), equals('60:00.00'));
     });
+
+    test('formats duration rounded down correctly', () {
+      const duration = Duration(milliseconds: 10004);
+      expect(DurationFormatter.format(duration), equals('10.00'));
+    });
+
+    test('formats duration rounded up correctly', () {
+      const duration = Duration(milliseconds: 9995);
+      expect(DurationFormatter.format(duration), equals('10.00'));
+    });
   });
 }
