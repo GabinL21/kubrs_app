@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class ScrambleVisualizer {
   static Widget getLoadingCubeVisualization() {
     final cubeColors = List.generate(54, (_) => Color.up);
-    return _getCube(cubeColors, 'loading');
+    return _getCube(cubeColors, 'scrambleVisualizationLoading');
   }
 
   static Widget getCubeVisualization(String scramble) {
     final cube = _getScrambledCube(scramble);
-    return _getCube(cube.colors, 'loaded');
+    return _getCube(cube.colors, 'scrambleVisualizationLoaded');
   }
 
   static Widget getUpFaceVisualization(String scramble) {
