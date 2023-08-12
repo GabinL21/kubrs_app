@@ -31,6 +31,12 @@ class ScrambleVisualizer {
     );
   }
 
+  static Widget getUpFaceVisualization(String scramble) {
+    final cube = _getScrambledCube(scramble);
+    final upFaceColors = cube.colors.sublist(0, 9).toList();
+    return _getFace(upFaceColors, isLarge: true);
+  }
+
   static Cube _getScrambledCube(String scramble) {
     final moves = _getMovesFromScramble(scramble);
     var cube = Cube.solved;
@@ -44,31 +50,35 @@ class ScrambleVisualizer {
     return scramble.split(' ').map(Move.parse).toList();
   }
 
-  static Widget _getFace(List<Color> faceColors) {
+  static Widget _getFace(List<Color> faceColors, {bool isLarge = false}) {
+    final spaceBetween = isLarge ? 3.0 : 2.0;
     return Column(
       children: [
-        _getRow(faceColors.sublist(0, 3)),
-        const SizedBox(height: 2),
-        _getRow(faceColors.sublist(3, 6)),
-        const SizedBox(height: 2),
-        _getRow(faceColors.sublist(6, 9)),
+        _getRow(faceColors.sublist(0, 3), isLarge: isLarge),
+        SizedBox(height: spaceBetween),
+        _getRow(faceColors.sublist(3, 6), isLarge: isLarge),
+        SizedBox(height: spaceBetween),
+        _getRow(faceColors.sublist(6, 9), isLarge: isLarge),
       ],
     );
   }
 
-  static Widget _getRow(List<Color> rowColors) {
+  static Widget _getRow(List<Color> rowColors, {bool isLarge = false}) {
+    final spaceBetween = isLarge ? 3.0 : 2.0;
     return Row(
       children: [
-        _getSquare(rowColors[0]),
-        const SizedBox(width: 2),
-        _getSquare(rowColors[1]),
-        const SizedBox(width: 2),
-        _getSquare(rowColors[2]),
+        _getSquare(rowColors[0], isLarge: isLarge),
+        SizedBox(width: spaceBetween),
+        _getSquare(rowColors[1], isLarge: isLarge),
+        SizedBox(width: spaceBetween),
+        _getSquare(rowColors[2], isLarge: isLarge),
       ],
     );
   }
 
-  static Widget _getSquare(Color color) {
+  static Widget _getSquare(Color color, {bool isLarge = false}) {
+    final boxSize = isLarge ? 12.0 : 8.0;
+    final borderRadius = isLarge ? 3.0 : 2.0;
     final boxColor = switch (color) {
       Color.up => Colors.white,
       Color.down => Colors.yellow,
@@ -78,11 +88,11 @@ class ScrambleVisualizer {
       Color.left => Colors.orange,
     };
     return Container(
-      width: 8,
-      height: 8,
+      width: boxSize,
+      height: boxSize,
       decoration: BoxDecoration(
         color: boxColor,
-        borderRadius: BorderRadius.circular(2),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
     );
   }
