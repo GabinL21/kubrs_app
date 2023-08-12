@@ -2,33 +2,14 @@ import 'package:cuber/cuber.dart';
 import 'package:flutter/material.dart';
 
 class ScrambleVisualizer {
+  static Widget getLoadingCubeVisualization() {
+    final cubeColors = List.generate(54, (_) => Color.up);
+    return _getCube(cubeColors);
+  }
+
   static Widget getCubeVisualization(String scramble) {
     final cube = _getScrambledCube(scramble);
-    final upFaceColors = cube.colors.sublist(0, 9).toList();
-    final rightFaceColors = cube.colors.sublist(9, 18).toList();
-    final frontFaceColors = cube.colors.sublist(18, 27).toList();
-    final downFaceColors = cube.colors.sublist(27, 36).toList();
-    final leftFaceColors = cube.colors.sublist(36, 45).toList();
-    final bottomFaceColors = cube.colors.sublist(45, 54).toList();
-    return Row(
-      children: [
-        _getFace(leftFaceColors),
-        const SizedBox(width: 4),
-        Column(
-          children: [
-            _getFace(upFaceColors),
-            const SizedBox(height: 4),
-            _getFace(frontFaceColors),
-            const SizedBox(height: 4),
-            _getFace(downFaceColors),
-          ],
-        ),
-        const SizedBox(width: 4),
-        _getFace(rightFaceColors),
-        const SizedBox(width: 4),
-        _getFace(bottomFaceColors),
-      ],
-    );
+    return _getCube(cube.colors);
   }
 
   static Widget getUpFaceVisualization(String scramble) {
@@ -48,6 +29,34 @@ class ScrambleVisualizer {
 
   static List<Move> _getMovesFromScramble(String scramble) {
     return scramble.split(' ').map(Move.parse).toList();
+  }
+
+  static Widget _getCube(List<Color> cubeColors) {
+    final upFaceColors = cubeColors.sublist(0, 9).toList();
+    final rightFaceColors = cubeColors.sublist(9, 18).toList();
+    final frontFaceColors = cubeColors.sublist(18, 27).toList();
+    final downFaceColors = cubeColors.sublist(27, 36).toList();
+    final leftFaceColors = cubeColors.sublist(36, 45).toList();
+    final bottomFaceColors = cubeColors.sublist(45, 54).toList();
+    return Row(
+      children: [
+        _getFace(leftFaceColors),
+        const SizedBox(width: 4),
+        Column(
+          children: [
+            _getFace(upFaceColors),
+            const SizedBox(height: 4),
+            _getFace(frontFaceColors),
+            const SizedBox(height: 4),
+            _getFace(downFaceColors),
+          ],
+        ),
+        const SizedBox(width: 4),
+        _getFace(rightFaceColors),
+        const SizedBox(width: 4),
+        _getFace(bottomFaceColors),
+      ],
+    );
   }
 
   static Widget _getFace(List<Color> faceColors, {bool isLarge = false}) {
@@ -97,3 +106,5 @@ class ScrambleVisualizer {
     );
   }
 }
+
+extension CubeColor on Color {}

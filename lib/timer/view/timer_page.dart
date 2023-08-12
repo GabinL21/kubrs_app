@@ -134,7 +134,9 @@ class TimerView extends StatelessWidget {
   Widget _getScrambleVisualization() {
     return BlocBuilder<ScrambleBloc, ScrambleState>(
       builder: (context, state) {
-        if (state is ScrambleLoading) return const CircularProgressIndicator();
+        if (state is ScrambleLoading) {
+          return ScrambleVisualizer.getLoadingCubeVisualization();
+        }
         return ScrambleVisualizer.getCubeVisualization(state.scramble);
       },
     );
