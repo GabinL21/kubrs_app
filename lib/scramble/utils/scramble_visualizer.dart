@@ -2,17 +2,40 @@ import 'package:cuber/cuber.dart';
 import 'package:flutter/material.dart';
 
 class ScrambleVisualizer {
-  static Widget getCubeFace(String scramble) {
+  static Widget getCubeVisualization(String scramble) {
     final cube = _getScrambledCube(scramble);
-    final frontFaceColors = cube.colors.take(9).toList();
-    return _getFace(frontFaceColors);
+    final upFaceColors = cube.colors.sublist(0, 9).toList();
+    final rightFaceColors = cube.colors.sublist(9, 18).toList();
+    final frontFaceColors = cube.colors.sublist(18, 27).toList();
+    final downFaceColors = cube.colors.sublist(27, 36).toList();
+    final leftFaceColors = cube.colors.sublist(36, 45).toList();
+    final bottomFaceColors = cube.colors.sublist(45, 54).toList();
+    return Row(
+      children: [
+        _getFace(leftFaceColors),
+        const SizedBox(width: 4),
+        Column(
+          children: [
+            _getFace(upFaceColors),
+            const SizedBox(height: 4),
+            _getFace(frontFaceColors),
+            const SizedBox(height: 4),
+            _getFace(downFaceColors),
+          ],
+        ),
+        const SizedBox(width: 4),
+        _getFace(rightFaceColors),
+        const SizedBox(width: 4),
+        _getFace(bottomFaceColors),
+      ],
+    );
   }
 
   static Cube _getScrambledCube(String scramble) {
     final moves = _getMovesFromScramble(scramble);
-    final cube = Cube.scrambled(n: 0);
+    var cube = Cube.solved;
     for (final move in moves) {
-      cube.move(move);
+      cube = cube.move(move);
     }
     return cube;
   }
