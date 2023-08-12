@@ -6,8 +6,9 @@ part 'scramble_event.dart';
 part 'scramble_state.dart';
 
 class ScrambleBloc extends Bloc<ScrambleEvent, ScrambleState> {
-  ScrambleBloc() : super(const ScrambleLoading()) {
+  ScrambleBloc() : super(const ScrambleInitial()) {
     on<GenerateScrambleEvent>((event, emit) async {
+      if (state is ScrambleLoading) return;
       emit(const ScrambleLoading());
       final scramble = await ScrambleGenerator.generate();
       emit(ScrambleLoaded(scramble));

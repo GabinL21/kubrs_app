@@ -9,6 +9,10 @@ abstract class ScrambleState extends Equatable {
   List<Object> get props => [scramble];
 }
 
+class ScrambleInitial extends ScrambleState {
+  const ScrambleInitial() : super('...\n'); // New line to maintain text size
+}
+
 class ScrambleLoading extends ScrambleState {
   const ScrambleLoading() : super('...\n'); // New line to maintain text size
 }

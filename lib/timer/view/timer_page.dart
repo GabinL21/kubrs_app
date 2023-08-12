@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
+import 'package:kubrs_app/scramble/view/scramble_visualization.dart';
 import 'package:kubrs_app/session/view/session_stats.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
@@ -126,19 +127,8 @@ class TimerView extends StatelessWidget {
         if (timerState is! TimerReseted && timerState is! TimerRunning)
           const SessionStats(),
         if (timerState is! TimerReseted && timerState is! TimerRunning)
-          _getScrambleVisualization(),
+          const ScrambleVisualization(),
       ],
-    );
-  }
-
-  Widget _getScrambleVisualization() {
-    return BlocBuilder<ScrambleBloc, ScrambleState>(
-      builder: (context, state) {
-        if (state is ScrambleLoading) {
-          return ScrambleVisualizer.getLoadingCubeVisualization();
-        }
-        return ScrambleVisualizer.getCubeVisualization(state.scramble);
-      },
     );
   }
 }

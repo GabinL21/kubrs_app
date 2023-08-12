@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class ScrambleVisualizer {
   static Widget getLoadingCubeVisualization() {
     final cubeColors = List.generate(54, (_) => Color.up);
-    return _getCube(cubeColors);
+    return _getCube(cubeColors, 'loading');
   }
 
   static Widget getCubeVisualization(String scramble) {
     final cube = _getScrambledCube(scramble);
-    return _getCube(cube.colors);
+    return _getCube(cube.colors, 'loaded');
   }
 
   static Widget getUpFaceVisualization(String scramble) {
@@ -31,7 +31,7 @@ class ScrambleVisualizer {
     return scramble.split(' ').map(Move.parse).toList();
   }
 
-  static Widget _getCube(List<Color> cubeColors) {
+  static Widget _getCube(List<Color> cubeColors, String key) {
     final upFaceColors = cubeColors.sublist(0, 9).toList();
     final rightFaceColors = cubeColors.sublist(9, 18).toList();
     final frontFaceColors = cubeColors.sublist(18, 27).toList();
@@ -39,6 +39,7 @@ class ScrambleVisualizer {
     final leftFaceColors = cubeColors.sublist(36, 45).toList();
     final bottomFaceColors = cubeColors.sublist(45, 54).toList();
     return Row(
+      key: Key(key),
       children: [
         _getFace(leftFaceColors),
         const SizedBox(width: 4),
