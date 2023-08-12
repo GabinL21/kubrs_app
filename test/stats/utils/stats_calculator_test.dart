@@ -94,6 +94,13 @@ void main() {
       });
 
       test('filters DNF solves when not every solve is DNF', () {
+        final meanStat = StatsCalculator.computeMean(solvesWithDnf);
+        expect(meanStat, MeanStat(10000, 5));
+      });
+
+      test(
+          'filters DNF solves when not every solve is DNF '
+          'and nb solves is defined', () {
         final meanStat = StatsCalculator.computeMean(solvesWithDnf, 5);
         expect(meanStat, MeanStat(10000, 5));
       });
