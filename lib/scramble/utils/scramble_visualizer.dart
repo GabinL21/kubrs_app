@@ -28,7 +28,11 @@ class ScrambleVisualizer {
   }
 
   static List<Move> _getMovesFromScramble(String scramble) {
-    return scramble.split(' ').map(Move.parse).toList();
+    try {
+      return scramble.split(' ').map(Move.parse).toList();
+    } catch (e, _) {
+      return List.empty(); // Return no moves when parsing fails
+    }
   }
 
   static Widget _getCube(List<Color> cubeColors, String key) {

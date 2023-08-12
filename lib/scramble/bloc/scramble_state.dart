@@ -10,11 +10,11 @@ abstract class ScrambleState extends Equatable {
 }
 
 class ScrambleInitial extends ScrambleState {
-  const ScrambleInitial() : super('...\n'); // New line to maintain text size
+  const ScrambleInitial() : super('');
 }
 
 class ScrambleLoading extends ScrambleState {
-  const ScrambleLoading() : super('...\n'); // New line to maintain text size
+  const ScrambleLoading() : super('');
 }
 
 class ScrambleLoaded extends ScrambleState {

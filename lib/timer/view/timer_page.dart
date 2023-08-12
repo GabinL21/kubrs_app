@@ -73,8 +73,11 @@ class TimerView extends StatelessWidget {
   Widget _getScrambleText() {
     return BlocBuilder<ScrambleBloc, ScrambleState>(
       builder: (context, state) {
+        final text = state is ScrambleLoaded
+            ? state.scramble
+            : '...\n'; // New line to maintain text size
         return Text(
-          state.scramble,
+          text,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.displayMedium,
         );
