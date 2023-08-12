@@ -23,16 +23,19 @@ class StatsCalculator {
   }
 
   static Stat computeMean(List<Solve> solves, [int? nbSolves]) {
-    nbSolves ??= solves.length;
-    if (solves.isEmpty) return MeanStat.empty(nbSolves);
-    if (solves.every((s) => s.dnf)) return MeanStat.dnf(nbSolves);
+    if (solves.isEmpty) return MeanStat.empty(nbSolves ?? solves.length);
+    if (solves.every((s) => s.dnf)) {
+      return MeanStat.dnf(nbSolves ?? solves.length);
+    }
     final nonDnfSolves = solves.where((s) => !s.dnf);
-    if (nbSolves <= 0 || nbSolves > nonDnfSolves.length) {
+    if (nbSolves != null && (nbSolves <= 0 || nbSolves > nonDnfSolves.length)) {
       return MeanStat.empty(nbSolves);
     }
-    final times = _getTimes(nonDnfSolves.take(nbSolves));
+    final meanSolves =
+        nbSolves == null ? nonDnfSolves : nonDnfSolves.take(nbSolves);
+    final times = _getTimes(meanSolves);
     final mean = times.average.round();
-    return MeanStat(mean, nbSolves);
+    return MeanStat(mean, nbSolves ??= nonDnfSolves.length);
   }
 
   static Stat computeAverage(List<Solve> solves, int nbSolves) {
