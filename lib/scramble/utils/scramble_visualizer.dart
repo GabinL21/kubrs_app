@@ -1,115 +1,134 @@
-import 'package:cuber/cuber.dart';
+import 'package:cuber/cuber.dart' as cube;
 import 'package:flutter/material.dart';
 
 class ScrambleVisualizer {
   static Widget getLoadingCubeVisualization() {
-    final cubeColors = List.generate(54, (_) => Color.up);
-    return _getCube(cubeColors, 'scrambleVisualizationLoading');
+    final cubeSquares = List.generate(54, (_) => const CubeSquare(Colors.grey));
+    return _getCube(cubeSquares, 'scrambleVisualizationLoading');
   }
 
   static Widget getCubeVisualization(String scramble) {
     final cube = _getScrambledCube(scramble);
-    return _getCube(cube.colors, 'scrambleVisualizationLoaded');
+    final cubeSquares = cube.colors.map(_getSquare).toList();
+    return _getCube(cubeSquares, 'scrambleVisualizationLoaded');
   }
 
   static Widget getUpFaceVisualization(String scramble) {
     final cube = _getScrambledCube(scramble);
-    final upFaceColors = cube.colors.sublist(0, 9).toList();
-    return _getFace(upFaceColors, isLarge: true);
-  }
-
-  static Cube _getScrambledCube(String scramble) {
-    final moves = _getMovesFromScramble(scramble);
-    var cube = Cube.solved;
-    for (final move in moves) {
-      cube = cube.move(move);
+    if (cube.isSolved) {
+      // Scramble is empty or an error
+      final upFaceSquares =
+          List.generate(9, (_) => const CubeSquare(Colors.grey, isLarge: true));
+      return _getFace(upFaceSquares, isLarge: true);
     }
-    return cube;
+    final upFaceColors = cube.colors.sublist(0, 9).toList();
+    final upFaceSquares =
+        upFaceColors.map((c) => _getSquare(c, isLarge: true)).toList();
+    return _getFace(upFaceSquares, isLarge: true);
   }
 
-  static List<Move> _getMovesFromScramble(String scramble) {
+  static cube.Cube _getScrambledCube(String scramble) {
+    final moves = _getMovesFromScramble(scramble);
+    var scrambledCube = cube.Cube.solved;
+    for (final move in moves) {
+      scrambledCube = scrambledCube.move(move);
+    }
+    return scrambledCube;
+  }
+
+  static List<cube.Move> _getMovesFromScramble(String scramble) {
     try {
-      return scramble.split(' ').map(Move.parse).toList();
+      return scramble.split(' ').map(cube.Move.parse).toList();
     } catch (e, _) {
       return List.empty(); // Return no moves when parsing fails
     }
   }
 
-  static Widget _getCube(List<Color> cubeColors, String key) {
-    final upFaceColors = cubeColors.sublist(0, 9).toList();
-    final rightFaceColors = cubeColors.sublist(9, 18).toList();
-    final frontFaceColors = cubeColors.sublist(18, 27).toList();
-    final downFaceColors = cubeColors.sublist(27, 36).toList();
-    final leftFaceColors = cubeColors.sublist(36, 45).toList();
-    final bottomFaceColors = cubeColors.sublist(45, 54).toList();
+  static Widget _getCube(List<CubeSquare> cubeSquares, String key) {
+    final upFaceSquares = cubeSquares.sublist(0, 9).toList();
+    final rightFaceSquares = cubeSquares.sublist(9, 18).toList();
+    final frontFaceSquares = cubeSquares.sublist(18, 27).toList();
+    final downFaceSquares = cubeSquares.sublist(27, 36).toList();
+    final leftFaceSquares = cubeSquares.sublist(36, 45).toList();
+    final bottomFaceSquares = cubeSquares.sublist(45, 54).toList();
     return Row(
       key: Key(key),
       children: [
-        _getFace(leftFaceColors),
+        _getFace(leftFaceSquares),
         const SizedBox(width: 4),
         Column(
           children: [
-            _getFace(upFaceColors),
+            _getFace(upFaceSquares),
             const SizedBox(height: 4),
-            _getFace(frontFaceColors),
+            _getFace(frontFaceSquares),
             const SizedBox(height: 4),
-            _getFace(downFaceColors),
+            _getFace(downFaceSquares),
           ],
         ),
         const SizedBox(width: 4),
-        _getFace(rightFaceColors),
+        _getFace(rightFaceSquares),
         const SizedBox(width: 4),
-        _getFace(bottomFaceColors),
+        _getFace(bottomFaceSquares),
       ],
     );
   }
 
-  static Widget _getFace(List<Color> faceColors, {bool isLarge = false}) {
+  static Widget _getFace(List<CubeSquare> faceSquares, {bool isLarge = false}) {
     final spaceBetween = isLarge ? 3.0 : 2.0;
     return Column(
       children: [
-        _getRow(faceColors.sublist(0, 3), isLarge: isLarge),
+        _getRow(faceSquares.sublist(0, 3), isLarge: isLarge),
         SizedBox(height: spaceBetween),
-        _getRow(faceColors.sublist(3, 6), isLarge: isLarge),
+        _getRow(faceSquares.sublist(3, 6), isLarge: isLarge),
         SizedBox(height: spaceBetween),
-        _getRow(faceColors.sublist(6, 9), isLarge: isLarge),
+        _getRow(faceSquares.sublist(6, 9), isLarge: isLarge),
       ],
     );
   }
 
-  static Widget _getRow(List<Color> rowColors, {bool isLarge = false}) {
+  static Widget _getRow(List<CubeSquare> rowSquares, {bool isLarge = false}) {
     final spaceBetween = isLarge ? 3.0 : 2.0;
     return Row(
       children: [
-        _getSquare(rowColors[0], isLarge: isLarge),
+        rowSquares[0],
         SizedBox(width: spaceBetween),
-        _getSquare(rowColors[1], isLarge: isLarge),
+        rowSquares[1],
         SizedBox(width: spaceBetween),
-        _getSquare(rowColors[2], isLarge: isLarge),
+        rowSquares[2],
       ],
     );
   }
 
-  static Widget _getSquare(Color color, {bool isLarge = false}) {
+  static CubeSquare _getSquare(cube.Color color, {bool isLarge = false}) {
+    final boxColor = switch (color) {
+      cube.Color.up => Colors.white,
+      cube.Color.down => Colors.yellow,
+      cube.Color.front => Colors.green,
+      cube.Color.bottom => Colors.blue,
+      cube.Color.right => Colors.red,
+      cube.Color.left => Colors.orange,
+    };
+    return CubeSquare(boxColor, isLarge: isLarge);
+  }
+}
+
+class CubeSquare extends StatelessWidget {
+  const CubeSquare(this.color, {this.isLarge = false, super.key});
+
+  final Color color;
+  final bool isLarge;
+
+  @override
+  Widget build(BuildContext context) {
     final boxSize = isLarge ? 12.0 : 8.0;
     final borderRadius = isLarge ? 3.0 : 2.0;
-    final boxColor = switch (color) {
-      Color.up => Colors.white,
-      Color.down => Colors.yellow,
-      Color.front => Colors.green,
-      Color.bottom => Colors.blue,
-      Color.right => Colors.red,
-      Color.left => Colors.orange,
-    };
     return Container(
       width: boxSize,
       height: boxSize,
       decoration: BoxDecoration(
-        color: boxColor,
+        color: color,
         borderRadius: BorderRadius.circular(borderRadius),
       ),
     );
   }
 }
-
-extension CubeColor on Color {}
