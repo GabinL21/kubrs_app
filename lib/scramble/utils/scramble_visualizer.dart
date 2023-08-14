@@ -2,46 +2,40 @@ import 'package:cuber/cuber.dart' as cube;
 import 'package:flutter/material.dart';
 
 class ScrambleVisualizer {
-  static Widget getLoadingCubeVisualization() {
-    final cubeSquares = List.generate(54, (_) => const CubeSquare(Colors.grey));
+  static Color grey = Colors.grey;
+  static Color white = Colors.white;
+  static Color yellow = Colors.yellow;
+  static Color green = Colors.green;
+  static Color blue = Colors.blue;
+  static Color red = Colors.red;
+  static Color orange = Colors.orange;
+
+  static double spaceSize = 2;
+  static double largeSpaceSize = 3;
+
+  static Widget getLoadingCube() {
+    final cubeSquares = List.generate(54, (_) => CubeSquare(grey));
     return _getCube(cubeSquares, 'scrambleVisualizationLoading');
   }
 
-  static Widget getCubeVisualization(String scramble) {
-    final cube = _getScrambledCube(scramble);
-    final cubeSquares = cube.colors.map(_getSquare).toList();
+  static Widget getCube(String scramble) {
+    final cube = Cube.getScrambledCube(scramble);
+    final cubeSquares = _getSquares(cube.colors);
     return _getCube(cubeSquares, 'scrambleVisualizationLoaded');
   }
 
-  static Widget getUpFaceVisualization(String scramble) {
-    final cube = _getScrambledCube(scramble);
-    if (cube.isSolved) {
-      // Scramble is empty or an error
-      final upFaceSquares =
-          List.generate(9, (_) => const CubeSquare(Colors.grey, isLarge: true));
-      return _getFace(upFaceSquares, isLarge: true);
-    }
+  static Widget getUpFace(String scramble) {
+    final cube = Cube.getScrambledCube(scramble);
+    if (cube.isSolved) _getErrorFace();
     final upFaceColors = cube.colors.sublist(0, 9).toList();
-    final upFaceSquares =
-        upFaceColors.map((c) => _getSquare(c, isLarge: true)).toList();
+    final upFaceSquares = _getSquares(upFaceColors, isLarge: true);
     return _getFace(upFaceSquares, isLarge: true);
   }
 
-  static cube.Cube _getScrambledCube(String scramble) {
-    final moves = _getMovesFromScramble(scramble);
-    var scrambledCube = cube.Cube.solved;
-    for (final move in moves) {
-      scrambledCube = scrambledCube.move(move);
-    }
-    return scrambledCube;
-  }
-
-  static List<cube.Move> _getMovesFromScramble(String scramble) {
-    try {
-      return scramble.split(' ').map(cube.Move.parse).toList();
-    } catch (e, _) {
-      return List.empty(); // Return no moves when parsing fails
-    }
+  static Widget _getErrorFace() {
+    final upFaceSquares =
+        List.generate(9, (_) => CubeSquare(grey, isLarge: true));
+    return _getFace(upFaceSquares, isLarge: true);
   }
 
   static Widget _getCube(List<CubeSquare> cubeSquares, String key) {
@@ -74,7 +68,7 @@ class ScrambleVisualizer {
   }
 
   static Widget _getFace(List<CubeSquare> faceSquares, {bool isLarge = false}) {
-    final spaceBetween = isLarge ? 3.0 : 2.0;
+    final spaceBetween = isLarge ? largeSpaceSize : spaceSize;
     return Column(
       children: [
         _getRow(faceSquares.sublist(0, 3), isLarge: isLarge),
@@ -87,7 +81,7 @@ class ScrambleVisualizer {
   }
 
   static Widget _getRow(List<CubeSquare> rowSquares, {bool isLarge = false}) {
-    final spaceBetween = isLarge ? 3.0 : 2.0;
+    final spaceBetween = isLarge ? largeSpaceSize : spaceSize;
     return Row(
       children: [
         rowSquares[0],
@@ -99,14 +93,21 @@ class ScrambleVisualizer {
     );
   }
 
+  static List<CubeSquare> _getSquares(
+    List<cube.Color> colors, {
+    bool isLarge = false,
+  }) {
+    return colors.map((c) => _getSquare(c, isLarge: true)).toList();
+  }
+
   static CubeSquare _getSquare(cube.Color color, {bool isLarge = false}) {
     final boxColor = switch (color) {
-      cube.Color.up => Colors.white,
-      cube.Color.down => Colors.yellow,
-      cube.Color.front => Colors.green,
-      cube.Color.bottom => Colors.blue,
-      cube.Color.right => Colors.red,
-      cube.Color.left => Colors.orange,
+      cube.Color.up => white,
+      cube.Color.down => yellow,
+      cube.Color.front => green,
+      cube.Color.bottom => blue,
+      cube.Color.right => red,
+      cube.Color.left => orange,
     };
     return CubeSquare(boxColor, isLarge: isLarge);
   }
@@ -115,20 +116,44 @@ class ScrambleVisualizer {
 class CubeSquare extends StatelessWidget {
   const CubeSquare(this.color, {this.isLarge = false, super.key});
 
+  static double squareSize = 8;
+  static double largeSquareSize = 12;
+  static double borderRadius = 2;
+  static double largeBorderRadius = 3;
+
   final Color color;
   final bool isLarge;
 
   @override
   Widget build(BuildContext context) {
-    final boxSize = isLarge ? 12.0 : 8.0;
-    final borderRadius = isLarge ? 3.0 : 2.0;
+    final boxSize = isLarge ? largeSquareSize : squareSize;
+    final boxBorderRadius = isLarge ? largeBorderRadius : borderRadius;
     return Container(
       width: boxSize,
       height: boxSize,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(boxBorderRadius),
       ),
     );
+  }
+}
+
+extension Cube on cube.Cube {
+  static cube.Cube getScrambledCube(String scramble) {
+    final moves = _getMovesFromScramble(scramble);
+    var scrambledCube = cube.Cube.solved;
+    for (final move in moves) {
+      scrambledCube = scrambledCube.move(move);
+    }
+    return scrambledCube;
+  }
+
+  static List<cube.Move> _getMovesFromScramble(String scramble) {
+    try {
+      return scramble.split(' ').map(cube.Move.parse).toList();
+    } catch (e, _) {
+      return List.empty(); // Return no moves when parsing fails
+    }
   }
 }
