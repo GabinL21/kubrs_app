@@ -13,6 +13,8 @@ class ScrambleVisualization extends StatelessWidget {
         final scramble = state.scramble;
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
+          switchInCurve: Curves.easeIn,
+          switchOutCurve: Curves.easeOut,
           child: state is! ScrambleLoaded
               ? ScrambleVisualizer.getLoadingCube()
               : ScrambleVisualizer.getCube(scramble),

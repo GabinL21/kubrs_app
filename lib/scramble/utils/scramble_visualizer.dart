@@ -97,7 +97,7 @@ class ScrambleVisualizer {
     List<cube.Color> colors, {
     bool isLarge = false,
   }) {
-    return colors.map((c) => _getSquare(c, isLarge: true)).toList();
+    return colors.map((c) => _getSquare(c, isLarge: isLarge)).toList();
   }
 
   static CubeSquare _getSquare(cube.Color color, {bool isLarge = false}) {
