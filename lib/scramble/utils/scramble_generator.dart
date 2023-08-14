@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:cuber/cuber.dart';
 import 'package:flutter/foundation.dart';
 
-class Scramble {
+class ScrambleGenerator {
   static Future<String> generate() async {
     final cube = _getRandomStateCube();
     final solution = await compute(_solveCube, cube);

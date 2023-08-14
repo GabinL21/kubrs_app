@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/history/utils/date_time_formatter.dart';
+import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveTile extends StatelessWidget {
@@ -16,8 +17,10 @@ class SolveTile extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(16),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _getLeftColumn(context),
+          ScrambleVisualizer.getUpFace(solve.scramble),
         ],
       ),
     );

@@ -31,7 +31,7 @@ void main() {
       uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
-      scramble: '',
+      scramble: 'R',
     ),
   );
 
@@ -41,7 +41,7 @@ void main() {
       uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
-      scramble: '',
+      scramble: 'R',
     ),
   );
 
