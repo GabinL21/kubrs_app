@@ -117,15 +117,15 @@ class App extends StatelessWidget {
         return BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.history),
+              icon: Icon(Icons.history_outlined),
               label: 'History',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.timer),
+              icon: Icon(Icons.timer_outlined),
               label: 'Timer',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.query_stats),
+              icon: Icon(Icons.query_stats_outlined),
               label: 'Stats',
             ),
           ],
