@@ -60,38 +60,63 @@ class TimerView extends StatelessWidget {
     return Column(
       children: [
         if (timerState is! TimerReseted && timerState is! TimerRunning)
-          _getScrambleText(),
-        if (timerState is! TimerReseted && timerState is! TimerRunning)
-          Align(
-            alignment: Alignment.centerRight,
-            child: _getRefreshScrambleButton(context),
-          ),
+          _getScrambleHeader(),
       ],
     );
   }
 
-  Widget _getScrambleText() {
+  Widget _getScrambleHeader() {
     return BlocBuilder<ScrambleBloc, ScrambleState>(
       builder: (context, state) {
-        final text = state is ScrambleLoaded
-            ? state.scramble
-            : '...\n'; // New line to maintain text size
-        return Text(
-          text,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displayMedium,
+        return Column(
+          children: [
+            _getScrambleText(context, state),
+            Align(
+              alignment: Alignment.centerRight,
+              child: _getRefreshScrambleButton(context, state),
+            ),
+          ],
         );
       },
     );
   }
 
-  Widget _getRefreshScrambleButton(BuildContext context) {
-    return IconButton(
-      onPressed: () =>
-          context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
-      icon: Icon(
-        Icons.cached_rounded,
-        color: Theme.of(context).colorScheme.secondary,
+  Text _getScrambleText(BuildContext context, ScrambleState state) {
+    final text = state is ScrambleLoaded
+        ? state.scramble
+        : '...\n'; // New line to maintain text size
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: Theme.of(context)
+          .textTheme
+          .displayMedium
+          ?.copyWith(color: Theme.of(context).colorScheme.secondary),
+    );
+  }
+
+  Widget _getRefreshScrambleButton(BuildContext context, ScrambleState state) {
+    final keyName = state is ScrambleLoaded
+        ? 'refreshScrambleButtonShowed'
+        : 'refreshScrambleButtonHidden';
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 100),
+      switchInCurve: Curves.easeIn,
+      switchOutCurve: Curves.easeOut,
+      child: Visibility(
+        key: Key(keyName),
+        visible: state is ScrambleLoaded,
+        maintainSize: true,
+        maintainAnimation: true,
+        maintainState: true,
+        child: IconButton(
+          onPressed: () =>
+              context.read<ScrambleBloc>().add(GenerateScrambleEvent()),
+          icon: Icon(
+            Icons.cached_rounded,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
       ),
     );
   }
