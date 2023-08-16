@@ -11,7 +11,7 @@ class AppTheme {
     onPrimary: Color.fromRGBO(69, 69, 69, 1),
     tertiary: Color.fromRGBO(250, 155, 68, 1),
     error: Color.fromRGBO(249, 82, 82, 1),
-    shadow: Color.fromRGBO(0, 0, 0, 0.1),
+    shadow: Color.fromRGBO(0, 0, 0, 0.05),
   );
 
   static final TextTheme _textTheme = GoogleFonts.montserratTextTheme(
@@ -48,15 +48,9 @@ class AppTheme {
     backgroundColor: _colorScheme.surface,
     selectedItemColor: _colorScheme.primary,
     unselectedItemColor: _colorScheme.secondary,
-    elevation: 4,
+    elevation: 0,
     showSelectedLabels: false,
     showUnselectedLabels: false,
-  );
-
-  static final BottomAppBarTheme _bottomAppBarTheme = BottomAppBarTheme(
-    color: _colorScheme.surface,
-    elevation: 8,
-    shadowColor: _colorScheme.shadow,
   );
 
   static final DrawerThemeData _drawerTheme = DrawerThemeData(
@@ -66,7 +60,7 @@ class AppTheme {
 
   static final ProgressIndicatorThemeData _progressIndicatorTheme =
       ProgressIndicatorThemeData(
-    color: _colorScheme.secondary,
+    color: _colorScheme.tertiary,
   );
 
   static final DialogTheme _dialogTheme = DialogTheme(
@@ -80,7 +74,6 @@ class AppTheme {
       scaffoldBackgroundColor: _colorScheme.background,
       textTheme: _textTheme,
       appBarTheme: _appBarTheme,
-      bottomAppBarTheme: _bottomAppBarTheme,
       bottomNavigationBarTheme: _bottomNavigationBarTheme,
       drawerTheme: _drawerTheme,
       progressIndicatorTheme: _progressIndicatorTheme,
