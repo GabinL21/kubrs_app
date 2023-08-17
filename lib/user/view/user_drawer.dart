@@ -15,33 +15,49 @@ class UserDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) {
-                if (state is UserLoaded) {
-                  return Text(
-                    'Hello ${state.userName}!',
-                    style: Theme.of(context).textTheme.displayMedium,
-                  );
-                }
-                return Text(
-                  'Loading...',
-                  style: Theme.of(context).textTheme.displayMedium,
-                );
-              },
-            ),
-            TextButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(SignOutRequested());
-              },
-              child: Text(
-                'Sign out',
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-              ),
-            )
+            _getHeader(context),
+            _getFooter(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _getHeader(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        if (state is UserLoaded) {
+          return Text(
+            state.userName,
+            style: Theme.of(context).textTheme.displayMedium,
+          );
+        }
+        return Text(
+          'Loading...',
+          style: Theme.of(context).textTheme.displayMedium,
+        );
+      },
+    );
+  }
+
+  Widget _getFooter(BuildContext context) {
+    return Column(
+      children: [
+        _getSignOutButton(context),
+      ],
+    );
+  }
+
+  Widget _getSignOutButton(BuildContext context) {
+    final color = Theme.of(context).colorScheme.error;
+    return TextButton.icon(
+      onPressed: () => context.read<AuthBloc>().add(SignOutRequested()),
+      icon: Icon(Icons.logout_outlined, color: color),
+      label: Text(
+        'Sign out',
+        style: Theme.of(context).textTheme.displayMedium!.copyWith(
+              color: color,
+            ),
       ),
     );
   }
