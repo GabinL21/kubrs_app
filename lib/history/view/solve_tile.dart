@@ -22,7 +22,7 @@ class SolveTile extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -49,6 +49,7 @@ class SolveTile extends StatelessWidget {
       solve.timeToDisplay,
       style: Theme.of(context).textTheme.displayMedium?.copyWith(
             fontWeight: FontWeight.w700,
+            fontSize: 18,
           ),
     );
   }
@@ -58,6 +59,7 @@ class SolveTile extends StatelessWidget {
       DateTimeFormatter.format(solve.timestamp),
       style: Theme.of(context).textTheme.displaySmall?.copyWith(
             color: Theme.of(context).colorScheme.secondary,
+            fontSize: 14,
           ),
     );
   }

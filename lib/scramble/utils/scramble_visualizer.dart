@@ -11,7 +11,7 @@ class ScrambleVisualizer {
   static Color orange = const Color.fromRGBO(242, 146, 58, 1);
 
   static double spaceSize = 2;
-  static double largeSpaceSize = 3;
+  static double largeSpaceSize = 2.5;
 
   static Widget getLoadingCube() {
     final cubeSquares = List.generate(54, (_) => CubeSquare(grey));
@@ -117,9 +117,9 @@ class CubeSquare extends StatelessWidget {
   const CubeSquare(this.color, {this.isLarge = false, super.key});
 
   static double squareSize = 8;
-  static double largeSquareSize = 12;
+  static double largeSquareSize = 10;
   static double borderRadius = 2;
-  static double largeBorderRadius = 3;
+  static double largeBorderRadius = 2.5;
 
   final Color color;
   final bool isLarge;
