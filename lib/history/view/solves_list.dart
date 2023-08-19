@@ -39,9 +39,12 @@ class _SolvesListState extends State<SolvesList> {
             style: Theme.of(context).textTheme.displayMedium,
           );
         }
-        final nbItems = state is HistoryLoadingNext ? nbSolves + 1 : nbSolves;
+        final nbItems =
+            state is HistoryLoadingNext || state is HistoryFullyLoaded
+                ? nbSolves + 1
+                : nbSolves;
         final scrollPhysics = state is HistoryLoadingNext
-            ? const ClampingScrollPhysics()
+            ? const BouncingScrollPhysics()
             : const BouncingScrollPhysics();
         return ListView.separated(
           itemCount: nbItems,
@@ -49,10 +52,15 @@ class _SolvesListState extends State<SolvesList> {
           physics: scrollPhysics,
           controller: _scrollController,
           itemBuilder: (context, index) {
-            if (state is HistoryLoadingNext && index == nbItems - 1) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+            if (index == nbItems - 1) {
+              if (state is HistoryLoadingNext) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is HistoryFullyLoaded) {
+                return const SizedBox(height: 16); // Bottom padding
+              }
             }
             return SolveTile(solve: solves[index]);
           },
