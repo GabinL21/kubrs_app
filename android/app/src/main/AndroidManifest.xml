@@ -2,7 +2,7 @@
     package="com.example.verygoodcore.kubrs_app">
     <application
         android:label="${appName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:name="${applicationName}">
         <activity
             android:name=".MainActivity"

@@ -28,6 +28,7 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.1.4
+  flutter_launcher_icons: "^0.13.1"
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.0
@@ -36,3 +37,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+flutter_launcher_icons: # dart run flutter_launcher_icons
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
