@@ -56,20 +56,28 @@ class AuthView extends StatelessWidget {
   }
 
   Widget _getAuthForm(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _getHeader(context),
-        const SizedBox(height: 256),
-        _getGoogleSignInButton(context),
-      ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 196, 0, 196),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _getHeader(context),
+          _getGoogleSignInButton(context),
+        ],
+      ),
     );
   }
 
   Widget _getHeader(BuildContext context) {
-    return Text(
-      'Kubrs',
-      style: Theme.of(context).textTheme.displayLarge,
+    return Column(
+      children: [
+        SizedBox(height: 128, child: Image.asset('assets/logo.png')),
+        const SizedBox(height: 32),
+        Text(
+          'Kubrs',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+      ],
     );
   }
 
