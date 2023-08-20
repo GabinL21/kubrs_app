@@ -58,31 +58,48 @@ class AuthView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Kubrs',
-          style: Theme.of(context).textTheme.displayLarge,
-        ),
-        const SizedBox(
-          height: 256,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextButton.icon(
-              onPressed: () => _authenticateWithGoogle(context),
-              icon: Icon(
-                Icons.account_circle,
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-              label: Text(
-                'Sign-in with Google',
-                style: Theme.of(context).textTheme.displayMedium,
-              ),
-            ),
+        _getHeader(context),
+        const SizedBox(height: 256),
+        _getGoogleSignInButton(context),
+      ],
+    );
+  }
+
+  Widget _getHeader(BuildContext context) {
+    return Text(
+      'Kubrs',
+      style: Theme.of(context).textTheme.displayLarge,
+    );
+  }
+
+  Widget _getGoogleSignInButton(BuildContext context) {
+    final theme = Theme.of(context);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(100),
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.shadow,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: TextButton.icon(
+          onPressed: () => _authenticateWithGoogle(context),
+          icon: Icon(
+            Icons.account_circle,
+            color: theme.colorScheme.primary,
+          ),
+          label: Text(
+            'Sign-in with Google',
+            style: theme.textTheme.displayMedium,
           ),
         ),
-      ],
+      ),
     );
   }
 
