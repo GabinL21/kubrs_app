@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
+import 'package:kubrs_app/auth/view/sign_in_button.dart';
 import 'package:kubrs_app/timer/timer.dart';
 
 class AuthPage extends StatelessWidget {
@@ -73,33 +74,10 @@ class AuthView extends StatelessWidget {
   }
 
   Widget _getGoogleSignInButton(BuildContext context) {
-    final theme = Theme.of(context);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(100),
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.shadow,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: TextButton.icon(
-          onPressed: () => _authenticateWithGoogle(context),
-          icon: Icon(
-            Icons.account_circle,
-            color: theme.colorScheme.primary,
-          ),
-          label: Text(
-            'Sign-in with Google',
-            style: theme.textTheme.displayMedium,
-          ),
-        ),
-      ),
+    return SignInButton(
+      iconData: Icons.account_circle_rounded,
+      label: 'Sign-in with Google',
+      onPressed: () => _authenticateWithGoogle(context),
     );
   }
 
