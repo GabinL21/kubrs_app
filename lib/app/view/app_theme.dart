@@ -9,7 +9,7 @@ class AppTheme {
     primary: Color.fromRGBO(69, 69, 69, 1),
     secondary: Color.fromRGBO(132, 132, 132, 1),
     onPrimary: Color.fromRGBO(69, 69, 69, 1),
-    tertiary: Color.fromRGBO(250, 155, 68, 1),
+    tertiary: Color.fromRGBO(88, 136, 229, 1),
     error: Color.fromRGBO(249, 82, 82, 1),
     shadow: Color.fromRGBO(0, 0, 0, 0.05),
   );

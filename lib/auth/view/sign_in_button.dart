@@ -47,9 +47,6 @@ class SignInButton extends StatelessWidget {
   ButtonStyle _getButtonStyle(ThemeData theme) {
     return ButtonStyle(
       backgroundColor: MaterialStatePropertyAll(theme.colorScheme.surface),
-      overlayColor: MaterialStatePropertyAll(
-        theme.colorScheme.tertiary.withOpacity(0.05),
-      ),
       padding: const MaterialStatePropertyAll(EdgeInsets.all(12)),
       shape: MaterialStatePropertyAll(
         RoundedRectangleBorder(
