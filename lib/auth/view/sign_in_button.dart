@@ -36,7 +36,7 @@ class SignInButton extends StatelessWidget {
 
   TextButton _getButton(ThemeData theme) {
     return TextButton.icon(
-      onPressed: () => onPressed,
+      onPressed: onPressed,
       icon: Icon(
         iconData,
         color: theme.colorScheme.primary,
