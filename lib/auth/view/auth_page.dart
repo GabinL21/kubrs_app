@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
+import 'package:kubrs_app/auth/view/sign_in_button.dart';
 import 'package:kubrs_app/timer/timer.dart';
 
 class AuthPage extends StatelessWidget {
@@ -55,34 +56,36 @@ class AuthView extends StatelessWidget {
   }
 
   Widget _getAuthForm(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 196, 0, 196),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _getHeader(context),
+          _getGoogleSignInButton(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _getHeader(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(height: 128, child: Image.asset('assets/logo.png')),
+        const SizedBox(height: 32),
         Text(
           'Kubrs',
           style: Theme.of(context).textTheme.displayLarge,
         ),
-        const SizedBox(
-          height: 256,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextButton.icon(
-              onPressed: () => _authenticateWithGoogle(context),
-              icon: Icon(
-                Icons.account_circle,
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-              label: Text(
-                'Sign-in with Google',
-                style: Theme.of(context).textTheme.displayMedium,
-              ),
-            ),
-          ),
-        ),
       ],
+    );
+  }
+
+  Widget _getGoogleSignInButton(BuildContext context) {
+    return SignInButton(
+      iconData: Icons.account_circle_rounded,
+      label: 'Sign-in with Google',
+      onPressed: () => _authenticateWithGoogle(context),
     );
   }
 

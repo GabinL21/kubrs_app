@@ -2,16 +2,16 @@ import 'package:cuber/cuber.dart' as cube;
 import 'package:flutter/material.dart';
 
 class ScrambleVisualizer {
-  static Color grey = Colors.grey;
-  static Color white = Colors.white;
-  static Color yellow = Colors.yellow;
-  static Color green = Colors.green;
-  static Color blue = Colors.blue;
-  static Color red = Colors.red;
-  static Color orange = Colors.orange;
+  static Color grey = const Color.fromRGBO(132, 132, 132, 1);
+  static Color white = const Color.fromRGBO(223, 223, 223, 1);
+  static Color yellow = const Color.fromRGBO(234, 237, 114, 1);
+  static Color green = const Color.fromRGBO(131, 239, 114, 1);
+  static Color blue = const Color.fromRGBO(88, 136, 229, 1);
+  static Color red = const Color.fromRGBO(249, 82, 82, 1);
+  static Color orange = const Color.fromRGBO(242, 146, 58, 1);
 
   static double spaceSize = 2;
-  static double largeSpaceSize = 3;
+  static double largeSpaceSize = 2.5;
 
   static Widget getLoadingCube() {
     final cubeSquares = List.generate(54, (_) => CubeSquare(grey));
@@ -117,9 +117,9 @@ class CubeSquare extends StatelessWidget {
   const CubeSquare(this.color, {this.isLarge = false, super.key});
 
   static double squareSize = 8;
-  static double largeSquareSize = 12;
+  static double largeSquareSize = 10;
   static double borderRadius = 2;
-  static double largeBorderRadius = 3;
+  static double largeBorderRadius = 2.5;
 
   final Color color;
   final bool isLarge;

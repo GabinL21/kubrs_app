@@ -114,23 +114,34 @@ class App extends StatelessWidget {
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         final navigationBloc = BlocProvider.of<NavigationBloc>(context);
-        return BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.timer),
-              label: 'Timer',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.query_stats),
-              label: 'Stats',
-            ),
-          ],
-          currentIndex: state.index,
-          onTap: (index) => navigationBloc.add(NavigateToIndex(index)),
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow,
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history_outlined),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.timer_outlined),
+                label: 'Timer',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.query_stats_outlined),
+                label: 'Stats',
+              ),
+            ],
+            currentIndex: state.index,
+            onTap: (index) => navigationBloc.add(NavigateToIndex(index)),
+          ),
         );
       },
     );

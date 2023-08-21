@@ -4,31 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const ColorScheme _colorScheme = ColorScheme.dark(
-    background: Color.fromRGBO(13, 13, 13, 1),
-    primary: Color.fromRGBO(18, 18, 18, 1),
-    onPrimary: Color.fromRGBO(255, 255, 255, 1),
-    secondary: Color.fromRGBO(166, 166, 166, 1),
-    tertiary: Color.fromRGBO(247, 241, 149, 1),
-    error: Color.fromRGBO(247, 149, 149, 1),
+  static const ColorScheme _colorScheme = ColorScheme.light(
+    background: Color.fromRGBO(248, 248, 248, 1),
+    primary: Color.fromRGBO(69, 69, 69, 1),
+    secondary: Color.fromRGBO(132, 132, 132, 1),
+    onPrimary: Color.fromRGBO(69, 69, 69, 1),
+    tertiary: Color.fromRGBO(88, 136, 229, 1),
+    error: Color.fromRGBO(249, 82, 82, 1),
+    shadow: Color.fromRGBO(0, 0, 0, 0.05),
   );
 
   static final TextTheme _textTheme = GoogleFonts.montserratTextTheme(
     TextTheme(
       displayLarge: TextStyle(
-        color: _colorScheme.onBackground,
+        color: _colorScheme.primary,
         fontSize: 64,
         fontWeight: FontWeight.w700,
         fontFeatures: const [FontFeature.tabularFigures()],
       ),
       displayMedium: TextStyle(
-        color: _colorScheme.onBackground,
+        color: _colorScheme.primary,
         fontSize: 20,
         fontWeight: FontWeight.w500,
         fontFeatures: const [FontFeature.tabularFigures()],
       ),
       displaySmall: TextStyle(
-        color: _colorScheme.onBackground,
+        color: _colorScheme.primary,
         fontSize: 16,
         fontWeight: FontWeight.w500,
         fontFeatures: const [FontFeature.tabularFigures()],
@@ -37,32 +38,33 @@ class AppTheme {
   );
 
   static final AppBarTheme _appBarTheme = AppBarTheme(
-    backgroundColor: _colorScheme.primary,
-    elevation: 0,
+    backgroundColor: _colorScheme.surface,
+    elevation: 8,
+    shadowColor: _colorScheme.shadow,
   );
 
   static final BottomNavigationBarThemeData _bottomNavigationBarTheme =
       BottomNavigationBarThemeData(
-    backgroundColor: _colorScheme.primary,
-    selectedItemColor: _colorScheme.tertiary,
-    unselectedItemColor: _colorScheme.onPrimary,
+    backgroundColor: _colorScheme.surface,
+    selectedItemColor: _colorScheme.primary,
+    unselectedItemColor: _colorScheme.secondary,
     elevation: 0,
     showSelectedLabels: false,
     showUnselectedLabels: false,
   );
 
   static final DrawerThemeData _drawerTheme = DrawerThemeData(
-    backgroundColor: _colorScheme.primary,
+    backgroundColor: _colorScheme.background,
     elevation: 0,
   );
 
   static final ProgressIndicatorThemeData _progressIndicatorTheme =
       ProgressIndicatorThemeData(
-    color: _colorScheme.onPrimary,
+    color: _colorScheme.tertiary,
   );
 
   static final DialogTheme _dialogTheme = DialogTheme(
-    backgroundColor: _colorScheme.primary,
+    backgroundColor: _colorScheme.background,
     contentTextStyle: _textTheme.displaySmall,
   );
 

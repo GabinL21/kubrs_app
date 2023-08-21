@@ -22,6 +22,9 @@ abstract class TagToggleButton extends StatelessWidget {
         final solveEvent = getSolveEvent(state.solve);
         return TextButton(
           onPressed: () => solveBloc.add(solveEvent),
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+          ),
           child: Text(
             getButtonText(),
             style: _getTextStyle(context, state.solve),

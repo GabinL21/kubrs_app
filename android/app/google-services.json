@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:940539174983:android:889b89f598440d9b8d5162",
+        "mobilesdk_app_id": "1:940539174983:android:e4744567efe4c2d28d5162",
         "android_client_info": {
-          "package_name": "com.example.verygoodcore.kubrs_app"
+          "package_name": "app.kubrs"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "940539174983-ak3gi1ea3cvvfgakcuemkb87bc2sljg5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.verygoodcore.kubrs_app",
-            "certificate_hash": "038ae789ccd0769b42749327d74727cabc851cd7"
-          }
-        },
         {
           "client_id": "940539174983-466f9qqekskdgp5qqptfc2p168nm1jjq.apps.googleusercontent.com",
           "client_type": 3

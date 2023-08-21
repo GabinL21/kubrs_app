@@ -1,4 +1,4 @@
-package com.example.verygoodcore.kubrs_app
+package app.kubrs
 
 import io.flutter.embedding.android.FlutterActivity
 
