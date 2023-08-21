@@ -17,8 +17,6 @@ class SignInButton extends StatelessWidget {
     final theme = Theme.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(100),
         boxShadow: [
           BoxShadow(
             color: theme.colorScheme.shadow,
@@ -27,10 +25,7 @@ class SignInButton extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: _getButton(theme),
-      ),
+      child: _getButton(theme),
     );
   }
 
@@ -44,6 +39,22 @@ class SignInButton extends StatelessWidget {
       label: Text(
         label,
         style: theme.textTheme.displayMedium,
+      ),
+      style: _getButtonStyle(theme),
+    );
+  }
+
+  ButtonStyle _getButtonStyle(ThemeData theme) {
+    return ButtonStyle(
+      backgroundColor: MaterialStatePropertyAll(theme.colorScheme.surface),
+      overlayColor: MaterialStatePropertyAll(
+        theme.colorScheme.tertiary.withOpacity(0.05),
+      ),
+      padding: const MaterialStatePropertyAll(EdgeInsets.all(12)),
+      shape: MaterialStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100),
+        ),
       ),
     );
   }
