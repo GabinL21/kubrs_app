@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kubrs_app/history/utils/date_time_formatter.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/view/solve_details_page.dart';
 
 class SolveTile extends StatelessWidget {
   const SolveTile({super.key, required this.solve});
@@ -10,25 +11,36 @@ class SolveTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Theme.of(context).colorScheme.shadow,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+    return InkWell(
+      onTap: () => _navigateToSolveDetails(context),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow,
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _getLeftColumn(context),
+            ScrambleVisualizer.getUpFace(solve.scramble),
+          ],
+        ),
       ),
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _getLeftColumn(context),
-          ScrambleVisualizer.getUpFace(solve.scramble),
-        ],
+    );
+  }
+
+  void _navigateToSolveDetails(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(
+        builder: (context) => SolveDetailsPage(solve: solve),
       ),
     );
   }
