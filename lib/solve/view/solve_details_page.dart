@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
-import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/solve/view/solve_details_delete_button.dart';
 
 class SolveDetailsPage extends StatelessWidget {
-  const SolveDetailsPage({super.key, required this.solve});
+  const SolveDetailsPage({
+    super.key,
+    required this.solve,
+    required this.solveBloc,
+  });
 
   final Solve solve;
+  final SolveBloc solveBloc;
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => SolveRepository(),
+    return BlocProvider.value(
+      value: solveBloc,
       child: Scaffold(
         appBar: AppBar(backgroundColor: Colors.transparent),
         body: SolveDetailsView(solve: solve),

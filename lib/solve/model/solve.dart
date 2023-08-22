@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
-class Solve {
-  Solve({
+class Solve extends Equatable {
+  const Solve({
     required this.uid,
     required this.timestamp,
     required this.time,
@@ -84,5 +85,10 @@ class Solve {
       'plusTwo': plusTwo,
       'dnf': dnf,
     };
+  }
+
+  @override
+  List<Object?> get props {
+    return [uid, scramble, timestamp.millisecondsSinceEpoch, plusTwo, dnf];
   }
 }

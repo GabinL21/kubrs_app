@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
-import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
 class SolveDetailsDeleteButton extends StatelessWidget {
   const SolveDetailsDeleteButton({super.key, required this.solve});
@@ -77,6 +77,7 @@ class SolveDetailsDeleteButton extends StatelessWidget {
   }
 
   void _deleteSolve(BuildContext context) {
-    RepositoryProvider.of<SolveRepository>(context).deleteSolve(solve);
+    final deleteSolveEvent = DeleteSolve(solve: solve);
+    BlocProvider.of<SolveBloc>(context).add(deleteSolveEvent);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/history/utils/date_time_formatter.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/view/solve_details_page.dart';
 
@@ -38,9 +40,13 @@ class SolveTile extends StatelessWidget {
   }
 
   void _navigateToSolveDetails(BuildContext context) {
+    final solveBloc = BlocProvider.of<SolveBloc>(context);
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => SolveDetailsPage(solve: solve),
+        builder: (context) => SolveDetailsPage(
+          solve: solve,
+          solveBloc: solveBloc,
+        ),
       ),
     );
   }
