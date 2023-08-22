@@ -14,14 +14,18 @@ class ScrambleVisualizer {
     final cubeSquares =
         List.generate(54, (_) => CubeSquare(color: grey, size: size));
     return _getCube(
-        cubeSquares: cubeSquares, key: 'scrambleVisualizationLoading');
+      cubeSquares: cubeSquares,
+      key: 'scrambleVisualizationLoading',
+    );
   }
 
   static Widget getCube({required String scramble, double size = 8}) {
     final cube = Cube.getScrambledCube(scramble);
     final cubeSquares = _getSquares(cube.colors, size);
     return _getCube(
-        cubeSquares: cubeSquares, key: 'scrambleVisualizationLoaded');
+      cubeSquares: cubeSquares,
+      key: 'scrambleVisualizationLoaded',
+    );
   }
 
   static Widget getUpFace({required String scramble, double size = 10}) {
