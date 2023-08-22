@@ -11,7 +11,13 @@ class SolveDetailsShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: _shareSolve,
+      onPressed: () {
+        _shareSolve().then(
+          (value) => {
+            if (value == ShareResultStatus.success) _showSuccessSnack(context),
+          },
+        );
+      },
       icon: Icon(
         Icons.share_outlined,
         color: Theme.of(context).colorScheme.primary,
@@ -19,9 +25,20 @@ class SolveDetailsShareButton extends StatelessWidget {
     );
   }
 
-  void _shareSolve() {
+  Future<ShareResultStatus> _shareSolve() async {
     final solveTime = solve.timeToDisplay;
     final timeAgo = DateTimeFormatter.format(solve.timestamp);
-    Share.share('Got a $solveTime 3x3 solve $timeAgo on Kubrs!');
+    final shareResult = await Share.shareWithResult(
+      'Got a $solveTime 3x3 solve $timeAgo on Kubrs!',
+    );
+    return shareResult.status;
+  }
+
+  void _showSuccessSnack(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Solve successfully shared!'),
+      ),
+    );
   }
 }
