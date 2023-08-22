@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
+import 'package:kubrs_app/solve/view/solve_details_delete_button.dart';
 
 class SolveDetailsPage extends StatelessWidget {
   const SolveDetailsPage({super.key, required this.solve});
@@ -10,9 +13,12 @@ class SolveDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent),
-      body: SolveDetailsView(solve: solve),
+    return RepositoryProvider(
+      create: (_) => SolveRepository(),
+      child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.transparent),
+        body: SolveDetailsView(solve: solve),
+      ),
     );
   }
 }
@@ -123,7 +129,7 @@ class SolveDetailsView extends StatelessWidget {
       children: [
         _getEditButton(theme),
         const SizedBox(width: 32),
-        _getDeleteButton(theme),
+        SolveDetailsDeleteButton(solve: solve),
       ],
     );
   }
@@ -132,13 +138,6 @@ class SolveDetailsView extends StatelessWidget {
     return IconButton(
       onPressed: () => {},
       icon: Icon(Icons.edit_outlined, color: theme.colorScheme.primary),
-    );
-  }
-
-  Widget _getDeleteButton(ThemeData theme) {
-    return IconButton(
-      onPressed: () => {},
-      icon: Icon(Icons.delete_outline, color: theme.colorScheme.primary),
     );
   }
 }

@@ -20,16 +20,16 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
       final solve = event.solve;
       final newSolve = Solve.cloneAndTogglePlusTwo(solve: solve);
       emit(SolveDone(newSolve));
-      await solveRepository.updateLastSolve(newSolve);
+      await solveRepository.updateSolve(newSolve);
     });
     on<ToggleDNFTag>((event, emit) async {
       final solve = event.solve;
       final newSolve = Solve.cloneAndToggleDNF(solve: solve);
       emit(SolveDone(newSolve));
-      await solveRepository.updateLastSolve(newSolve);
+      await solveRepository.updateSolve(newSolve);
     });
     on<DeleteSolve>((event, emit) async {
-      await solveRepository.deleteLastSolve(event.solve);
+      await solveRepository.deleteSolve(event.solve);
       emit(SolveInitial());
     });
   }
