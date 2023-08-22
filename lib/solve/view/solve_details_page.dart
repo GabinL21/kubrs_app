@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kubrs_app/history/utils/date_time_formatter.dart';
+import 'package:intl/intl.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
-import 'package:kubrs_app/scramble/view/scramble_visualization.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveDetailsPage extends StatelessWidget {
@@ -18,9 +17,10 @@ class SolveDetailsPage extends StatelessWidget {
 }
 
 class SolveDetailsView extends StatelessWidget {
-  const SolveDetailsView({super.key, required this.solve});
+  SolveDetailsView({super.key, required this.solve});
 
   final Solve solve;
+  final DateFormat dateFormat = DateFormat.yMMMMd().add_jm();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class SolveDetailsView extends StatelessWidget {
         children: [
           Column(
             children: [
-              _getScrambleVisualization(),
+              _getFaceVisualization(),
               _getSolveTime(theme),
               _getSolveDateTime(theme),
             ],
@@ -42,7 +42,7 @@ class SolveDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _getScrambleVisualization() {
+  Widget _getFaceVisualization() {
     return ScrambleVisualizer.getUpFace(solve.scramble);
   }
 
@@ -55,7 +55,7 @@ class SolveDetailsView extends StatelessWidget {
 
   Widget _getSolveDateTime(ThemeData theme) {
     return Text(
-      DateTimeFormatter.format(solve.timestamp),
+      dateFormat.format(solve.timestamp),
       style: theme.textTheme.displayMedium
           ?.copyWith(color: theme.colorScheme.secondary),
     );
