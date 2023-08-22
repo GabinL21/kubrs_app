@@ -15,6 +15,11 @@ class WorstStat extends Stat with EquatableMixin {
   final bool _dnf;
 
   @override
+  int? get value {
+    return _value;
+  }
+
+  @override
   String get displayedName {
     return 'Worst';
   }

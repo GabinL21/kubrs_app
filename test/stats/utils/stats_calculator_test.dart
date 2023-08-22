@@ -160,6 +160,24 @@ void main() {
         final averageStat = StatsCalculator.computeAverage(sevenSolves, 5);
         expect(averageStat, AverageStat(10667, 5));
       });
+
+      test('returns empty best average when solves are empty', () {
+        final bestAverageStat =
+            StatsCalculator.computeBestAverage(List.empty(), 5);
+        expect(bestAverageStat, AverageStat.empty(5));
+      });
+
+      test('computes best average with +2 correctly', () {
+        final bestAverageStat =
+            StatsCalculator.computeBestAverage(sevenSolves, 5);
+        expect(bestAverageStat, AverageStat(9667, 5));
+      });
+
+      test('computes best average with DNF solves correctly', () {
+        final bestAverageStat =
+            StatsCalculator.computeBestAverage(solvesWithDnf, 5);
+        expect(bestAverageStat, AverageStat(10667, 5));
+      });
     });
   });
 }
