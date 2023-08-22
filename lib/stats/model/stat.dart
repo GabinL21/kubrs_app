@@ -1,5 +1,6 @@
 abstract class Stat implements Comparable<Stat> {
   int? get value;
+  bool get isDnf;
   String get displayedName;
   String get displayedValue;
 
@@ -12,7 +13,11 @@ abstract class Stat implements Comparable<Stat> {
 
   @override
   int compareTo(Stat other) {
-    if (value == null && other.value == null) return 0;
+    if (value == null && other.value == null) {
+      if (isDnf && !other.isDnf) return 1;
+      if (!isDnf && other.isDnf) return -1;
+      return 0;
+    }
     if (value == null) return -1;
     if (other.value == null) return 1;
     return other.value! - value!;

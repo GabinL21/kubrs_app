@@ -137,6 +137,11 @@ void main() {
         expect(averageStat, AverageStat.dnf(solvesWithDnf.length));
       });
 
+      test('returns DNF average when every solve is DNF', () {
+        final averageStat = StatsCalculator.computeAverage(dnfSolves, 5);
+        expect(averageStat, AverageStat.dnf(5));
+      });
+
       test(
           'returns correct average when more than 1 solve is DNF '
           'but not in the average of range', () {
@@ -173,10 +178,16 @@ void main() {
         expect(bestAverageStat, AverageStat(9667, 5));
       });
 
-      test('computes best average with DNF solves correctly', () {
+      test('computes best average with some DNF solves correctly', () {
         final bestAverageStat =
             StatsCalculator.computeBestAverage(solvesWithDnf, 5);
         expect(bestAverageStat, AverageStat(10667, 5));
+      });
+
+      test('returns best DNF average when every solve is DNF', () {
+        final bestAverageStat =
+            StatsCalculator.computeBestAverage(dnfSolves, 5);
+        expect(bestAverageStat, AverageStat.dnf(5));
       });
     });
   });
