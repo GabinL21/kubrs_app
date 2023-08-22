@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:kubrs_app/details/cubit/solve_details_cubit.dart';
 import 'package:kubrs_app/details/view/solve_details_delete_button.dart';
 import 'package:kubrs_app/details/view/solve_details_edit_button.dart';
 import 'package:kubrs_app/details/view/solve_details_share_button.dart';
@@ -13,51 +15,57 @@ class SolveDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        actions: [SolveDetailsShareButton(solve: solve)],
+    return BlocProvider(
+      create: (_) => SolveDetailsCubit(solve),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: const [SolveDetailsShareButton()],
+        ),
+        body: SolveDetailsView(),
       ),
-      body: SolveDetailsView(solve: solve),
     );
   }
 }
 
 class SolveDetailsView extends StatelessWidget {
-  SolveDetailsView({super.key, required this.solve});
+  SolveDetailsView({super.key});
 
-  final Solve solve;
   final DateFormat dateFormat = DateFormat.yMMMMd().add_jm();
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(48, 64, 48, 48),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _getHeader(theme),
-          _getScrambleCard(theme),
-          _getActions(theme),
-        ],
-      ),
+    return BlocBuilder<SolveDetailsCubit, Solve>(
+      builder: (context, state) {
+        final theme = Theme.of(context);
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(48, 64, 48, 48),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _getHeader(state, theme),
+              _getScrambleCard(state, theme),
+              _getActions(theme),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget _getHeader(ThemeData theme) {
+  Widget _getHeader(Solve solve, ThemeData theme) {
     return Column(
       children: [
-        _getFaceVisualization(),
+        _getFaceVisualization(solve),
         const SizedBox(height: 48),
-        _getSolveTime(theme),
+        _getSolveTime(solve, theme),
         const SizedBox(height: 8),
-        _getSolveDateTime(theme),
+        _getSolveDateTime(solve, theme),
       ],
     );
   }
 
-  Widget _getFaceVisualization() {
+  Widget _getFaceVisualization(Solve solve) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -66,14 +74,14 @@ class SolveDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _getSolveTime(ThemeData theme) {
+  Widget _getSolveTime(Solve solve, ThemeData theme) {
     return Text(
       solve.timeToDisplay,
       style: theme.textTheme.displayLarge?.copyWith(fontSize: 56),
     );
   }
 
-  Widget _getSolveDateTime(ThemeData theme) {
+  Widget _getSolveDateTime(Solve solve, ThemeData theme) {
     return Text(
       dateFormat.format(solve.timestamp),
       style: theme.textTheme.displayMedium
@@ -81,7 +89,7 @@ class SolveDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _getScrambleCard(ThemeData theme) {
+  Widget _getScrambleCard(Solve solve, ThemeData theme) {
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
@@ -97,15 +105,15 @@ class SolveDetailsView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          _getScrambleText(theme),
+          _getScrambleText(solve, theme),
           const SizedBox(height: 16),
-          _getScrambleVisualization(),
+          _getScrambleVisualization(solve),
         ],
       ),
     );
   }
 
-  Widget _getScrambleText(ThemeData theme) {
+  Widget _getScrambleText(Solve solve, ThemeData theme) {
     return Text(
       solve.scramble,
       textAlign: TextAlign.center,
@@ -114,7 +122,7 @@ class SolveDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _getScrambleVisualization() {
+  Widget _getScrambleVisualization(Solve solve) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -124,12 +132,12 @@ class SolveDetailsView extends StatelessWidget {
   }
 
   Widget _getActions(ThemeData theme) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SolveDetailsEditButton(solve: solve),
-        const SizedBox(width: 32),
-        SolveDetailsDeleteButton(solve: solve),
+        SolveDetailsEditButton(),
+        SizedBox(width: 32),
+        SolveDetailsDeleteButton(),
       ],
     );
   }

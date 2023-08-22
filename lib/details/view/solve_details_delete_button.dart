@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/details/cubit/solve_details_cubit.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
-import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveDetailsDeleteButton extends StatelessWidget {
-  const SolveDetailsDeleteButton({super.key, required this.solve});
-
-  final Solve solve;
+  const SolveDetailsDeleteButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +75,7 @@ class SolveDetailsDeleteButton extends StatelessWidget {
   }
 
   void _deleteSolve(BuildContext context) {
+    final solve = BlocProvider.of<SolveDetailsCubit>(context).state;
     final deleteSolveEvent = DeleteSolve(solve: solve);
     BlocProvider.of<SolveBloc>(context).add(deleteSolveEvent);
   }

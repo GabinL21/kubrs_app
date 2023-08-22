@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveDetailsEditButton extends StatelessWidget {
-  const SolveDetailsEditButton({super.key, required this.solve});
-
-  final Solve solve;
+  const SolveDetailsEditButton({super.key});
 
   @override
   Widget build(BuildContext context) {
