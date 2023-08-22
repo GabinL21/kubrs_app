@@ -27,12 +27,13 @@ class SolveDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(48),
+      padding: const EdgeInsets.fromLTRB(48, 64, 48, 48),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _getHeader(theme),
           _getScrambleCard(theme),
+          _getActions(theme),
         ],
       ),
     );
@@ -113,6 +114,31 @@ class SolveDetailsView extends StatelessWidget {
       children: [
         ScrambleVisualizer.getCube(scramble: solve.scramble),
       ],
+    );
+  }
+
+  Widget _getActions(ThemeData theme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _getEditButton(theme),
+        const SizedBox(width: 32),
+        _getDeleteButton(theme),
+      ],
+    );
+  }
+
+  Widget _getEditButton(ThemeData theme) {
+    return IconButton(
+      onPressed: () => {},
+      icon: Icon(Icons.edit_outlined, color: theme.colorScheme.primary),
+    );
+  }
+
+  Widget _getDeleteButton(ThemeData theme) {
+    return IconButton(
+      onPressed: () => {},
+      icon: Icon(Icons.delete_outline, color: theme.colorScheme.primary),
     );
   }
 }
