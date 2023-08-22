@@ -27,15 +27,26 @@ class SolveDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(32, 96, 32, 96),
+      padding: const EdgeInsets.all(48),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _getFaceVisualization(),
-          _getSolveTime(theme),
-          _getSolveDateTime(theme),
+          _getHeader(theme),
           _getScrambleCard(theme),
         ],
       ),
+    );
+  }
+
+  Widget _getHeader(ThemeData theme) {
+    return Column(
+      children: [
+        _getFaceVisualization(),
+        const SizedBox(height: 48),
+        _getSolveTime(theme),
+        const SizedBox(height: 8),
+        _getSolveDateTime(theme),
+      ],
     );
   }
 
@@ -43,7 +54,7 @@ class SolveDetailsView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ScrambleVisualizer.getUpFace(solve.scramble),
+        ScrambleVisualizer.getUpFace(scramble: solve.scramble, size: 24),
       ],
     );
   }
@@ -51,7 +62,7 @@ class SolveDetailsView extends StatelessWidget {
   Widget _getSolveTime(ThemeData theme) {
     return Text(
       solve.timeToDisplay,
-      style: theme.textTheme.displayLarge,
+      style: theme.textTheme.displayLarge?.copyWith(fontSize: 56),
     );
   }
 
@@ -76,10 +87,11 @@ class SolveDetailsView extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           _getScrambleText(theme),
+          const SizedBox(height: 16),
           _getScrambleVisualization(),
         ],
       ),
@@ -99,7 +111,7 @@ class SolveDetailsView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ScrambleVisualizer.getCube(solve.scramble),
+        ScrambleVisualizer.getCube(scramble: solve.scramble),
       ],
     );
   }
