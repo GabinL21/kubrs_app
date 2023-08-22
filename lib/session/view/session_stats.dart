@@ -18,9 +18,9 @@ class SessionStats extends StatelessWidget {
           children: [
             _getSolveCountStatText(solves, textStyle),
             _getBestSolveText(solves, textStyle),
-            _getWorstSolveText(solves, textStyle),
             _getSolveMeanText(solves, textStyle),
             _getLastAverageText(solves, textStyle),
+            _getBestAverageText(solves, textStyle),
           ],
         );
       },
@@ -51,16 +51,6 @@ class SessionStats extends StatelessWidget {
     );
   }
 
-  Widget _getWorstSolveText(List<Solve> solves, TextStyle? textStyle) {
-    final worstStat = StatsCalculator.computeWorst(solves);
-    final statName = worstStat.displayedName;
-    final statValue = worstStat.displayedValue;
-    return Text(
-      '$statName: $statValue',
-      style: textStyle,
-    );
-  }
-
   Widget _getSolveMeanText(List<Solve> solves, TextStyle? textStyle) {
     final meanStat = StatsCalculator.computeMean(solves);
     final statValue = meanStat.displayedValue;
@@ -76,6 +66,16 @@ class SessionStats extends StatelessWidget {
     final statValue = averageStat.displayedValue;
     return Text(
       'Last $statName: $statValue',
+      style: textStyle,
+    );
+  }
+
+  Widget _getBestAverageText(List<Solve> solves, TextStyle? textStyle) {
+    final averageStat = StatsCalculator.computeBestAverage(solves, 5);
+    final statName = averageStat.displayedName;
+    final statValue = averageStat.displayedValue;
+    return Text(
+      'Best $statName: $statValue',
       style: textStyle,
     );
   }
