@@ -15,6 +15,16 @@ class BestStat extends Stat with EquatableMixin {
   final bool _dnf;
 
   @override
+  int? get value {
+    return _value;
+  }
+
+  @override
+  bool get isDnf {
+    return _dnf;
+  }
+
+  @override
   String get displayedName {
     return 'Best';
   }

@@ -56,6 +56,15 @@ class StatsCalculator {
     return AverageStat(average, nbSolves);
   }
 
+  static Stat computeBestAverage(List<Solve> solves, int nbSolves) {
+    Stat bestAverage = AverageStat.empty(nbSolves);
+    for (var i = 0; i <= solves.length - nbSolves; i++) {
+      final average = computeAverage(solves.sublist(i, i + nbSolves), nbSolves);
+      if (bestAverage < average) bestAverage = average;
+    }
+    return bestAverage;
+  }
+
   static List<int> _getTimes(Iterable<Solve> solves) {
     return solves
         .map((s) => s.effectiveTime.inMilliseconds)
