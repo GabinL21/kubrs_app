@@ -27,23 +27,24 @@ class SolveDetailsView extends StatelessWidget {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 96, 32, 96),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          Column(
-            children: [
-              _getFaceVisualization(),
-              _getSolveTime(theme),
-              _getSolveDateTime(theme),
-            ],
-          ),
+          _getFaceVisualization(),
+          _getSolveTime(theme),
+          _getSolveDateTime(theme),
+          _getScrambleCard(theme),
         ],
       ),
     );
   }
 
   Widget _getFaceVisualization() {
-    return ScrambleVisualizer.getUpFace(solve.scramble);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ScrambleVisualizer.getUpFace(solve.scramble),
+      ],
+    );
   }
 
   Widget _getSolveTime(ThemeData theme) {
@@ -58,6 +59,47 @@ class SolveDetailsView extends StatelessWidget {
       dateFormat.format(solve.timestamp),
       style: theme.textTheme.displayMedium
           ?.copyWith(color: theme.colorScheme.secondary),
+    );
+  }
+
+  Widget _getScrambleCard(ThemeData theme) {
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: theme.colorScheme.shadow,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          _getScrambleText(theme),
+          _getScrambleVisualization(),
+        ],
+      ),
+    );
+  }
+
+  Widget _getScrambleText(ThemeData theme) {
+    return Text(
+      solve.scramble,
+      textAlign: TextAlign.center,
+      style: theme.textTheme.displaySmall
+          ?.copyWith(color: theme.colorScheme.secondary),
+    );
+  }
+
+  Widget _getScrambleVisualization() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ScrambleVisualizer.getCube(solve.scramble),
+      ],
     );
   }
 }
