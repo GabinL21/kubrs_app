@@ -5,6 +5,7 @@ import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/view/solve_details_delete_button.dart';
+import 'package:kubrs_app/solve/view/solve_details_share_button.dart';
 
 class SolveDetailsPage extends StatelessWidget {
   const SolveDetailsPage({
@@ -21,7 +22,10 @@ class SolveDetailsPage extends StatelessWidget {
     return BlocProvider.value(
       value: solveBloc,
       child: Scaffold(
-        appBar: AppBar(backgroundColor: Colors.transparent),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: [SolveDetailsShareButton(solve: solve)],
+        ),
         body: SolveDetailsView(solve: solve),
       ),
     );
