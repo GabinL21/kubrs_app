@@ -19,7 +19,7 @@ void main() {
     const errorScramble = 'a b c d';
 
     testWidgets('displays 9 squares when visualizing up face', (tester) async {
-      final visualization = ScrambleVisualizer.getUpFace(scramble);
+      final visualization = ScrambleVisualizer.getUpFace(scramble: scramble);
       await tester.pumpVisualization(visualization);
       expect(find.byType(Container), findsNWidgets(9));
     });
@@ -27,7 +27,8 @@ void main() {
     testWidgets(
         'displays 9 squares when visualizing up face with an empty scramble',
         (tester) async {
-      final visualization = ScrambleVisualizer.getUpFace(emptyScramble);
+      final visualization =
+          ScrambleVisualizer.getUpFace(scramble: emptyScramble);
       await tester.pumpVisualization(visualization);
       expect(find.byType(Container), findsNWidgets(9));
     });
@@ -35,13 +36,14 @@ void main() {
     testWidgets(
         'displays 9 squares when visualizing up face with an error scramble',
         (tester) async {
-      final visualization = ScrambleVisualizer.getUpFace(errorScramble);
+      final visualization =
+          ScrambleVisualizer.getUpFace(scramble: errorScramble);
       await tester.pumpVisualization(visualization);
       expect(find.byType(Container), findsNWidgets(9));
     });
 
     testWidgets('displays 54 squares when visualizing cube', (tester) async {
-      final visualization = ScrambleVisualizer.getCube(scramble);
+      final visualization = ScrambleVisualizer.getCube(scramble: scramble);
       await tester.pumpVisualization(visualization);
       expect(find.byType(Container), findsNWidgets(54));
     });
@@ -49,7 +51,7 @@ void main() {
     testWidgets(
         'displays 54 squares when visualizing cube with an empty scramble',
         (tester) async {
-      final visualization = ScrambleVisualizer.getCube(emptyScramble);
+      final visualization = ScrambleVisualizer.getCube(scramble: emptyScramble);
       await tester.pumpVisualization(visualization);
       expect(find.byType(Container), findsNWidgets(54));
     });
@@ -57,7 +59,7 @@ void main() {
     testWidgets(
         'displays 54 squares when visualizing cube with an error scramble',
         (tester) async {
-      final visualization = ScrambleVisualizer.getCube(errorScramble);
+      final visualization = ScrambleVisualizer.getCube(scramble: errorScramble);
       await tester.pumpVisualization(visualization);
       expect(find.byType(Container), findsNWidgets(54));
     });
