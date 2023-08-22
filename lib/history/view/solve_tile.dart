@@ -43,9 +43,9 @@ class SolveTile extends StatelessWidget {
     final solveBloc = BlocProvider.of<SolveBloc>(context);
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => SolveDetailsPage(
-          solve: solve,
-          solveBloc: solveBloc,
+        builder: (context) => BlocProvider.value(
+          value: solveBloc,
+          child: SolveDetailsPage(solve: solve),
         ),
       ),
     );

@@ -31,7 +31,14 @@ class SolveRepository {
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getStreamOfSolvesSince(
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSolvesStream() {
+    return _solvesCollection
+        .where('uid', isEqualTo: _uid)
+        .orderBy('timestamp', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSolvesStreamSince(
     DateTime dateTime,
   ) {
     return _solvesCollection
