@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kubrs_app/details/view/solve_details_delete_button.dart';
+import 'package:kubrs_app/details/view/solve_details_edit_button.dart';
+import 'package:kubrs_app/details/view/solve_details_share_button.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
-import 'package:kubrs_app/solve/view/solve_details_delete_button.dart';
-import 'package:kubrs_app/solve/view/solve_details_share_button.dart';
 
 class SolveDetailsPage extends StatelessWidget {
   const SolveDetailsPage({super.key, required this.solve});
@@ -126,17 +127,10 @@ class SolveDetailsView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _getEditButton(theme),
+        SolveDetailsEditButton(solve: solve),
         const SizedBox(width: 32),
         SolveDetailsDeleteButton(solve: solve),
       ],
-    );
-  }
-
-  Widget _getEditButton(ThemeData theme) {
-    return IconButton(
-      onPressed: () => {},
-      icon: Icon(Icons.edit_outlined, color: theme.colorScheme.primary),
     );
   }
 }
