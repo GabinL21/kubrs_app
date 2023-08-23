@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -37,32 +36,52 @@ class ImportDialog extends StatelessWidget {
     );
   }
 
-  Future<void> _getOptionAction(
+  void _getOptionAction(
     SolveParser solveParser,
     BuildContext context,
-  ) async {
-    final List<Solve> solves;
+  ) {
     try {
-      solves = await _launchImportProcess(solveParser);
-    } catch (e) {
-      if (!context.mounted) return;
-      Navigator.pop(context); // Pop import dialog
-      _displayErrorSnackBar(context);
-      return;
-    }
-    if (!context.mounted) return;
-    Navigator.pop(context); // Pop import dialog
-    if (solves.isNotEmpty) {
-      _displayConfirmationDialog(solves, context);
+      _launchImportProcess(solveParser, context);
+    } catch (_) {
+      _handleError(context);
     }
   }
 
-  Future<List<Solve>> _launchImportProcess(SolveParser solveParser) async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null || result.files.single.path == null) return List.empty();
+  void _launchImportProcess(SolveParser solveParser, BuildContext context) {
+    FilePicker.platform
+        .pickFiles()
+        .then((result) => _processResult(result, solveParser, context))
+        .catchError((_) => _handleError(context));
+  }
+
+  void _processResult(
+    FilePickerResult? result,
+    SolveParser solveParser,
+    BuildContext context,
+  ) {
+    if (result == null || result.files.single.path == null) return;
     final file = File(result.files.single.path!);
-    final textSolves = await file.readAsString();
-    return solveParser.call(textSolves);
+    file
+        .readAsString()
+        .then(
+          (textSolves) => _processTextSolves(textSolves, solveParser, context),
+        )
+        .catchError((_) => _handleError(context));
+    ;
+  }
+
+  void _processTextSolves(
+    String textSolves,
+    SolveParser solveParser,
+    BuildContext context,
+  ) {
+    try {
+      final solves = solveParser.call(textSolves);
+      Navigator.pop(context); // Pop import dialog
+      _displayConfirmationDialog(solves, context);
+    } catch (_) {
+      _handleError(context);
+    }
   }
 
   void _displayConfirmationDialog(List<Solve> solves, BuildContext context) {
@@ -70,6 +89,11 @@ class ImportDialog extends StatelessWidget {
       context: context,
       builder: (_) => ImportConfirmationDialog(solves: solves),
     );
+  }
+
+  void _handleError(BuildContext context) {
+    Navigator.pop(context); // Pop import dialog
+    _displayErrorSnackBar(context);
   }
 
   void _displayErrorSnackBar(BuildContext context) {
