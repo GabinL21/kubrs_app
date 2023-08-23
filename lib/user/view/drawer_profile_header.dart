@@ -16,15 +16,8 @@ class DrawerProfileHeader extends StatelessWidget {
   }
 
   Widget _getHeaderContent(UserState userState, ThemeData theme) {
-    if (userState is UserLoaded) {
-      return Text(
-        userState.userName,
-        style: theme.textTheme.displayMedium,
-      );
-    }
-    return Text(
-      'Loading...',
-      style: theme.textTheme.displayMedium,
-    );
+    final displayedUserName =
+        userState is UserLoaded ? userState.userName : 'Loading...';
+    return Text(displayedUserName, style: theme.textTheme.displayMedium);
   }
 }
