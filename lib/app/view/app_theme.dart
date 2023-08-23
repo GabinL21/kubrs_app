@@ -10,6 +10,7 @@ class AppTheme {
     secondary: Color.fromRGBO(132, 132, 132, 1),
     onPrimary: Color.fromRGBO(69, 69, 69, 1),
     tertiary: Color.fromRGBO(88, 136, 229, 1),
+    onTertiary: Colors.white,
     error: Color.fromRGBO(249, 82, 82, 1),
     shadow: Color.fromRGBO(0, 0, 0, 0.05),
   );
@@ -69,6 +70,14 @@ class AppTheme {
     contentTextStyle: _textTheme.displaySmall,
   );
 
+  static final SnackBarThemeData _snackBarTheme = SnackBarThemeData(
+    backgroundColor: _colorScheme.tertiary,
+    contentTextStyle:
+        _textTheme.displaySmall?.copyWith(color: _colorScheme.onTertiary),
+    behavior: SnackBarBehavior.floating,
+    elevation: 0,
+  );
+
   static ThemeData get themeData {
     return ThemeData(
       colorScheme: _colorScheme,
@@ -79,6 +88,7 @@ class AppTheme {
       drawerTheme: _drawerTheme,
       progressIndicatorTheme: _progressIndicatorTheme,
       dialogTheme: _dialogTheme,
+      snackBarTheme: _snackBarTheme,
     );
   }
 }
