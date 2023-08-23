@@ -13,14 +13,14 @@ void main() {
       expect(dnfBest.displayedValue, 'DNF');
     });
 
-    test('displays best value rounded down correctly', () {
+    test('displays best value nearest to be rounded down correctly', () {
       final best = BestStat(10004);
       expect(best.displayedValue, '10.00');
     });
 
-    test('displays best value rounded up correctly', () {
+    test('displays best value nearest to be rounded up correctly', () {
       final best = BestStat(9995);
-      expect(best.displayedValue, '10.00');
+      expect(best.displayedValue, '09.99');
     });
   });
 }

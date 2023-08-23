@@ -22,7 +22,7 @@ class CubeDeskSolveParser {
 
   Solve _parseSolve(Map<String, dynamic> jsonSolve) {
     final timestamp = DateTime.parse(jsonSolve['created_at'] as String);
-    final timeInMillis = ((jsonSolve['time'] as double) * 1000).round();
+    final timeInMillis = ((jsonSolve['time'] as double) * 1000).floor();
     final time = Duration(milliseconds: timeInMillis);
     final scramble = jsonSolve['scramble'] as String;
     final plusTwo = jsonSolve['plus_two'] as bool;

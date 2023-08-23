@@ -33,12 +33,12 @@ void main() {
       expect(plusTwoSolve.effectiveTime, const Duration(seconds: 12));
     });
 
-    test('returns correct time to display rounded down', () {
+    test('returns correct time to display nearest to be rounded down', () {
       expect(roundedDownSolve.timeToDisplay, '10.00');
     });
 
-    test('returns correct time to display rounded up', () {
-      expect(roundedUpSolve.timeToDisplay, '10.00');
+    test('returns correct time to display nearest to be rounded up', () {
+      expect(roundedUpSolve.timeToDisplay, '09.99');
     });
 
     test('returns correct time to display without +2', () {

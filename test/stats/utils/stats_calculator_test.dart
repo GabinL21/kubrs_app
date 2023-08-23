@@ -115,9 +115,9 @@ void main() {
         expect(meanStat, MeanStat(10000, 5));
       });
 
-      test('rounds last digits when computing mean', () {
+      test('rounds down last digit when computing mean', () {
         final meanStat = StatsCalculator.computeMean(solvesWithLastDigits);
-        expect(meanStat, MeanStat(10006, 5));
+        expect(meanStat, MeanStat(10005, 5));
       });
 
       test('computes mean of 5 with more than 5 solves correctly', () {
@@ -146,24 +146,24 @@ void main() {
           'returns correct average when more than 1 solve is DNF '
           'but not in the average of range', () {
         final averageStat = StatsCalculator.computeAverage(solvesWithDnf, 5);
-        expect(averageStat, AverageStat(10667, 5));
+        expect(averageStat, AverageStat(10666, 5));
       });
 
       test('computes average with +2 correctly', () {
         final averageStat =
             StatsCalculator.computeAverage(solvesWithPlusTwo, 5);
-        expect(averageStat, AverageStat(10667, 5));
+        expect(averageStat, AverageStat(10666, 5));
       });
 
-      test('rounds last digits when computing average', () {
+      test('round down last digit when computing average', () {
         final averageStat =
             StatsCalculator.computeAverage(solvesWithLastDigits, 5);
-        expect(averageStat, AverageStat(10007, 5));
+        expect(averageStat, AverageStat(10005, 5));
       });
 
       test('computes average of 5 with more than 5 solves correctly', () {
         final averageStat = StatsCalculator.computeAverage(sevenSolves, 5);
-        expect(averageStat, AverageStat(10667, 5));
+        expect(averageStat, AverageStat(10666, 5));
       });
 
       test('returns empty best average when solves are empty', () {
@@ -175,13 +175,13 @@ void main() {
       test('computes best average with +2 correctly', () {
         final bestAverageStat =
             StatsCalculator.computeBestAverage(sevenSolves, 5);
-        expect(bestAverageStat, AverageStat(9667, 5));
+        expect(bestAverageStat, AverageStat(9666, 5));
       });
 
       test('computes best average with some DNF solves correctly', () {
         final bestAverageStat =
             StatsCalculator.computeBestAverage(solvesWithDnf, 5);
-        expect(bestAverageStat, AverageStat(10667, 5));
+        expect(bestAverageStat, AverageStat(10666, 5));
       });
 
       test('returns best DNF average when every solve is DNF', () {

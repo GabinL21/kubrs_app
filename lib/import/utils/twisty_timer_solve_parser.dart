@@ -18,7 +18,7 @@ class TwistyTimerSolveParser {
 
   Solve _parseSolve(String textSolve) {
     final textFields = textSolve.split(';').map(_stripStringQuotes).toList();
-    final timeInMillis = (double.parse(textFields[0]) * 1000).round();
+    final timeInMillis = (double.parse(textFields[0]) * 1000).floor();
     final time = Duration(milliseconds: timeInMillis);
     final scramble = textFields[1];
     final timestamp = DateTime.parse(textFields[2]);

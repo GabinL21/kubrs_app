@@ -13,14 +13,14 @@ void main() {
       expect(dnfWorst.displayedValue, 'DNF');
     });
 
-    test('displays worst value rounded down correctly', () {
+    test('displays worst value nearest to be rounded down correctly', () {
       final worst = WorstStat(10004);
       expect(worst.displayedValue, '10.00');
     });
 
-    test('displays worst value rounded up correctly', () {
+    test('displays worst value nearest to be rounded up correctly', () {
       final worst = WorstStat(9995);
-      expect(worst.displayedValue, '10.00');
+      expect(worst.displayedValue, '09.99');
     });
   });
 }

@@ -13,14 +13,14 @@ void main() {
       expect(dnfMean.displayedValue, 'DNF');
     });
 
-    test('displays mean value rounded down correctly', () {
+    test('displays mean value nearest to be rounded down correctly', () {
       final mean = MeanStat(10004, 5);
       expect(mean.displayedValue, '10.00');
     });
 
-    test('displays mean value rounded up correctly', () {
+    test('displays mean value nearest to be rounded up correctly', () {
       final mean = MeanStat(9995, 5);
-      expect(mean.displayedValue, '10.00');
+      expect(mean.displayedValue, '09.99');
     });
   });
 }
