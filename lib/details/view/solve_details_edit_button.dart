@@ -48,21 +48,24 @@ class SolveDetailsEditButton extends StatelessWidget {
   }
 
   Widget _getEditDialogContent(BuildContext context, Solve solve) {
+    final theme = Theme.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: const Text('+2'),
+          title: Text('+2', style: theme.textTheme.displaySmall),
           leading: Switch(
             value: solve.plusTwo,
             onChanged: (_) => _togglePlusTwo(context),
+            activeColor: theme.colorScheme.tertiary,
           ),
         ),
         ListTile(
-          title: const Text('DNF'),
+          title: Text('DNF', style: theme.textTheme.displaySmall),
           leading: Switch(
             value: solve.dnf,
             onChanged: (_) => _toggleDnf(context),
+            activeColor: theme.colorScheme.tertiary,
           ),
         ),
       ],
