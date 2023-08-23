@@ -13,11 +13,27 @@ class Solve extends Equatable {
     this.dnf = false,
   });
 
-  factory Solve.create({required Duration time, required String scramble}) {
+  factory Solve.create({
+    required DateTime timestamp,
+    required Duration time,
+    required String scramble,
+    bool plusTwo = false,
+    bool dnf = false,
+  }) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final timestamp = DateTime.now();
     return Solve(
       uid: uid,
+      timestamp: timestamp,
+      time: time,
+      scramble: scramble,
+      plusTwo: plusTwo,
+      dnf: dnf,
+    );
+  }
+
+  factory Solve.createNow({required Duration time, required String scramble}) {
+    final timestamp = DateTime.now();
+    return Solve.create(
       timestamp: timestamp,
       time: time,
       scramble: scramble,

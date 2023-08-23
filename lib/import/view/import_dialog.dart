@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:kubrs_app/import/utils/cstimer_solve_importer.dart';
+import 'package:kubrs_app/import/utils/solve_importer.dart';
 
 class ImportDialog extends StatelessWidget {
   const ImportDialog({super.key});
@@ -8,7 +14,7 @@ class ImportDialog extends StatelessWidget {
     return SimpleDialog(
       title: _getTitle(context),
       children: [
-        _getOption('csTimer', context),
+        _getOption('csTimer', CSTimerSolveImporter(), context),
       ],
     );
   }
@@ -20,10 +26,15 @@ class ImportDialog extends StatelessWidget {
     );
   }
 
-  Widget _getOption(String timerName, BuildContext context) {
+  Widget _getOption(
+    String timerName,
+    SolveImporter solveImporter,
+    BuildContext context,
+  ) {
     final theme = Theme.of(context);
     return SimpleDialogOption(
       onPressed: () {
+        _launchImportProcess(solveImporter);
         Navigator.pop(context);
       },
       child: Text(
@@ -32,5 +43,13 @@ class ImportDialog extends StatelessWidget {
             ?.copyWith(color: theme.colorScheme.secondary),
       ),
     );
+  }
+
+  Future<void> _launchImportProcess(SolveImporter solveImporter) async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null || result.files.single.path == null) return;
+    final file = File(result.files.single.path!);
+    final rawData = await file.readAsString();
+    final solves = solveImporter.convertRawDataToSolves(rawData);
   }
 }
