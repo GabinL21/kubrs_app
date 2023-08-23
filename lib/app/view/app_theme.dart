@@ -65,6 +65,7 @@ class AppTheme {
 
   static final DialogTheme _dialogTheme = DialogTheme(
     backgroundColor: _colorScheme.background,
+    titleTextStyle: _textTheme.displayMedium,
     contentTextStyle: _textTheme.displaySmall,
   );
 

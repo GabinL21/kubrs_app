@@ -14,17 +14,10 @@ class ImportDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: _getTitle(context),
+      title: const Text('From which timer do you want to import solves?'),
       children: [
         _getOption('csTimer', CSTimerSolveImporter(), context),
       ],
-    );
-  }
-
-  Widget _getTitle(BuildContext context) {
-    return Text(
-      'From which timer do you want to import solves?',
-      style: Theme.of(context).textTheme.displayMedium,
     );
   }
 
@@ -73,7 +66,7 @@ class ImportDialog extends StatelessWidget {
   }
 
   void _displayConfirmationDialog(List<Solve> solves, BuildContext context) {
-    showDialog<SimpleDialog>(
+    showDialog<ImportConfirmationDialog>(
       context: context,
       builder: (_) => ImportConfirmationDialog(solves: solves),
     );
