@@ -155,7 +155,7 @@ void main() {
         expect(averageStat, AverageStat(10666, 5));
       });
 
-      test('round down last digit when computing average', () {
+      test('rounds down last digit when computing average', () {
         final averageStat =
             StatsCalculator.computeAverage(solvesWithLastDigits, 5);
         expect(averageStat, AverageStat(10005, 5));
