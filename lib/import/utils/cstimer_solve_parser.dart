@@ -29,15 +29,14 @@ class CSTimerSolveParser {
   }
 
   Solve _parseSolve(List<dynamic> solveData) {
-    final solve = Solve.create(
+    return Solve.create(
       uid: uid,
       timestamp: _parseTimestamp(solveData),
       time: _parseTime(solveData),
       scramble: _parseScramble(solveData),
+      plusTwo: _parsePlusTwo(solveData),
+      dnf: _parseDnf(solveData),
     );
-    if (_isDnf(solveData)) return Solve.cloneAndToggleDNF(solve: solve);
-    if (_isPlusTwo(solveData)) return Solve.cloneAndTogglePlusTwo(solve: solve);
-    return solve;
   }
 
   DateTime _parseTimestamp(List<dynamic> solveData) {
@@ -54,12 +53,12 @@ class CSTimerSolveParser {
     return solveData[1] as String;
   }
 
-  bool _isPlusTwo(List<dynamic> solveData) {
+  bool _parsePlusTwo(List<dynamic> solveData) {
     final penalty = (solveData[0] as List<dynamic>)[0] as int;
     return penalty == 2000;
   }
 
-  bool _isDnf(List<dynamic> solveData) {
+  bool _parseDnf(List<dynamic> solveData) {
     final penalty = (solveData[0] as List<dynamic>)[0] as int;
     return penalty == -1;
   }
