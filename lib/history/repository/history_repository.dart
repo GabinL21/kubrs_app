@@ -4,7 +4,7 @@ import 'package:kubrs_app/history/model/history.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class HistoryRepository {
-  static const int pageSize = 20;
+  static const int pageSize = 10;
   final _uid = FirebaseAuth.instance.currentUser!.uid;
   final _solvesCollection = FirebaseFirestore.instance.collection('solves');
 
