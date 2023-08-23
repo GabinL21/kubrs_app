@@ -20,7 +20,7 @@ class SolveDetailsEditButton extends StatelessWidget {
 
   void _showEditDialog(BuildContext context) {
     final editDialog = _getEditDialog(context);
-    showDialog<AlertDialog>(
+    showDialog<SimpleDialog>(
       context: context,
       builder: (BuildContext context) {
         return editDialog;
@@ -38,8 +38,8 @@ class SolveDetailsEditButton extends StatelessWidget {
       ],
       child: BlocBuilder<SolveDetailsCubit, Solve>(
         builder: (context, solve) {
-          return AlertDialog(
-            content: _getEditDialogContent(context, solve),
+          return SimpleDialog(
+            children: _getEditDialogContent(context, solve),
           );
         },
       ),
@@ -47,29 +47,26 @@ class SolveDetailsEditButton extends StatelessWidget {
     return alert;
   }
 
-  Widget _getEditDialogContent(BuildContext context, Solve solve) {
+  List<Widget> _getEditDialogContent(BuildContext context, Solve solve) {
     final theme = Theme.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ListTile(
-          title: Text('+2', style: theme.textTheme.displaySmall),
-          leading: Switch(
-            value: solve.plusTwo,
-            onChanged: (_) => _togglePlusTwo(context),
-            activeColor: theme.colorScheme.tertiary,
-          ),
+    return [
+      ListTile(
+        title: Text('+2', style: theme.textTheme.displaySmall),
+        leading: Switch(
+          value: solve.plusTwo,
+          onChanged: (_) => _togglePlusTwo(context),
+          activeColor: theme.colorScheme.tertiary,
         ),
-        ListTile(
-          title: Text('DNF', style: theme.textTheme.displaySmall),
-          leading: Switch(
-            value: solve.dnf,
-            onChanged: (_) => _toggleDnf(context),
-            activeColor: theme.colorScheme.tertiary,
-          ),
+      ),
+      ListTile(
+        title: Text('DNF', style: theme.textTheme.displaySmall),
+        leading: Switch(
+          value: solve.dnf,
+          onChanged: (_) => _toggleDnf(context),
+          activeColor: theme.colorScheme.tertiary,
         ),
-      ],
-    );
+      ),
+    ];
   }
 
   void _togglePlusTwo(BuildContext context) {

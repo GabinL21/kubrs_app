@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kubrs_app/auth/auth.dart';
-import 'package:kubrs_app/user/bloc/user_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:kubrs_app/user/view/drawer_donate_button.dart';
+import 'package:kubrs_app/user/view/drawer_import_button.dart';
+import 'package:kubrs_app/user/view/drawer_profile_header.dart';
+import 'package:kubrs_app/user/view/drawer_sign_out_button.dart';
 
 class UserDrawer extends StatelessWidget {
   const UserDrawer({super.key});
@@ -16,7 +16,7 @@ class UserDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _getHeader(context),
+            const DrawerProfileHeader(),
             _getFooter(context),
           ],
         ),
@@ -24,58 +24,14 @@ class UserDrawer extends StatelessWidget {
     );
   }
 
-  Widget _getHeader(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-      builder: (context, state) {
-        if (state is UserLoaded) {
-          return Text(
-            state.userName,
-            style: Theme.of(context).textTheme.displayMedium,
-          );
-        }
-        return Text(
-          'Loading...',
-          style: Theme.of(context).textTheme.displayMedium,
-        );
-      },
-    );
-  }
-
   Widget _getFooter(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _getDonateButton(context),
-        _getSignOutButton(context),
+        DrawerImportButton(),
+        DrawerDonateButton(),
+        DrawerSignOutButton(),
       ],
-    );
-  }
-
-  Widget _getDonateButton(BuildContext context) {
-    final url = Uri.parse('https://ko-fi.com/kubrs');
-    final color = Theme.of(context).colorScheme.primary;
-    return TextButton.icon(
-      onPressed: () async =>
-          {if (await canLaunchUrl(url)) await launchUrl(url)},
-      icon: Icon(Icons.attach_money_outlined, color: color),
-      label: Text(
-        'Donate',
-        style: Theme.of(context).textTheme.displayMedium,
-      ),
-    );
-  }
-
-  Widget _getSignOutButton(BuildContext context) {
-    final color = Theme.of(context).colorScheme.error;
-    return TextButton.icon(
-      onPressed: () => context.read<AuthBloc>().add(SignOutRequested()),
-      icon: Icon(Icons.logout_outlined, color: color),
-      label: Text(
-        'Sign out',
-        style: Theme.of(context).textTheme.displayMedium?.copyWith(
-              color: color,
-            ),
-      ),
     );
   }
 }

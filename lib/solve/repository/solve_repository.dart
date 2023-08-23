@@ -7,6 +7,9 @@ class SolveRepository {
   final _solvesCollection = FirebaseFirestore.instance.collection('solves');
 
   Future<void> addSolve(Solve solve) async {
+    if (await _getSolveDocumentId(solve.timestamp) != null) {
+      return; // The solve is already stored, cancel operation
+    }
     await _solvesCollection.add(solve.toJson());
   }
 

@@ -11,8 +11,8 @@ class ResetSolve extends SolveEvent {
   const ResetSolve();
 }
 
-class AddSolve extends SolveEvent {
-  const AddSolve({required this.solve});
+class EndSolve extends SolveEvent {
+  const EndSolve({required this.solve});
 
   final Solve solve;
 }

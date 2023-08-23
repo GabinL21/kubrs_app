@@ -43,7 +43,7 @@ class DeleteSolveButton extends StatelessWidget {
   }
 
   TextButton _getCancelButton(BuildContext context) {
-    final cancelButton = TextButton(
+    return TextButton(
       child: Text(
         'Cancel',
         style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -51,14 +51,13 @@ class DeleteSolveButton extends StatelessWidget {
             ),
       ),
       onPressed: () {
-        Navigator.of(context).pop();
+        Navigator.pop(context);
       },
     );
-    return cancelButton;
   }
 
   TextButton _getDeleteButton(BuildContext context) {
-    final continueButton = TextButton(
+    return TextButton(
       child: Text(
         'Delete',
         style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -68,10 +67,9 @@ class DeleteSolveButton extends StatelessWidget {
       onPressed: () {
         _deleteLastSolve(context);
         _reinitializeTimer(context);
-        Navigator.of(context).pop();
+        Navigator.pop(context);
       },
     );
-    return continueButton;
   }
 
   void _deleteLastSolve(BuildContext context) {

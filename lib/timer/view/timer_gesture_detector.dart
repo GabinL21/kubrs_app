@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 
 class TimerGestureDetector extends StatelessWidget {
   const TimerGestureDetector({super.key, required this.child});
+
+  static final String uid = FirebaseAuth.instance.currentUser!.uid;
 
   final Widget child;
 
@@ -42,8 +45,12 @@ class TimerGestureDetector extends StatelessWidget {
     if (state is! TimerRunning) return;
     context.read<TimerBloc>().add(StopTimer(duration: state.duration));
     final scramble = context.read<ScrambleBloc>().state.scramble;
-    final solve = Solve.create(time: state.duration, scramble: scramble);
-    context.read<SolveBloc>().add(AddSolve(solve: solve));
+    final solve = Solve.createNow(
+      uid: uid,
+      time: state.duration,
+      scramble: scramble,
+    );
+    context.read<SolveBloc>().add(EndSolve(solve: solve));
     context.read<ScrambleBloc>().add(GenerateScrambleEvent());
   }
 
