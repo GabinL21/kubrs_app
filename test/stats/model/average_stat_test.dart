@@ -13,14 +13,14 @@ void main() {
       expect(dnfAverage.displayedValue, 'DNF');
     });
 
-    test('displays average value rounded down correctly', () {
+    test('displays average value nearest to be rounded down correctly', () {
       final average = AverageStat(10004, 5);
       expect(average.displayedValue, '10.00');
     });
 
-    test('displays average value rounded up correctly', () {
+    test('displays average value nearest to be rounded up correctly', () {
       final average = AverageStat(9995, 5);
-      expect(average.displayedValue, '10.00');
+      expect(average.displayedValue, '09.99');
     });
   });
 }

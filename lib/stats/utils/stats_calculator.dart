@@ -34,7 +34,7 @@ class StatsCalculator {
     final meanSolves =
         nbSolves == null ? nonDnfSolves : nonDnfSolves.take(nbSolves);
     final times = _getTimes(meanSolves);
-    final mean = times.average.round();
+    final mean = times.average.floor();
     return MeanStat(mean, nbSolves ??= nonDnfSolves.length);
   }
 
@@ -52,7 +52,7 @@ class StatsCalculator {
     times.removeAt(minTimeIndex);
     final maxTimeIndex = times.indexOf(times.max);
     times.removeAt(maxTimeIndex);
-    final average = times.average.round();
+    final average = times.average.floor();
     return AverageStat(average, nbSolves);
   }
 
@@ -66,10 +66,6 @@ class StatsCalculator {
   }
 
   static List<int> _getTimes(Iterable<Solve> solves) {
-    return solves
-        .map((s) => s.effectiveTime.inMilliseconds)
-        // Round last digit to compute rounding properly
-        .map((t) => (t / 10).round() * 10)
-        .toList();
+    return solves.map((s) => s.effectiveTime.inMilliseconds).toList();
   }
 }
