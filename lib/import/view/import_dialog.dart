@@ -1,10 +1,12 @@
-import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/import/utils/cstimer_solve_importer.dart';
 import 'package:kubrs_app/import/utils/solve_importer.dart';
+import 'package:kubrs_app/import/view/import_confirmation_dialog.dart';
+import 'package:kubrs_app/solve/model/solve.dart';
 
 class ImportDialog extends StatelessWidget {
   const ImportDialog({super.key});
@@ -46,25 +48,36 @@ class ImportDialog extends StatelessWidget {
     SolveImporter solveImporter,
     BuildContext context,
   ) async {
+    final List<Solve> solves;
     try {
-      await _launchImportProcess(solveImporter);
+      solves = await _launchImportProcess(solveImporter);
     } catch (e) {
       if (!context.mounted) return;
-      Navigator.pop(context); // Pop dialog
+      Navigator.pop(context); // Pop import dialog
       Navigator.pop(context); // Pop drawer
       _displaySnackBarError(context);
       return;
     }
     if (!context.mounted) return;
-    Navigator.pop(context); // Pop dialog
+    Navigator.pop(context); // Pop import dialog
+    if (solves.isNotEmpty) {
+      _displayConfirmationDialog(solves, context);
+    }
   }
 
-  Future<void> _launchImportProcess(SolveImporter solveImporter) async {
+  Future<List<Solve>> _launchImportProcess(SolveImporter solveImporter) async {
     final result = await FilePicker.platform.pickFiles();
-    if (result == null || result.files.single.path == null) return;
+    if (result == null || result.files.single.path == null) return List.empty();
     final file = File(result.files.single.path!);
     final rawData = await file.readAsString();
-    solveImporter.convertRawDataToSolves(rawData);
+    return solveImporter.convertRawDataToSolves(rawData);
+  }
+
+  void _displayConfirmationDialog(List<Solve> solves, BuildContext context) {
+    showDialog<SimpleDialog>(
+      context: context,
+      builder: (_) => ImportConfirmationDialog(solves: solves),
+    );
   }
 
   void _displaySnackBarError(BuildContext context) {
