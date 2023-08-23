@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/import/utils/cstimer_solve_parser.dart';
+import 'package:kubrs_app/import/utils/twisty_timer_solve_parser.dart';
 import 'package:kubrs_app/import/view/import_dialog_option.dart';
 
 class ImportDialog extends StatelessWidget {
@@ -16,6 +17,10 @@ class ImportDialog extends StatelessWidget {
         ImportDialogOption(
           timerName: 'csTimer',
           solveParser: CSTimerSolveParser(uid: uid).parseSolves,
+        ),
+        ImportDialogOption(
+          timerName: 'Twisty Timer',
+          solveParser: TwistyTimerSolveParser(uid: uid).parseSolves,
         ),
       ],
     );
