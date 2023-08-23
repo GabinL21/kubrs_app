@@ -58,6 +58,13 @@ class SolveDetailsEditButton extends StatelessWidget {
             onChanged: (_) => _togglePlusTwo(context),
           ),
         ),
+        ListTile(
+          title: const Text('DNF'),
+          leading: Switch(
+            value: solve.dnf,
+            onChanged: (_) => _toggleDnf(context),
+          ),
+        ),
       ],
     );
   }
@@ -67,5 +74,12 @@ class SolveDetailsEditButton extends StatelessWidget {
     final solve = solveDetailsCubit.state;
     solveDetailsCubit.togglePlusTwo();
     BlocProvider.of<SolveBloc>(context).add(TogglePlusTwoTag(solve: solve));
+  }
+
+  void _toggleDnf(BuildContext context) {
+    final solveDetailsCubit = BlocProvider.of<SolveDetailsCubit>(context);
+    final solve = solveDetailsCubit.state;
+    solveDetailsCubit.toggleDnf();
+    BlocProvider.of<SolveBloc>(context).add(ToggleDNFTag(solve: solve));
   }
 }
