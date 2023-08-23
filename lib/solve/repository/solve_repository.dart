@@ -31,7 +31,14 @@ class SolveRepository {
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getStreamOfSolvesSince(
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSolvesStream() {
+    return _solvesCollection
+        .where('uid', isEqualTo: _uid)
+        .orderBy('timestamp', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSolvesStreamSince(
     DateTime dateTime,
   ) {
     return _solvesCollection
@@ -40,23 +47,22 @@ class SolveRepository {
         .endAt([dateTime]).snapshots();
   }
 
-  Future<void> updateLastSolve(Solve updatedSolve) async {
-    final lastSolveDocId =
-        await _getLastSolveDocumentId(updatedSolve.timestamp);
+  Future<void> updateSolve(Solve updatedSolve) async {
+    final lastSolveDocId = await _getSolveDocumentId(updatedSolve.timestamp);
     if (lastSolveDocId == null) return;
     await _solvesCollection.doc(lastSolveDocId).set(updatedSolve.toJson());
   }
 
-  Future<void> deleteLastSolve(Solve lastSolve) async {
-    final lastSolveDocId = await _getLastSolveDocumentId(lastSolve.timestamp);
+  Future<void> deleteSolve(Solve solve) async {
+    final lastSolveDocId = await _getSolveDocumentId(solve.timestamp);
     if (lastSolveDocId == null) return;
     await _solvesCollection.doc(lastSolveDocId).delete();
   }
 
-  Future<String?> _getLastSolveDocumentId(DateTime lastSolveTimestamp) async {
+  Future<String?> _getSolveDocumentId(DateTime solveTimestamp) async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
-        .where('timestamp', isEqualTo: lastSolveTimestamp)
+        .where('timestamp', isEqualTo: solveTimestamp)
         .limit(1)
         .get();
     if (snapshot.docs.isEmpty) return null;

@@ -14,3 +14,7 @@ class GetFirstHistory extends HistoryEvent {
 class GetNextHistory extends HistoryEvent {
   const GetNextHistory();
 }
+
+class RefreshHistory extends HistoryEvent {
+  const RefreshHistory();
+}

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/details/view/solve_details_page.dart';
 import 'package:kubrs_app/history/utils/date_time_formatter.dart';
 import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class SolveTile extends StatelessWidget {
@@ -10,25 +13,40 @@ class SolveTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Theme.of(context).colorScheme.shadow,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+    return InkWell(
+      onTap: () => _navigateToSolveDetails(context),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow,
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _getLeftColumn(context),
+            ScrambleVisualizer.getUpFace(scramble: solve.scramble),
+          ],
+        ),
       ),
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _getLeftColumn(context),
-          ScrambleVisualizer.getUpFace(solve.scramble),
-        ],
+    );
+  }
+
+  void _navigateToSolveDetails(BuildContext context) {
+    final solveBloc = BlocProvider.of<SolveBloc>(context);
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(
+        builder: (context) => BlocProvider.value(
+          value: solveBloc,
+          child: SolveDetailsPage(solve: solve),
+        ),
       ),
     );
   }

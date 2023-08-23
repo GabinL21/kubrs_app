@@ -17,7 +17,9 @@ extension on WidgetTester {
       MaterialApp(
         home: BlocProvider.value(
           value: historyBloc,
-          child: const SolvesList(),
+          child: const Scaffold(
+            body: SolvesList(),
+          ),
         ),
       ),
     );

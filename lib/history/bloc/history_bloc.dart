@@ -3,12 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
 part 'history_event.dart';
 part 'history_state.dart';
 
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
-  HistoryBloc({required this.historyRepository}) : super(HistoryInitial()) {
+  HistoryBloc({required this.historyRepository, required this.solveRepository})
+      : super(HistoryInitial()) {
+    solveRepository
+        .getSolvesStream()
+        .listen((_) => add(const RefreshHistory()));
     on<GetFirstHistory>((_, emit) async {
       if (state is! HistoryInitial) return;
       emit(HistoryLoading());
@@ -30,6 +35,11 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       }
       emit(HistoryLoaded(newHistory.solves, newHistory.lastDocument));
     });
+    on<RefreshHistory>((_, emit) {
+      emit(HistoryInitial());
+    });
   }
+
   final HistoryRepository historyRepository;
+  final SolveRepository solveRepository;
 }

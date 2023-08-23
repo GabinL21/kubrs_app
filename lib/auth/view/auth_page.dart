@@ -57,7 +57,7 @@ class AuthView extends StatelessWidget {
 
   Widget _getAuthForm(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 196, 0, 196),
+      padding: const EdgeInsets.fromLTRB(0, 192, 0, 192),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

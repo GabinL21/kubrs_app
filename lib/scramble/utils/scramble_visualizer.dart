@@ -10,78 +10,86 @@ class ScrambleVisualizer {
   static Color red = const Color.fromRGBO(249, 82, 82, 1);
   static Color orange = const Color.fromRGBO(242, 146, 58, 1);
 
-  static double spaceSize = 2;
-  static double largeSpaceSize = 2.5;
-
-  static Widget getLoadingCube() {
-    final cubeSquares = List.generate(54, (_) => CubeSquare(grey));
-    return _getCube(cubeSquares, 'scrambleVisualizationLoading');
+  static Widget getLoadingCube({double size = 8}) {
+    final cubeSquares =
+        List.generate(54, (_) => CubeSquare(color: grey, size: size));
+    return _getCube(
+      cubeSquares: cubeSquares,
+      key: 'scrambleVisualizationLoading',
+    );
   }
 
-  static Widget getCube(String scramble) {
+  static Widget getCube({required String scramble, double size = 8}) {
     final cube = Cube.getScrambledCube(scramble);
-    final cubeSquares = _getSquares(cube.colors);
-    return _getCube(cubeSquares, 'scrambleVisualizationLoaded');
+    final cubeSquares = _getSquares(cube.colors, size);
+    return _getCube(
+      cubeSquares: cubeSquares,
+      key: 'scrambleVisualizationLoaded',
+    );
   }
 
-  static Widget getUpFace(String scramble) {
+  static Widget getUpFace({required String scramble, double size = 10}) {
     final cube = Cube.getScrambledCube(scramble);
     if (cube.isSolved) _getErrorFace();
     final upFaceColors = cube.colors.sublist(0, 9).toList();
-    final upFaceSquares = _getSquares(upFaceColors, isLarge: true);
-    return _getFace(upFaceSquares, isLarge: true);
+    final upFaceSquares = _getSquares(upFaceColors, size);
+    return _getFace(upFaceSquares, size);
   }
 
-  static Widget _getErrorFace() {
+  static Widget _getErrorFace({double size = 10}) {
     final upFaceSquares =
-        List.generate(9, (_) => CubeSquare(grey, isLarge: true));
-    return _getFace(upFaceSquares, isLarge: true);
+        List.generate(9, (_) => CubeSquare(color: grey, size: size));
+    return _getFace(upFaceSquares, size);
   }
 
-  static Widget _getCube(List<CubeSquare> cubeSquares, String key) {
+  static Widget _getCube({
+    required List<CubeSquare> cubeSquares,
+    required String key,
+    double size = 8,
+  }) {
     final upFaceSquares = cubeSquares.sublist(0, 9).toList();
     final rightFaceSquares = cubeSquares.sublist(9, 18).toList();
     final frontFaceSquares = cubeSquares.sublist(18, 27).toList();
     final downFaceSquares = cubeSquares.sublist(27, 36).toList();
     final leftFaceSquares = cubeSquares.sublist(36, 45).toList();
     final bottomFaceSquares = cubeSquares.sublist(45, 54).toList();
+    final space = 4 * size / 8;
     return Row(
       key: Key(key),
       children: [
-        _getFace(leftFaceSquares),
-        const SizedBox(width: 4),
+        _getFace(leftFaceSquares, size),
+        SizedBox(width: space),
         Column(
           children: [
-            _getFace(upFaceSquares),
-            const SizedBox(height: 4),
-            _getFace(frontFaceSquares),
-            const SizedBox(height: 4),
-            _getFace(downFaceSquares),
+            _getFace(upFaceSquares, size),
+            SizedBox(height: space),
+            _getFace(frontFaceSquares, size),
+            SizedBox(height: space),
+            _getFace(downFaceSquares, size),
           ],
         ),
-        const SizedBox(width: 4),
-        _getFace(rightFaceSquares),
-        const SizedBox(width: 4),
-        _getFace(bottomFaceSquares),
+        SizedBox(width: space),
+        _getFace(rightFaceSquares, size),
+        SizedBox(width: space),
+        _getFace(bottomFaceSquares, size),
       ],
     );
   }
 
-  static Widget _getFace(List<CubeSquare> faceSquares, {bool isLarge = false}) {
-    final spaceBetween = isLarge ? largeSpaceSize : spaceSize;
+  static Widget _getFace(List<CubeSquare> faceSquares, double size) {
+    final spaceBetween = 2 * size / 8;
     return Column(
       children: [
-        _getRow(faceSquares.sublist(0, 3), isLarge: isLarge),
+        _getRow(faceSquares.sublist(0, 3), spaceBetween),
         SizedBox(height: spaceBetween),
-        _getRow(faceSquares.sublist(3, 6), isLarge: isLarge),
+        _getRow(faceSquares.sublist(3, 6), spaceBetween),
         SizedBox(height: spaceBetween),
-        _getRow(faceSquares.sublist(6, 9), isLarge: isLarge),
+        _getRow(faceSquares.sublist(6, 9), spaceBetween),
       ],
     );
   }
 
-  static Widget _getRow(List<CubeSquare> rowSquares, {bool isLarge = false}) {
-    final spaceBetween = isLarge ? largeSpaceSize : spaceSize;
+  static Widget _getRow(List<CubeSquare> rowSquares, double spaceBetween) {
     return Row(
       children: [
         rowSquares[0],
@@ -94,13 +102,13 @@ class ScrambleVisualizer {
   }
 
   static List<CubeSquare> _getSquares(
-    List<cube.Color> colors, {
-    bool isLarge = false,
-  }) {
-    return colors.map((c) => _getSquare(c, isLarge: isLarge)).toList();
+    List<cube.Color> colors,
+    double size,
+  ) {
+    return colors.map((c) => _getSquare(c, size)).toList();
   }
 
-  static CubeSquare _getSquare(cube.Color color, {bool isLarge = false}) {
+  static CubeSquare _getSquare(cube.Color color, double size) {
     final boxColor = switch (color) {
       cube.Color.up => white,
       cube.Color.down => yellow,
@@ -109,25 +117,20 @@ class ScrambleVisualizer {
       cube.Color.right => red,
       cube.Color.left => orange,
     };
-    return CubeSquare(boxColor, isLarge: isLarge);
+    return CubeSquare(color: boxColor, size: size);
   }
 }
 
 class CubeSquare extends StatelessWidget {
-  const CubeSquare(this.color, {this.isLarge = false, super.key});
-
-  static double squareSize = 8;
-  static double largeSquareSize = 10;
-  static double borderRadius = 2;
-  static double largeBorderRadius = 2.5;
+  const CubeSquare({required this.color, required this.size, super.key});
 
   final Color color;
-  final bool isLarge;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    final boxSize = isLarge ? largeSquareSize : squareSize;
-    final boxBorderRadius = isLarge ? largeBorderRadius : borderRadius;
+    final boxSize = size;
+    final boxBorderRadius = 2 * size / 8;
     return Container(
       width: boxSize,
       height: boxSize,

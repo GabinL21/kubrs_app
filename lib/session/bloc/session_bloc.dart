@@ -11,7 +11,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   SessionBloc({required this.solveBloc, required this.solveRepository})
       : super(SessionInitial()) {
     solveRepository
-        .getStreamOfSolvesSince(sessionStart)
+        .getSolvesStreamSince(sessionStart)
         .listen((_) => add(const RefreshSessionSolves()));
     on<RefreshSessionSolves>((event, emit) async {
       emit(SessionLoading(state.solves));
