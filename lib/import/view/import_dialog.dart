@@ -33,10 +33,7 @@ class ImportDialog extends StatelessWidget {
   ) {
     final theme = Theme.of(context);
     return SimpleDialogOption(
-      onPressed: () {
-        _launchImportProcess(solveImporter);
-        Navigator.pop(context);
-      },
+      onPressed: () => _getOptionAction(solveImporter, context),
       child: Text(
         timerName,
         style: theme.textTheme.displaySmall
@@ -45,11 +42,36 @@ class ImportDialog extends StatelessWidget {
     );
   }
 
+  Future<void> _getOptionAction(
+    SolveImporter solveImporter,
+    BuildContext context,
+  ) async {
+    try {
+      await _launchImportProcess(solveImporter);
+    } catch (e) {
+      if (!context.mounted) return;
+      Navigator.pop(context); // Pop dialog
+      Navigator.pop(context); // Pop drawer
+      _displaySnackBarError(context);
+      return;
+    }
+    if (!context.mounted) return;
+    Navigator.pop(context); // Pop dialog
+  }
+
   Future<void> _launchImportProcess(SolveImporter solveImporter) async {
     final result = await FilePicker.platform.pickFiles();
     if (result == null || result.files.single.path == null) return;
     final file = File(result.files.single.path!);
     final rawData = await file.readAsString();
-    final solves = solveImporter.convertRawDataToSolves(rawData);
+    solveImporter.convertRawDataToSolves(rawData);
+  }
+
+  void _displaySnackBarError(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Importation failed, check your file'),
+      ),
+    );
   }
 }
