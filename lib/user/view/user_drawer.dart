@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/auth/auth.dart';
+import 'package:kubrs_app/import/view/import_dialog.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -55,7 +56,10 @@ class UserDrawer extends StatelessWidget {
   Widget _getImportButton(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
     return TextButton.icon(
-      onPressed: () => {},
+      onPressed: () => showDialog<ImportDialog>(
+        context: context,
+        builder: (_) => const ImportDialog(),
+      ),
       icon: Icon(Icons.import_export_outlined, color: color),
       label: Text(
         'Import',
