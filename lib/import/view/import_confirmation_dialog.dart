@@ -45,6 +45,7 @@ class ImportConfirmationDialog extends StatelessWidget {
       onPressed: () => {
         _importSolves(solves),
         Navigator.pop(context), // Pop confirmation dialog
+        _displaySuccessSnackBar(solves, context),
       },
     );
   }
@@ -54,5 +55,13 @@ class ImportConfirmationDialog extends StatelessWidget {
     for (final solve in solves) {
       unawaited(solveRepository.addSolve(solve));
     }
+  }
+
+  void _displaySuccessSnackBar(List<Solve> solves, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Successfully imported ${solves.length} solves'),
+      ),
+    );
   }
 }

@@ -54,7 +54,7 @@ class ImportDialog extends StatelessWidget {
     } catch (e) {
       if (!context.mounted) return;
       Navigator.pop(context); // Pop import dialog
-      _displaySnackBarError(context);
+      _displayErrorSnackBar(context);
       return;
     }
     if (!context.mounted) return;
@@ -79,7 +79,7 @@ class ImportDialog extends StatelessWidget {
     );
   }
 
-  void _displaySnackBarError(BuildContext context) {
+  void _displayErrorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Importation failed, check your file'),
