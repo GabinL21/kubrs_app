@@ -18,7 +18,7 @@ class DurationFormatter {
 
   static Duration _roundDuration(Duration duration) {
     final milliseconds = duration.inMilliseconds;
-    final roundedMilliseconds = (milliseconds / 10).round() * 10;
+    final roundedMilliseconds = (milliseconds / 10).floor() * 10;
     return Duration(milliseconds: roundedMilliseconds);
   }
 }

@@ -38,14 +38,14 @@ void main() {
       expect(DurationFormatter.format(duration), equals('60:00.00'));
     });
 
-    test('formats duration rounded down correctly', () {
+    test('formats duration nearest to be rounded down correctly', () {
       const duration = Duration(milliseconds: 10004);
       expect(DurationFormatter.format(duration), equals('10.00'));
     });
 
-    test('formats duration rounded up correctly', () {
+    test('formats duration nearest to be rounded up correctly', () {
       const duration = Duration(milliseconds: 9995);
-      expect(DurationFormatter.format(duration), equals('10.00'));
+      expect(DurationFormatter.format(duration), equals('09.99'));
     });
   });
 }
