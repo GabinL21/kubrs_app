@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
 class Solve extends Equatable {
@@ -14,13 +13,13 @@ class Solve extends Equatable {
   });
 
   factory Solve.create({
+    required String uid,
     required DateTime timestamp,
     required Duration time,
     required String scramble,
     bool plusTwo = false,
     bool dnf = false,
   }) {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
     return Solve(
       uid: uid,
       timestamp: timestamp,
@@ -31,9 +30,14 @@ class Solve extends Equatable {
     );
   }
 
-  factory Solve.createNow({required Duration time, required String scramble}) {
+  factory Solve.createNow({
+    required String uid,
+    required Duration time,
+    required String scramble,
+  }) {
     final timestamp = DateTime.now();
     return Solve.create(
+      uid: uid,
       timestamp: timestamp,
       time: time,
       scramble: scramble,
