@@ -45,9 +45,22 @@ class UserDrawer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _getImportButton(context),
         _getDonateButton(context),
         _getSignOutButton(context),
       ],
+    );
+  }
+
+  Widget _getImportButton(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+    return TextButton.icon(
+      onPressed: () => {},
+      icon: Icon(Icons.import_export_outlined, color: color),
+      label: Text(
+        'Import',
+        style: Theme.of(context).textTheme.displayMedium,
+      ),
     );
   }
 
