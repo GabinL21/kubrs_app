@@ -54,7 +54,6 @@ class ImportDialog extends StatelessWidget {
     } catch (e) {
       if (!context.mounted) return;
       Navigator.pop(context); // Pop import dialog
-      Navigator.pop(context); // Pop drawer
       _displaySnackBarError(context);
       return;
     }

@@ -56,10 +56,7 @@ class UserDrawer extends StatelessWidget {
   Widget _getImportButton(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
     return TextButton.icon(
-      onPressed: () => showDialog<ImportDialog>(
-        context: context,
-        builder: (_) => const ImportDialog(),
-      ),
+      onPressed: () => _showImportDialog(context),
       icon: Icon(Icons.import_export_outlined, color: color),
       label: Text(
         'Import',
@@ -93,6 +90,14 @@ class UserDrawer extends StatelessWidget {
               color: color,
             ),
       ),
+    );
+  }
+
+  void _showImportDialog(BuildContext context) {
+    Navigator.pop(context); // Pop drawer
+    showDialog<ImportDialog>(
+      context: context,
+      builder: (_) => const ImportDialog(),
     );
   }
 }
