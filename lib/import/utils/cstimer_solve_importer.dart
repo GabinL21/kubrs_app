@@ -7,7 +7,7 @@ class CSTimerSolveImporter extends SolveImporter {
   @override
   List<Solve> convertRawDataToSolves(String rawData) {
     final json = jsonDecode(rawData) as Map<String, dynamic>;
-    final solves = List<Solve>.empty(growable: true);
+    final solves = <Solve>[];
     for (final key in json.keys) {
       if (!key.startsWith('session')) continue;
       final sessionData = json[key] as List<dynamic>;
@@ -18,7 +18,7 @@ class CSTimerSolveImporter extends SolveImporter {
   }
 
   List<Solve> _decodeSession(List<dynamic> sessionData) {
-    final solves = List<Solve>.empty(growable: true);
+    final solves = <Solve>[];
     for (final solveData in sessionData) {
       final solve = _decodeSolve(solveData as List<dynamic>);
       solves.add(solve);
