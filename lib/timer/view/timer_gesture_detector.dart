@@ -43,7 +43,7 @@ class TimerGestureDetector extends StatelessWidget {
     context.read<TimerBloc>().add(StopTimer(duration: state.duration));
     final scramble = context.read<ScrambleBloc>().state.scramble;
     final solve = Solve.createNow(time: state.duration, scramble: scramble);
-    context.read<SolveBloc>().add(AddSolve(solve: solve));
+    context.read<SolveBloc>().add(EndSolve(solve: solve));
     context.read<ScrambleBloc>().add(GenerateScrambleEvent());
   }
 

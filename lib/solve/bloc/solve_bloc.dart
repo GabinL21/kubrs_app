@@ -11,7 +11,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
     on<ResetSolve>((_, emit) async {
       emit(SolveInitial());
     });
-    on<AddSolve>((event, emit) async {
+    on<EndSolve>((event, emit) async {
       final solve = event.solve;
       emit(SolveDone(solve));
       await solveRepository.addSolve(solve);
