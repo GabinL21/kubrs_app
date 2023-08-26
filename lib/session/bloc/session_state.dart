@@ -1,22 +1,20 @@
 part of 'session_bloc.dart';
 
 abstract class SessionState extends Equatable {
-  const SessionState(this.solves);
+  const SessionState(this.solvesByTimestamp);
 
-  final List<Solve> solves;
+  final Map<int, Solve> solvesByTimestamp;
+
+  List<Solve> get solves => solvesByTimestamp.values.toList();
 
   @override
-  List<Object> get props => [solves];
+  List<Object> get props => [solvesByTimestamp];
 }
 
 class SessionInitial extends SessionState {
-  SessionInitial() : super(List.empty());
-}
-
-class SessionLoading extends SessionState {
-  const SessionLoading(super.solves);
+  SessionInitial() : super({});
 }
 
 class SessionLoaded extends SessionState {
-  const SessionLoaded(super.solves);
+  const SessionLoaded(super.solvesByTimestamp);
 }

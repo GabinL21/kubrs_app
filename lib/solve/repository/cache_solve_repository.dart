@@ -5,7 +5,7 @@ import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CacheSolveRepository extends SolveRepository {
-  static const dbCreationQuery = '''
+  static const _dbCreationQuery = '''
     CREATE TABLE solves(
       timestamp INTEGER PRIMARY KEY, 
       time INTEGER, 
@@ -17,23 +17,23 @@ class CacheSolveRepository extends SolveRepository {
     );
     ''';
 
-  final futureDb = openDatabase(
+  final _futureDb = openDatabase(
     'kubrs.db',
     onCreate: (db, _) {
       return db.execute(
-        dbCreationQuery,
+        _dbCreationQuery,
       );
     },
     version: 1,
   );
 
-  final StreamController<Solve> solvesUpdateStreamController =
+  final StreamController<Solve> _solvesUpdateStreamController =
       StreamController<Solve>.broadcast();
 
   @override
   Future<void> save(Solve solve) async {
-    solvesUpdateStreamController.add(solve);
-    final db = await futureDb;
+    _solvesUpdateStreamController.add(solve);
+    final db = await _futureDb;
     final solveData = _getSolveData(solve);
     await db.insert(
       'solves',
@@ -44,7 +44,7 @@ class CacheSolveRepository extends SolveRepository {
 
   @override
   Future<List<Solve>> readFirstHistoryPage({required int pageSize}) async {
-    final db = await futureDb;
+    final db = await _futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
       where: 'deleted = 0',
@@ -59,7 +59,7 @@ class CacheSolveRepository extends SolveRepository {
     required int pageSize,
     required Solve lastSolve,
   }) async {
-    final db = await futureDb;
+    final db = await _futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
       where: 'timestamp < ? AND deleted = 0',
@@ -72,7 +72,7 @@ class CacheSolveRepository extends SolveRepository {
 
   @override
   Future<List<Solve>> readSince(DateTime dateTime) async {
-    final db = await futureDb;
+    final db = await _futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
       where: 'timestamp >= ? AND deleted = 0',
@@ -84,12 +84,12 @@ class CacheSolveRepository extends SolveRepository {
 
   @override
   Stream<Solve> getUpdateStream() {
-    return solvesUpdateStreamController.stream;
+    return _solvesUpdateStreamController.stream;
   }
 
   @override
   Future<DateTime> getLastUpdate() async {
-    final db = await futureDb;
+    final db = await _futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
       orderBy: 'last_update DESC',
