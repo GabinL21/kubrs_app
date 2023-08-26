@@ -5,7 +5,7 @@ abstract class HistoryState extends Equatable {
   final List<Solve> solves;
 
   @override
-  List<Object> get props => [solves];
+  List<Object> get props => [solves.hashCode];
 }
 
 class HistoryInitial extends HistoryState {
