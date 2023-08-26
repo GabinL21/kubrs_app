@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kubrs_app/cache/repository/cache_repository.dart';
 import 'package:kubrs_app/history/model/history.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
@@ -7,18 +8,11 @@ class HistoryRepository {
   static const int pageSize = 10;
   final _uid = FirebaseAuth.instance.currentUser!.uid;
   final _solvesCollection = FirebaseFirestore.instance.collection('solves');
+  final _cacheRepository = CacheRepository();
 
   Future<History> getFirstHistory() async {
-    final snapshot = await _solvesCollection
-        .where('uid', isEqualTo: _uid)
-        .where('deleted', isEqualTo: false)
-        .orderBy('timestamp', descending: true)
-        .limit(pageSize)
-        .get();
-    final docs = snapshot.docs;
-    final solves = docs.map((doc) => Solve.fromJson(doc.data())).toList();
-    final lastDocument = docs.isNotEmpty ? docs.last : null;
-    return History(solves, lastDocument);
+    final solves = await _cacheRepository.readSolves();
+    return History(solves, null);
   }
 
   Future<History> getNextHistory(
