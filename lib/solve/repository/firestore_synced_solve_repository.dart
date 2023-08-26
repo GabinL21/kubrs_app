@@ -13,7 +13,7 @@ class FirestoreSyncedSolveRepository extends SyncedSolveRepository {
   Future<List<Solve>> fetch({required DateTime lastUpdate}) async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
-        .orderBy('timestamp', descending: true)
+        .orderBy('lastUpdate', descending: true)
         .endBefore([lastUpdate]).get();
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
