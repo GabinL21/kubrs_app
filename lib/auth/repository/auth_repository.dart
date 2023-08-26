@@ -20,7 +20,7 @@ class AuthRepository {
     await _firebaseAuth.signOut();
   }
 
-  Future<void> persistUserInFirestore() async {
+  Future<void> persistUser() async {
     final user = _firebaseAuth.currentUser!;
     final userDoc = _firebaseFirestore.collection('users').doc(user.uid);
     if ((await userDoc.get()).exists) return;
