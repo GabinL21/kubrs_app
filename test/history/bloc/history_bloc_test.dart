@@ -23,7 +23,9 @@ void main() {
     setUp(() {
       solveRepository = MockSolveRepository();
       when(
-        () => solveRepository.readFirstHistoryPage(pageSize: 10),
+        () => solveRepository.readFirstHistoryPage(
+          pageSize: HistoryBloc.pageSize,
+        ),
       ).thenAnswer((_) => Future.value(mockSolves));
       when(
         () => solveRepository.getUpdateStream(),

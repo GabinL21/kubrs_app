@@ -42,6 +42,6 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     });
   }
 
-  static const int pageSize = 10;
+  static const int pageSize = 20;
   final SolveRepository solveRepository;
 }
