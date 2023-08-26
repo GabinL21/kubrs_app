@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -11,9 +13,6 @@ class CacheRepository {
       dnf INTEGER,
       last_update INTEGER,
       deleted INTEGER
-    );
-    CREATE TABLE values(
-      last_update INTEGER
     );
     ''';
 
@@ -30,17 +29,15 @@ class CacheRepository {
   Future<void> writeSolve(Solve solve) async {
     final db = await futureDb;
     final solveData = _getSolveData(solve);
-    await db.insert('solves', solveData);
-  }
-
-  Future<List<Solve>> readSolves() async {
-    final db = await futureDb;
-    final List<Map<String, dynamic>> solvesData =
-        await db.query('solves', orderBy: 'timestamp DESC');
-    return solvesData.map(_getSolveFromData).toList();
+    await db.insert(
+      'solves',
+      solveData,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<List<Solve>> readFirstSolvesPage(int size) async {
+    await _syncCacheOnline();
     final db = await futureDb;
     final List<Map<String, dynamic>> solvesData =
         await db.query('solves', orderBy: 'timestamp DESC', limit: size);
@@ -57,6 +54,29 @@ class CacheRepository {
       limit: size,
     );
     return solvesData.map(_getSolveFromData).toList();
+  }
+
+  Future<void> _syncCacheOnline() async {
+    final lastUpdate = await _getLastUpdate();
+    final newSolves = await _getOnlineSolvesSince(lastUpdate);
+    newSolves.forEach(writeSolve);
+  }
+
+  Future<int> _getLastUpdate() async {
+    final db = await futureDb;
+    final List<Map<String, dynamic>> data = await db.query('solves');
+    if (data.isEmpty) return 0;
+    return data[0]['last_update'] as int;
+  }
+
+  Future<List<Solve>> _getOnlineSolvesSince(int lastUpdate) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('solves')
+        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('deleted', isEqualTo: false)
+        .orderBy('timestamp', descending: true)
+        .endAt([lastUpdate]).get();
+    return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
   Map<String, dynamic> _getSolveData(Solve solve) {
