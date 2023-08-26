@@ -11,6 +11,7 @@ class HistoryRepository {
   Future<History> getFirstHistory() async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
+        .where('deleted', isEqualTo: false)
         .orderBy('timestamp', descending: true)
         .limit(pageSize)
         .get();
@@ -26,6 +27,7 @@ class HistoryRepository {
   ) async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
+        .where('deleted', isEqualTo: false)
         .orderBy('timestamp', descending: true)
         .startAfterDocument(lastDocument)
         .limit(pageSize)

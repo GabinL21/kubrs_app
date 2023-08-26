@@ -11,6 +11,7 @@ class Solve extends Equatable {
     this.plusTwo = false,
     this.dnf = false,
     required this.lastUpdate,
+    this.deleted = false,
   });
 
   factory Solve.create({
@@ -54,6 +55,7 @@ class Solve extends Equatable {
       scramble: solve.scramble,
       plusTwo: !solve.plusTwo,
       lastUpdate: solve.lastUpdate,
+      deleted: solve.deleted,
     );
   }
 
@@ -65,6 +67,7 @@ class Solve extends Equatable {
       scramble: solve.scramble,
       dnf: !solve.dnf,
       lastUpdate: solve.lastUpdate,
+      deleted: solve.deleted,
     );
   }
 
@@ -78,6 +81,7 @@ class Solve extends Equatable {
       dnf: (map['dnf'] ?? false) as bool,
       lastUpdate:
           ((map['lastUpdate'] ?? map['timestamp']) as Timestamp).toDate(),
+      deleted: (map['deleted'] ?? false) as bool,
     );
   }
 
@@ -89,6 +93,7 @@ class Solve extends Equatable {
   final bool plusTwo;
   final bool dnf;
   final DateTime lastUpdate;
+  final bool deleted;
 
   Duration get effectiveTime {
     if (dnf) return const Duration(minutes: 10);
@@ -112,6 +117,7 @@ class Solve extends Equatable {
       'plusTwo': plusTwo,
       'dnf': dnf,
       'lastUpdate': lastUpdate,
+      'deleted': deleted,
     };
   }
 
@@ -124,6 +130,7 @@ class Solve extends Equatable {
       plusTwo,
       dnf,
       lastUpdate.millisecondsSinceEpoch,
+      deleted,
     ];
   }
 }

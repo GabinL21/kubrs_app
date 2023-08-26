@@ -16,6 +16,7 @@ class SolveRepository {
   Future<List<Solve>> getLastSolves() async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
+        .where('deleted', isEqualTo: false)
         .orderBy('timestamp', descending: true)
         .limit(10)
         .get();
@@ -29,6 +30,7 @@ class SolveRepository {
     final source = offline ? Source.cache : Source.serverAndCache;
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
+        .where('deleted', isEqualTo: false)
         .orderBy('timestamp', descending: true)
         .endAt([dateTime]).get(GetOptions(source: source));
     return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
@@ -37,6 +39,7 @@ class SolveRepository {
   Stream<QuerySnapshot<Map<String, dynamic>>> getSolvesStream() {
     return _solvesCollection
         .where('uid', isEqualTo: _uid)
+        .where('deleted', isEqualTo: false)
         .orderBy('timestamp', descending: true)
         .snapshots();
   }
@@ -46,6 +49,7 @@ class SolveRepository {
   ) {
     return _solvesCollection
         .where('uid', isEqualTo: _uid)
+        .where('deleted', isEqualTo: false)
         .orderBy('timestamp', descending: true)
         .endAt([dateTime]).snapshots();
   }
@@ -59,7 +63,7 @@ class SolveRepository {
   Future<void> deleteSolve(Solve solve) async {
     final lastSolveDocId = await _getSolveDocumentId(solve.timestamp);
     if (lastSolveDocId == null) return;
-    await _solvesCollection.doc(lastSolveDocId).delete();
+    await _solvesCollection.doc(lastSolveDocId).update({'deleted': true});
   }
 
   Future<String?> _getSolveDocumentId(DateTime solveTimestamp) async {
