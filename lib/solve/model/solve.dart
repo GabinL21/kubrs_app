@@ -145,7 +145,6 @@ class Solve extends Equatable {
       timestamp.millisecondsSinceEpoch,
       plusTwo,
       dnf,
-      lastUpdate.millisecondsSinceEpoch,
       deleted,
     ];
   }
