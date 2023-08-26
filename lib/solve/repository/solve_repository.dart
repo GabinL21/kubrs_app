@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kubrs_app/cache/repository/cache_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/repository/cache_repository.dart';
 
 class SolveRepository {
   final _uid = FirebaseAuth.instance.currentUser!.uid;
@@ -53,6 +53,14 @@ class SolveRepository {
     await _solvesCollection
         .doc(lastSolveDocId)
         .set(updatedSolve.toJsonWithUid(_uid));
+  }
+
+  Future<List<Solve>> getFirstHistory(int pageSize) {
+    return _cacheRepository.readFirstSolvesPage(pageSize);
+  }
+
+  Future<List<Solve>> getNextHistory(int pageSize, Solve lastSolve) async {
+    return _cacheRepository.readSolvesPage(pageSize, lastSolve.timestamp);
   }
 
   Future<String?> _getSolveDocumentId(DateTime solveTimestamp) async {

@@ -1,12 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kubrs_app/history/bloc/history_bloc.dart';
-import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:mocktail/mocktail.dart';
-
-class MockHistoryRepository extends Mock implements HistoryRepository {}
 
 class MockSolveRepository extends Mock implements SolveRepository {}
 
@@ -21,15 +18,13 @@ void main() {
       ),
     );
 
-    late HistoryRepository historyRepository;
     late SolveRepository solveRepository;
 
     setUp(() {
-      historyRepository = MockHistoryRepository();
-      when(
-        () => historyRepository.getFirstHistory(),
-      ).thenAnswer((_) => Future.value(mockSolves));
       solveRepository = MockSolveRepository();
+      when(
+        () => solveRepository.getFirstHistory(10),
+      ).thenAnswer((_) => Future.value(mockSolves));
       when(
         () => solveRepository.getSolvesStream(),
       ).thenAnswer((_) => const Stream.empty());
@@ -38,7 +33,6 @@ void main() {
     blocTest<HistoryBloc, HistoryState>(
       'emits initial state when history is created',
       build: () => HistoryBloc(
-        historyRepository: historyRepository,
         solveRepository: solveRepository,
       ),
       verify: (bloc) => bloc.state == HistoryInitial(),
@@ -47,7 +41,6 @@ void main() {
     blocTest<HistoryBloc, HistoryState>(
       'emits loading and loaded states when history is first fetched',
       build: () => HistoryBloc(
-        historyRepository: historyRepository,
         solveRepository: solveRepository,
       ),
       act: (bloc) => bloc.add(const GetFirstHistory()),
@@ -57,7 +50,6 @@ void main() {
     blocTest<HistoryBloc, HistoryState>(
       'emits intial state when history is refreshed',
       build: () => HistoryBloc(
-        historyRepository: historyRepository,
         solveRepository: solveRepository,
       ),
       seed: () => HistoryLoaded(mockSolves),

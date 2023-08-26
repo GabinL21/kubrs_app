@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/history/bloc/history_bloc.dart';
-import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/history/view/solves_list.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
@@ -10,15 +9,11 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => HistoryRepository(),
-      child: BlocProvider(
-        create: (context) => HistoryBloc(
-          historyRepository: RepositoryProvider.of<HistoryRepository>(context),
-          solveRepository: RepositoryProvider.of<SolveRepository>(context),
-        ),
-        child: const HistoryView(),
+    return BlocProvider(
+      create: (context) => HistoryBloc(
+        solveRepository: RepositoryProvider.of<SolveRepository>(context),
       ),
+      child: const HistoryView(),
     );
   }
 }

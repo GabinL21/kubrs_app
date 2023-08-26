@@ -39,8 +39,12 @@ class CacheRepository {
   Future<List<Solve>> readFirstSolvesPage(int size) async {
     await _syncCacheOnline();
     final db = await futureDb;
-    final List<Map<String, dynamic>> solvesData =
-        await db.query('solves', orderBy: 'timestamp DESC', limit: size);
+    final List<Map<String, dynamic>> solvesData = await db.query(
+      'solves',
+      where: 'deleted = 0',
+      orderBy: 'timestamp DESC',
+      limit: size,
+    );
     return solvesData.map(_getSolveFromData).toList();
   }
 
@@ -48,7 +52,7 @@ class CacheRepository {
     final db = await futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
-      where: 'timestamp < ?',
+      where: 'timestamp < ? AND deleted = 0',
       whereArgs: [lastTimestamp.millisecondsSinceEpoch],
       orderBy: 'timestamp DESC',
       limit: size,

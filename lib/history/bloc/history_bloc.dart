@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
@@ -8,15 +7,14 @@ part 'history_event.dart';
 part 'history_state.dart';
 
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
-  HistoryBloc({required this.historyRepository, required this.solveRepository})
-      : super(HistoryInitial()) {
+  HistoryBloc({required this.solveRepository}) : super(HistoryInitial()) {
     solveRepository
         .getSolvesStream()
         .listen((_) => add(const RefreshHistory()));
     on<GetFirstHistory>((_, emit) async {
       if (state is! HistoryInitial) return;
       emit(HistoryLoading());
-      final solves = await historyRepository.getFirstHistory();
+      final solves = await solveRepository.getFirstHistory(pageSize);
       emit(HistoryLoaded(solves));
     });
     on<GetNextHistory>((_, emit) async {
@@ -27,7 +25,10 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         return;
       }
       emit(HistoryLoadingNext(solves));
-      final newSolves = await historyRepository.getNextHistory(solves.last);
+      final newSolves = await solveRepository.getNextHistory(
+        pageSize,
+        solves.last,
+      );
       if (newSolves.isEmpty) {
         emit(HistoryFullyLoaded(solves));
         return;
@@ -39,6 +40,6 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     });
   }
 
-  final HistoryRepository historyRepository;
+  static const int pageSize = 10;
   final SolveRepository solveRepository;
 }
