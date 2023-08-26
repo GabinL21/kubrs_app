@@ -195,7 +195,6 @@ void main() {
 
 Solve _buildSolve(int timeInMillis) {
   return Solve.create(
-    uid: '',
     timestamp: DateTime(2000),
     time: Duration(milliseconds: timeInMillis),
     scramble: '',
@@ -204,7 +203,6 @@ Solve _buildSolve(int timeInMillis) {
 
 Solve _buildPlusTwoSolve(int timeInMillis) {
   return Solve.create(
-    uid: '',
     timestamp: DateTime(2000),
     time: Duration(milliseconds: timeInMillis),
     scramble: '',
@@ -214,7 +212,6 @@ Solve _buildPlusTwoSolve(int timeInMillis) {
 
 Solve _buildDnfSolve(int timeInMillis) {
   return Solve.create(
-    uid: '',
     timestamp: DateTime(2000),
     time: Duration(milliseconds: timeInMillis),
     scramble: '',

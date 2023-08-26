@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 class CubeDeskSolveParser {
-  CubeDeskSolveParser({required this.uid});
+  CubeDeskSolveParser();
 
-  final String uid;
-
-  List<Solve> parseSolves(String textSolves) {
+  static List<Solve> parseSolves(String textSolves) {
     final json = jsonDecode(textSolves) as Map<String, dynamic>;
     final solves = <Solve>[];
     final jsonSolves = json['solves'] as List<dynamic>;
@@ -20,7 +18,7 @@ class CubeDeskSolveParser {
     return solves;
   }
 
-  Solve _parseSolve(Map<String, dynamic> jsonSolve) {
+  static Solve _parseSolve(Map<String, dynamic> jsonSolve) {
     final timestamp = DateTime.parse(jsonSolve['created_at'] as String);
     final timeInMillis = ((jsonSolve['time'] as double) * 1000).floor();
     final time = Duration(milliseconds: timeInMillis);
@@ -28,7 +26,6 @@ class CubeDeskSolveParser {
     final plusTwo = jsonSolve['plus_two'] as bool;
     final dnf = jsonSolve['dnf'] as bool;
     return Solve.create(
-      uid: uid,
       timestamp: timestamp,
       time: time,
       scramble: scramble,

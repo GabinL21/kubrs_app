@@ -30,7 +30,6 @@ void main() {
   final mockSolves = List.generate(
     3,
     (_) => Solve.create(
-      uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
       scramble: 'R',
@@ -40,7 +39,6 @@ void main() {
   final mockExtraSolves = List.generate(
     10,
     (_) => Solve.create(
-      uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
       scramble: 'R',

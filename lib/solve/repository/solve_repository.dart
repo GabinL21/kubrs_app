@@ -12,18 +12,8 @@ class SolveRepository {
     if (await _getSolveDocumentId(solve.timestamp) != null) {
       return; // The solve is already stored, cancel operation
     }
-    await _solvesCollection.add(solve.toJson());
+    await _solvesCollection.add(solve.toJsonWithUid(_uid));
     await _cacheRepository.writeSolve(solve);
-  }
-
-  Future<List<Solve>> getLastSolves() async {
-    final snapshot = await _solvesCollection
-        .where('uid', isEqualTo: _uid)
-        .where('deleted', isEqualTo: false)
-        .orderBy('timestamp', descending: true)
-        .limit(10)
-        .get();
-    return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
   }
 
   Future<List<Solve>> getSolvesSince(
@@ -60,7 +50,9 @@ class SolveRepository {
   Future<void> updateSolve(Solve updatedSolve) async {
     final lastSolveDocId = await _getSolveDocumentId(updatedSolve.timestamp);
     if (lastSolveDocId == null) return;
-    await _solvesCollection.doc(lastSolveDocId).set(updatedSolve.toJson());
+    await _solvesCollection
+        .doc(lastSolveDocId)
+        .set(updatedSolve.toJsonWithUid(_uid));
   }
 
   Future<String?> _getSolveDocumentId(DateTime solveTimestamp) async {

@@ -93,7 +93,6 @@ class CacheRepository {
 
   Solve _getSolveFromData(Map<String, dynamic> solveData) {
     return Solve(
-      uid: '',
       timestamp:
           DateTime.fromMillisecondsSinceEpoch(solveData['timestamp'] as int),
       time: Duration(milliseconds: solveData['time'] as int),

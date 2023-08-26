@@ -3,21 +3,18 @@ import 'package:kubrs_app/solve/model/solve.dart';
 
 void main() {
   final solve = Solve.create(
-    uid: '',
     timestamp: DateTime(2000),
     time: const Duration(seconds: 10),
     scramble: '',
   );
 
   final roundedDownSolve = Solve.create(
-    uid: '',
     timestamp: DateTime(2000),
     time: const Duration(milliseconds: 10004),
     scramble: '',
   );
 
   final roundedUpSolve = Solve.create(
-    uid: '',
     timestamp: DateTime(2000),
     time: const Duration(milliseconds: 9995),
     scramble: '',

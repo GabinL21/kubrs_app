@@ -4,7 +4,6 @@ import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
 class Solve extends Equatable {
   const Solve({
-    required this.uid,
     required this.timestamp,
     required this.time,
     required this.scramble,
@@ -15,7 +14,6 @@ class Solve extends Equatable {
   });
 
   factory Solve.create({
-    required String uid,
     required DateTime timestamp,
     required Duration time,
     required String scramble,
@@ -23,7 +21,6 @@ class Solve extends Equatable {
     bool dnf = false,
   }) {
     return Solve(
-      uid: uid,
       timestamp: timestamp,
       time: time,
       scramble: scramble,
@@ -34,13 +31,11 @@ class Solve extends Equatable {
   }
 
   factory Solve.createNow({
-    required String uid,
     required Duration time,
     required String scramble,
   }) {
     final timestamp = DateTime.now();
     return Solve.create(
-      uid: uid,
       timestamp: timestamp,
       time: time,
       scramble: scramble,
@@ -50,7 +45,6 @@ class Solve extends Equatable {
   factory Solve.cloneAndTogglePlusTwo({required Solve solve}) {
     final lastUpdate = DateTime.now();
     return Solve(
-      uid: solve.uid,
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
@@ -63,7 +57,6 @@ class Solve extends Equatable {
   factory Solve.cloneAndToggleDNF({required Solve solve}) {
     final lastUpdate = DateTime.now();
     return Solve(
-      uid: solve.uid,
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
@@ -76,7 +69,6 @@ class Solve extends Equatable {
   factory Solve.cloneAndDelete({required Solve solve}) {
     final lastUpdate = DateTime.now();
     return Solve(
-      uid: solve.uid,
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
@@ -89,7 +81,6 @@ class Solve extends Equatable {
 
   factory Solve.fromJson(Map<String, dynamic> map) {
     return Solve(
-      uid: map['uid'] as String,
       timestamp: (map['timestamp'] as Timestamp).toDate(),
       time: Duration(milliseconds: map['time'] as int),
       scramble: map['scramble'] as String,
@@ -102,7 +93,6 @@ class Solve extends Equatable {
   }
 
   static const Duration plusTwoDuration = Duration(seconds: 2);
-  final String uid;
   final DateTime timestamp;
   final Duration time;
   final String scramble;
@@ -124,7 +114,7 @@ class Solve extends Equatable {
     return formattedTime;
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonWithUid(String uid) {
     return {
       'uid': uid,
       'timestamp': timestamp,
@@ -140,7 +130,6 @@ class Solve extends Equatable {
   @override
   List<Object?> get props {
     return [
-      uid,
       scramble,
       timestamp.millisecondsSinceEpoch,
       plusTwo,

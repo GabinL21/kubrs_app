@@ -6,7 +6,6 @@ import 'package:kubrs_app/solve/model/solve.dart';
 void main() {
   group('SolveDetailsCubit', () {
     final mockSolve = Solve(
-      uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
       scramble: '',
