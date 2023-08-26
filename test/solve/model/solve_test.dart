@@ -2,21 +2,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 
 void main() {
-  final solve = Solve(
+  final solve = Solve.create(
     uid: '',
     timestamp: DateTime(2000),
     time: const Duration(seconds: 10),
     scramble: '',
   );
 
-  final roundedDownSolve = Solve(
+  final roundedDownSolve = Solve.create(
     uid: '',
     timestamp: DateTime(2000),
     time: const Duration(milliseconds: 10004),
     scramble: '',
   );
 
-  final roundedUpSolve = Solve(
+  final roundedUpSolve = Solve.create(
     uid: '',
     timestamp: DateTime(2000),
     time: const Duration(milliseconds: 9995),

@@ -56,7 +56,7 @@ void main() {
 
     test('parses solves without penalty correctly', () {
       final actualSolve = solves[0];
-      final expectedSolve = Solve(
+      final expectedSolve = Solve.create(
         uid: '',
         timestamp: DateTime.fromMillisecondsSinceEpoch(1692708489 * 1000),
         time: const Duration(milliseconds: 1437),
@@ -67,7 +67,7 @@ void main() {
 
     test('parses +2 solves correctly', () {
       final actualSolve = solves[1];
-      final expectedSolve = Solve(
+      final expectedSolve = Solve.create(
         uid: '',
         timestamp: DateTime.fromMillisecondsSinceEpoch(1692708492 * 1000),
         time: const Duration(milliseconds: 1411),
@@ -79,7 +79,7 @@ void main() {
 
     test('parses DNF solves correctly', () {
       final actualSolve = solves[2];
-      final expectedSolve = Solve(
+      final expectedSolve = Solve.create(
         uid: '',
         timestamp: DateTime.fromMillisecondsSinceEpoch(1692708500 * 1000),
         time: const Duration(milliseconds: 1645),

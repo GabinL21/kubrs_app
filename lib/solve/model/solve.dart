@@ -10,6 +10,7 @@ class Solve extends Equatable {
     required this.scramble,
     this.plusTwo = false,
     this.dnf = false,
+    required this.lastUpdate,
   });
 
   factory Solve.create({
@@ -27,6 +28,7 @@ class Solve extends Equatable {
       scramble: scramble,
       plusTwo: plusTwo,
       dnf: dnf,
+      lastUpdate: timestamp,
     );
   }
 
@@ -51,6 +53,7 @@ class Solve extends Equatable {
       time: solve.time,
       scramble: solve.scramble,
       plusTwo: !solve.plusTwo,
+      lastUpdate: solve.lastUpdate,
     );
   }
 
@@ -61,6 +64,7 @@ class Solve extends Equatable {
       time: solve.time,
       scramble: solve.scramble,
       dnf: !solve.dnf,
+      lastUpdate: solve.lastUpdate,
     );
   }
 
@@ -72,6 +76,8 @@ class Solve extends Equatable {
       scramble: map['scramble'] as String,
       plusTwo: (map['plusTwo'] ?? false) as bool,
       dnf: (map['dnf'] ?? false) as bool,
+      lastUpdate:
+          ((map['lastUpdate'] ?? map['timestamp']) as Timestamp).toDate(),
     );
   }
 
@@ -82,6 +88,7 @@ class Solve extends Equatable {
   final String scramble;
   final bool plusTwo;
   final bool dnf;
+  final DateTime lastUpdate;
 
   Duration get effectiveTime {
     if (dnf) return const Duration(minutes: 10);
@@ -104,11 +111,19 @@ class Solve extends Equatable {
       'scramble': scramble,
       'plusTwo': plusTwo,
       'dnf': dnf,
+      'lastUpdate': lastUpdate,
     };
   }
 
   @override
   List<Object?> get props {
-    return [uid, scramble, timestamp.millisecondsSinceEpoch, plusTwo, dnf];
+    return [
+      uid,
+      scramble,
+      timestamp.millisecondsSinceEpoch,
+      plusTwo,
+      dnf,
+      lastUpdate.millisecondsSinceEpoch,
+    ];
   }
 }

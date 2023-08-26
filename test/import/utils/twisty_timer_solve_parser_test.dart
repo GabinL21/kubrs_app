@@ -22,7 +22,7 @@ void main() {
 
     test('parses solves without penalty correctly', () {
       final actualSolve = solves[0];
-      final expectedSolve = Solve(
+      final expectedSolve = Solve.create(
         uid: '',
         timestamp: DateTime.parse('2023-08-23T19:16:58.515+02:00'),
         time: const Duration(milliseconds: 3300),
@@ -33,7 +33,7 @@ void main() {
 
     test('parses DNF solves correctly', () {
       final actualSolve = solves[1];
-      final expectedSolve = Solve(
+      final expectedSolve = Solve.create(
         uid: '',
         timestamp: DateTime.parse('2023-08-23T19:17:21.071+02:00'),
         time: const Duration(milliseconds: 2050),

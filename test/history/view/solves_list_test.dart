@@ -29,7 +29,7 @@ extension on WidgetTester {
 void main() {
   final mockSolves = List.generate(
     3,
-    (_) => Solve(
+    (_) => Solve.create(
       uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
@@ -39,7 +39,7 @@ void main() {
 
   final mockExtraSolves = List.generate(
     10,
-    (_) => Solve(
+    (_) => Solve.create(
       uid: '',
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),

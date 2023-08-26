@@ -10,6 +10,7 @@ void main() {
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
       scramble: '',
+      lastUpdate: DateTime(2000),
     );
 
     blocTest<SolveDetailsCubit, Solve>(
