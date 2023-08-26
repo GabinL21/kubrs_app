@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
@@ -17,23 +16,23 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     on<GetFirstHistory>((_, emit) async {
       if (state is! HistoryInitial) return;
       emit(HistoryLoading());
-      final history = await historyRepository.getFirstHistory();
-      emit(HistoryLoaded(history.solves, history.lastDocument));
+      final solves = await historyRepository.getFirstHistory();
+      emit(HistoryLoaded(solves));
     });
     on<GetNextHistory>((_, emit) async {
       if (state is! HistoryLoaded) return;
-      if (state.lastDocument == null) return;
-      final lastDocument = (state as HistoryLoaded).lastDocument;
       final solves = state.solves;
-      final nbSolves = solves.length;
-      emit(HistoryLoadingNext(solves));
-      final newHistory =
-          await historyRepository.getNextHistory(state.solves, lastDocument!);
-      if (nbSolves == newHistory.solves.length) {
-        emit(HistoryFullyLoaded(solves, lastDocument));
+      if (solves.isEmpty) {
+        emit(HistoryFullyLoaded(solves));
         return;
       }
-      emit(HistoryLoaded(newHistory.solves, newHistory.lastDocument));
+      emit(HistoryLoadingNext(solves));
+      final newSolves = await historyRepository.getNextHistory(solves.last);
+      if (newSolves.isEmpty) {
+        emit(HistoryFullyLoaded(solves));
+        return;
+      }
+      emit(HistoryLoaded(solves..addAll(newSolves)));
     });
     on<RefreshHistory>((_, emit) {
       emit(HistoryInitial());

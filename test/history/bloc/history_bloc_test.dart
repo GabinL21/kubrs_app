@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kubrs_app/history/bloc/history_bloc.dart';
-import 'package:kubrs_app/history/model/history.dart';
 import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
@@ -30,7 +29,7 @@ void main() {
       historyRepository = MockHistoryRepository();
       when(
         () => historyRepository.getFirstHistory(),
-      ).thenAnswer((_) => Future.value(History(mockSolves, null)));
+      ).thenAnswer((_) => Future.value(mockSolves));
       solveRepository = MockSolveRepository();
       when(
         () => solveRepository.getSolvesStream(),
@@ -53,8 +52,7 @@ void main() {
         solveRepository: solveRepository,
       ),
       act: (bloc) => bloc.add(const GetFirstHistory()),
-      expect: () =>
-          <HistoryState>[HistoryLoading(), HistoryLoaded(mockSolves, null)],
+      expect: () => <HistoryState>[HistoryLoading(), HistoryLoaded(mockSolves)],
     );
 
     blocTest<HistoryBloc, HistoryState>(
@@ -63,7 +61,7 @@ void main() {
         historyRepository: historyRepository,
         solveRepository: solveRepository,
       ),
-      seed: () => HistoryLoaded(mockSolves, null),
+      seed: () => HistoryLoaded(mockSolves),
       act: (bloc) => bloc.add(const RefreshHistory()),
       expect: () => <HistoryState>[HistoryInitial()],
     );

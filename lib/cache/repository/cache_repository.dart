@@ -40,6 +40,25 @@ class CacheRepository {
     return solvesData.map(_getSolveFromData).toList();
   }
 
+  Future<List<Solve>> readFirstSolvesPage(int size) async {
+    final db = await futureDb;
+    final List<Map<String, dynamic>> solvesData =
+        await db.query('solves', orderBy: 'timestamp DESC', limit: size);
+    return solvesData.map(_getSolveFromData).toList();
+  }
+
+  Future<List<Solve>> readSolvesPage(int size, DateTime lastTimestamp) async {
+    final db = await futureDb;
+    final List<Map<String, dynamic>> solvesData = await db.query(
+      'solves',
+      where: 'timestamp < ?',
+      whereArgs: [lastTimestamp.millisecondsSinceEpoch],
+      orderBy: 'timestamp DESC',
+      limit: size,
+    );
+    return solvesData.map(_getSolveFromData).toList();
+  }
+
   Map<String, dynamic> _getSolveData(Solve solve) {
     return {
       'timestamp': solve.timestamp.millisecondsSinceEpoch,
