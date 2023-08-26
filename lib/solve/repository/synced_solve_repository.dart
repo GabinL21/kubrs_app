@@ -18,7 +18,7 @@ abstract class SyncedSolveRepository extends SolveRepository {
   @override
   Future<void> save(Solve solve) async {
     await solveRepository.save(solve);
-    saveOnline(solve);
+    await saveOnline(solve);
   }
 
   @override
