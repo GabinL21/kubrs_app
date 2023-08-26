@@ -6,7 +6,7 @@ abstract class SyncedSolveRepository extends SolveRepository {
 
   final SolveRepository solveRepository;
 
-  void saveOnline(Solve solve);
+  Future<void> saveOnline(Solve solve);
   Future<List<Solve>> fetch({required DateTime lastUpdate});
 
   Future<void> update() async {
@@ -31,5 +31,26 @@ abstract class SyncedSolveRepository extends SolveRepository {
   Future<List<Solve>> readFirstHistoryPage({required int pageSize}) async {
     await update();
     return solveRepository.readFirstHistoryPage(pageSize: pageSize);
+  }
+
+  @override
+  Future<List<Solve>> readNextHistoryPage({
+    required int pageSize,
+    required Solve lastSolve,
+  }) {
+    return solveRepository.readNextHistoryPage(
+      pageSize: pageSize,
+      lastSolve: lastSolve,
+    );
+  }
+
+  @override
+  Stream<Solve> getUpdateStream() {
+    return solveRepository.getUpdateStream();
+  }
+
+  @override
+  Future<DateTime> getLastUpdate() {
+    return solveRepository.getLastUpdate();
   }
 }
