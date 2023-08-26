@@ -8,7 +8,7 @@ abstract class SessionState extends Equatable {
   List<Solve> get solves => solvesByTimestamp.values.toList();
 
   @override
-  List<Object> get props => [solvesByTimestamp];
+  List<Object> get props => [solves.hashCode];
 }
 
 class SessionInitial extends SessionState {

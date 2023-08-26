@@ -14,7 +14,13 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     on<AddSessionSolve>((event, emit) async {
       final solve = event.solve;
       final timestamp = solve.timestamp.millisecondsSinceEpoch;
-      state.solvesByTimestamp.addAll({timestamp: solve});
+      final solvesByTimestamp = state.solvesByTimestamp;
+      if (solve.deleted) {
+        solvesByTimestamp.remove(timestamp);
+      } else {
+        solvesByTimestamp[timestamp] = solve;
+      }
+      emit(SessionLoaded(solvesByTimestamp));
     });
   }
 
