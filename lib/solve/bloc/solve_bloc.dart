@@ -14,7 +14,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
     on<EndSolve>((event, emit) async {
       final solve = event.solve;
       emit(SolveDone(solve));
-      await solveRepository.addSolve(solve);
+      await solveRepository.save(solve);
     });
     on<TogglePlusTwoTag>((event, emit) async {
       final solve = event.solve;
@@ -23,7 +23,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
         // Update last solve if the last solve is being updated
         emit(SolveDone(newSolve));
       }
-      await solveRepository.updateSolve(newSolve);
+      await solveRepository.save(newSolve);
     });
     on<ToggleDNFTag>((event, emit) async {
       final solve = event.solve;
@@ -32,7 +32,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
         // Update last solve if the last solve is being updated
         emit(SolveDone(newSolve));
       }
-      await solveRepository.updateSolve(newSolve);
+      await solveRepository.save(newSolve);
     });
     on<DeleteSolve>((event, emit) async {
       final solve = event.solve;
@@ -41,7 +41,7 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
         // Reset solve bloc if the last solve has been deleted
         emit(SolveInitial());
       }
-      await solveRepository.updateSolve(deletedSolve);
+      await solveRepository.save(deletedSolve);
     });
   }
   final SolveRepository solveRepository;

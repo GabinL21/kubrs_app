@@ -23,10 +23,10 @@ void main() {
     setUp(() {
       solveRepository = MockSolveRepository();
       when(
-        () => solveRepository.getFirstHistory(10),
+        () => solveRepository.readFirstHistoryPage(pageSize: 10),
       ).thenAnswer((_) => Future.value(mockSolves));
       when(
-        () => solveRepository.getSolvesStream(),
+        () => solveRepository.getUpdateStream(),
       ).thenAnswer((_) => const Stream.empty());
     });
 

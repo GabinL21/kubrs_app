@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
@@ -43,17 +44,17 @@ class ImportConfirmationDialog extends StatelessWidget {
             ),
       ),
       onPressed: () => {
-        _importSolves(solves),
+        _importSolves(solves, context),
         Navigator.pop(context), // Pop confirmation dialog
         _displaySuccessSnackBar(solves, context),
       },
     );
   }
 
-  void _importSolves(List<Solve> solves) {
-    final solveRepository = SolveRepository();
+  void _importSolves(List<Solve> solves, BuildContext context) {
+    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     for (final solve in solves) {
-      unawaited(solveRepository.addSolve(solve));
+      unawaited(solveRepository.save(solve));
     }
   }
 

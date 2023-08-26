@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CacheRepository {
+class CacheSolveRepository extends SolveRepository {
   static const dbCreationQuery = '''
     CREATE TABLE solves(
       timestamp INTEGER PRIMARY KEY, 
@@ -26,7 +27,12 @@ class CacheRepository {
     version: 1,
   );
 
-  Future<void> writeSolve(Solve solve) async {
+  final StreamController<Solve> solvesUpdateStreamController =
+      StreamController<Solve>.broadcast();
+
+  @override
+  Future<void> save(Solve solve) async {
+    solvesUpdateStreamController.add(solve);
     final db = await futureDb;
     final solveData = _getSolveData(solve);
     await db.insert(
@@ -36,51 +42,49 @@ class CacheRepository {
     );
   }
 
-  Future<List<Solve>> readFirstSolvesPage(int size) async {
-    await _syncCacheOnline();
+  @override
+  Future<List<Solve>> readFirstHistoryPage({required int pageSize}) async {
     final db = await futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
       where: 'deleted = 0',
       orderBy: 'timestamp DESC',
-      limit: size,
+      limit: pageSize,
     );
     return solvesData.map(_getSolveFromData).toList();
   }
 
-  Future<List<Solve>> readSolvesPage(int size, DateTime lastTimestamp) async {
+  @override
+  Future<List<Solve>> readNextHistoryPage({
+    required int pageSize,
+    required Solve lastSolve,
+  }) async {
     final db = await futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
       'solves',
       where: 'timestamp < ? AND deleted = 0',
-      whereArgs: [lastTimestamp.millisecondsSinceEpoch],
+      whereArgs: [lastSolve.timestamp.millisecondsSinceEpoch],
       orderBy: 'timestamp DESC',
-      limit: size,
+      limit: pageSize,
     );
     return solvesData.map(_getSolveFromData).toList();
   }
 
-  Future<void> _syncCacheOnline() async {
-    final lastUpdate = await _getLastUpdate();
-    final newSolves = await _getOnlineSolvesSince(lastUpdate);
-    newSolves.forEach(writeSolve);
-  }
-
-  Future<int> _getLastUpdate() async {
+  @override
+  Future<List<Solve>> readSince(DateTime dateTime) async {
     final db = await futureDb;
-    final List<Map<String, dynamic>> data = await db.query('solves');
-    if (data.isEmpty) return 0;
-    return data[0]['last_update'] as int;
+    final List<Map<String, dynamic>> solvesData = await db.query(
+      'solves',
+      where: 'timestamp >= ? AND deleted = 0',
+      whereArgs: [dateTime.millisecondsSinceEpoch],
+      orderBy: 'timestamp DESC',
+    );
+    return solvesData.map(_getSolveFromData).toList();
   }
 
-  Future<List<Solve>> _getOnlineSolvesSince(int lastUpdate) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('solves')
-        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .where('deleted', isEqualTo: false)
-        .orderBy('timestamp', descending: true)
-        .endAt([lastUpdate]).get();
-    return snapshot.docs.map((doc) => Solve.fromJson(doc.data())).toList();
+  @override
+  Stream<Solve> getUpdateStream() {
+    return solvesUpdateStreamController.stream;
   }
 
   Map<String, dynamic> _getSolveData(Solve solve) {

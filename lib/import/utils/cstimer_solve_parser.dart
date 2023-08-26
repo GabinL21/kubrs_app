@@ -6,33 +6,38 @@ class CSTimerSolveParser {
   CSTimerSolveParser();
 
   static List<Solve> parseSolves(String textSolves) {
-    final json = jsonDecode(textSolves) as Map<String, dynamic>;
     final solves = <Solve>[];
+    final json = jsonDecode(textSolves) as Map<String, dynamic>;
+    final importDateTime = DateTime.now();
     for (final key in json.keys) {
       if (!key.startsWith('session')) continue;
       final sessionData = json[key] as List<dynamic>;
-      final sessionSolves = _parseSession(sessionData);
+      final sessionSolves = _parseSession(sessionData, importDateTime);
       solves.addAll(sessionSolves);
     }
     return solves;
   }
 
-  static List<Solve> _parseSession(List<dynamic> sessionData) {
+  static List<Solve> _parseSession(
+    List<dynamic> sessionData,
+    DateTime importDateTime,
+  ) {
     final solves = <Solve>[];
     for (final solveData in sessionData) {
-      final solve = _parseSolve(solveData as List<dynamic>);
+      final solve = _parseSolve(solveData as List<dynamic>, importDateTime);
       solves.add(solve);
     }
     return solves;
   }
 
-  static Solve _parseSolve(List<dynamic> solveData) {
-    return Solve.create(
+  static Solve _parseSolve(List<dynamic> solveData, DateTime importDateTime) {
+    return Solve(
       timestamp: _parseTimestamp(solveData),
       time: _parseTime(solveData),
       scramble: _parseScramble(solveData),
       plusTwo: _parsePlusTwo(solveData),
       dnf: _parseDnf(solveData),
+      lastUpdate: importDateTime,
     );
   }
 

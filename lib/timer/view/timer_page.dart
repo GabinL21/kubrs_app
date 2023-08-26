@@ -5,7 +5,6 @@ import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/scramble/view/scramble_visualization.dart';
 import 'package:kubrs_app/session/view/session_stats.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
-import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/button/delete_solve_button.dart';
 import 'package:kubrs_app/timer/view/button/tag/dnf_tag_toggle_button.dart';
@@ -21,12 +20,9 @@ class TimerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final userBloc = BlocProvider.of<UserBloc>(context);
     if (userBloc.state is UserInitial) userBloc.add(UserRequested());
-    return RepositoryProvider(
-      create: (_) => SolveRepository(),
-      child: BlocProvider(
-        create: (_) => TimerBloc(),
-        child: const TimerView(),
-      ),
+    return BlocProvider(
+      create: (_) => TimerBloc(),
+      child: const TimerView(),
     );
   }
 }

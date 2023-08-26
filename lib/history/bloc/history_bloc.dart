@@ -9,12 +9,14 @@ part 'history_state.dart';
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   HistoryBloc({required this.solveRepository}) : super(HistoryInitial()) {
     solveRepository
-        .getSolvesStream()
+        .getUpdateStream()
         .listen((_) => add(const RefreshHistory()));
     on<GetFirstHistory>((_, emit) async {
       if (state is! HistoryInitial) return;
       emit(HistoryLoading());
-      final solves = await solveRepository.getFirstHistory(pageSize);
+      final solves = await solveRepository.readFirstHistoryPage(
+        pageSize: pageSize,
+      );
       emit(HistoryLoaded(solves));
     });
     on<GetNextHistory>((_, emit) async {
@@ -25,9 +27,9 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         return;
       }
       emit(HistoryLoadingNext(solves));
-      final newSolves = await solveRepository.getNextHistory(
-        pageSize,
-        solves.last,
+      final newSolves = await solveRepository.readNextHistoryPage(
+        pageSize: pageSize,
+        lastSolve: solves.last,
       );
       if (newSolves.isEmpty) {
         emit(HistoryFullyLoaded(solves));
