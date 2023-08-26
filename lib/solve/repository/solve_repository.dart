@@ -13,4 +13,6 @@ abstract class SolveRepository {
   });
 
   Stream<Solve> getUpdateStream();
+
+  Future<DateTime> getLastUpdate();
 }

@@ -87,6 +87,19 @@ class CacheSolveRepository extends SolveRepository {
     return solvesUpdateStreamController.stream;
   }
 
+  @override
+  Future<DateTime> getLastUpdate() async {
+    final db = await futureDb;
+    final List<Map<String, dynamic>> solvesData = await db.query(
+      'solves',
+      orderBy: 'last_update DESC',
+      limit: 1,
+    );
+    final lastUpdateInMillis =
+        solvesData.isEmpty ? 0 : solvesData.first['last_update'] as int;
+    return DateTime.fromMillisecondsSinceEpoch(lastUpdateInMillis);
+  }
+
   Map<String, dynamic> _getSolveData(Solve solve) {
     return {
       'timestamp': solve.timestamp.millisecondsSinceEpoch,
