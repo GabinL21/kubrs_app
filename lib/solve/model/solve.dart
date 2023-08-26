@@ -48,26 +48,42 @@ class Solve extends Equatable {
   }
 
   factory Solve.cloneAndTogglePlusTwo({required Solve solve}) {
+    final lastUpdate = DateTime.now();
     return Solve(
       uid: solve.uid,
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
       plusTwo: !solve.plusTwo,
-      lastUpdate: solve.lastUpdate,
+      lastUpdate: lastUpdate,
       deleted: solve.deleted,
     );
   }
 
   factory Solve.cloneAndToggleDNF({required Solve solve}) {
+    final lastUpdate = DateTime.now();
     return Solve(
       uid: solve.uid,
       timestamp: solve.timestamp,
       time: solve.time,
       scramble: solve.scramble,
       dnf: !solve.dnf,
-      lastUpdate: solve.lastUpdate,
+      lastUpdate: lastUpdate,
       deleted: solve.deleted,
+    );
+  }
+
+  factory Solve.cloneAndDelete({required Solve solve}) {
+    final lastUpdate = DateTime.now();
+    return Solve(
+      uid: solve.uid,
+      timestamp: solve.timestamp,
+      time: solve.time,
+      scramble: solve.scramble,
+      plusTwo: solve.plusTwo,
+      dnf: solve.dnf,
+      lastUpdate: lastUpdate,
+      deleted: true,
     );
   }
 

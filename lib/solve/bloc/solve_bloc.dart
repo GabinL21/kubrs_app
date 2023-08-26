@@ -35,11 +35,13 @@ class SolveBloc extends Bloc<SolveEvent, SolveState> {
       await solveRepository.updateSolve(newSolve);
     });
     on<DeleteSolve>((event, emit) async {
-      await solveRepository.deleteSolve(event.solve);
+      final solve = event.solve;
+      final deletedSolve = Solve.cloneAndDelete(solve: solve);
       if (state is SolveDone && event.solve == (state as SolveDone).solve) {
         // Reset solve bloc if the last solve has been deleted
         emit(SolveInitial());
       }
+      await solveRepository.updateSolve(deletedSolve);
     });
   }
   final SolveRepository solveRepository;

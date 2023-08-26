@@ -60,12 +60,6 @@ class SolveRepository {
     await _solvesCollection.doc(lastSolveDocId).set(updatedSolve.toJson());
   }
 
-  Future<void> deleteSolve(Solve solve) async {
-    final lastSolveDocId = await _getSolveDocumentId(solve.timestamp);
-    if (lastSolveDocId == null) return;
-    await _solvesCollection.doc(lastSolveDocId).update({'deleted': true});
-  }
-
   Future<String?> _getSolveDocumentId(DateTime solveTimestamp) async {
     final snapshot = await _solvesCollection
         .where('uid', isEqualTo: _uid)
