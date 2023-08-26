@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/import/view/import_dialog.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
 class DrawerImportButton extends StatelessWidget {
   const DrawerImportButton({super.key});
@@ -20,10 +22,11 @@ class DrawerImportButton extends StatelessWidget {
   }
 
   void _showImportDialog(BuildContext context) {
+    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     Navigator.pop(context); // Pop drawer
     showDialog<ImportDialog>(
       context: context,
-      builder: (_) => const ImportDialog(),
+      builder: (_) => ImportDialog(solveRepository: solveRepository),
     );
   }
 }

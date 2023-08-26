@@ -6,9 +6,14 @@ import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
 class ImportConfirmationDialog extends StatelessWidget {
-  const ImportConfirmationDialog({super.key, required this.solves});
+  const ImportConfirmationDialog({
+    super.key,
+    required this.solves,
+    required this.solveRepository,
+  });
 
   final List<Solve> solves;
+  final SolveRepository solveRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,6 @@ class ImportConfirmationDialog extends StatelessWidget {
   }
 
   void _importSolves(List<Solve> solves, BuildContext context) {
-    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     for (final solve in solves) {
       unawaited(solveRepository.save(solve));
     }

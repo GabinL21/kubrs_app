@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/import/utils/solve_parser.dart';
 import 'package:kubrs_app/import/view/import_confirmation_dialog.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
 class ImportDialogOption extends StatelessWidget {
   const ImportDialogOption({
@@ -15,7 +17,6 @@ class ImportDialogOption extends StatelessWidget {
 
   final String timerName;
   final SolveParser solveParser;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -56,9 +57,13 @@ class ImportDialogOption extends StatelessWidget {
   }
 
   void _displayConfirmationDialog(List<Solve> solves, BuildContext context) {
+    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     showDialog<ImportConfirmationDialog>(
       context: context,
-      builder: (_) => ImportConfirmationDialog(solves: solves),
+      builder: (_) => ImportConfirmationDialog(
+        solves: solves,
+        solveRepository: solveRepository,
+      ),
     );
   }
 
