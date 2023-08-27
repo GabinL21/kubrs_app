@@ -1,10 +1,13 @@
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 abstract class SyncedSolveRepository extends SolveRepository {
   SyncedSolveRepository({required this.solveRepository});
 
+  static const Duration onlineSaveDebounceTime = Duration(seconds: 1);
   final SolveRepository solveRepository;
+  bool _listeningToSolvesUpdateStream = false;
 
   Future<void> saveOnline(Solve solve);
   Future<List<Solve>> fetch({required DateTime lastUpdate});
@@ -17,8 +20,8 @@ abstract class SyncedSolveRepository extends SolveRepository {
 
   @override
   Future<void> save(Solve solve) async {
+    if (!_listeningToSolvesUpdateStream) _listenToSolvesUpdateStream();
     await solveRepository.save(solve);
-    await saveOnline(solve);
   }
 
   @override
@@ -52,5 +55,14 @@ abstract class SyncedSolveRepository extends SolveRepository {
   @override
   Future<DateTime> getLastUpdate() {
     return solveRepository.getLastUpdate();
+  }
+
+  void _listenToSolvesUpdateStream() {
+    _listeningToSolvesUpdateStream = true;
+    solveRepository
+        .getUpdateStream()
+        .groupBy((solve) => solve.timestamp)
+        .flatMap((group) => group.debounceTime(onlineSaveDebounceTime))
+        .listen(saveOnline);
   }
 }
