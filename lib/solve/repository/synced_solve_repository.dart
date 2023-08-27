@@ -61,7 +61,8 @@ abstract class SyncedSolveRepository extends SolveRepository {
     _listeningToSolvesUpdateStream = true;
     solveRepository
         .getUpdateStream()
-        .debounceTime(onlineSaveDebounceTime)
+        .groupBy((solve) => solve.timestamp)
+        .flatMap((group) => group.debounceTime(onlineSaveDebounceTime))
         .listen(saveOnline);
   }
 }
