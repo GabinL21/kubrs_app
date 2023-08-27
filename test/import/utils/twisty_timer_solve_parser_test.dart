@@ -13,7 +13,7 @@ void main() {
     late List<Solve> solves;
 
     setUp(() {
-      solves = TwistyTimerSolveParser(uid: '').parseSolves(textSolves);
+      solves = TwistyTimerSolveParser.parseSolves(textSolves);
     });
 
     test('parses the right number of solves', () {
@@ -22,8 +22,7 @@ void main() {
 
     test('parses solves without penalty correctly', () {
       final actualSolve = solves[0];
-      final expectedSolve = Solve(
-        uid: '',
+      final expectedSolve = Solve.create(
         timestamp: DateTime.parse('2023-08-23T19:16:58.515+02:00'),
         time: const Duration(milliseconds: 3300),
         scramble: "D L2 U L2 U L2 U R2 U B2 R' U2 B2 U F D' L2 R D' F U",
@@ -33,8 +32,7 @@ void main() {
 
     test('parses DNF solves correctly', () {
       final actualSolve = solves[1];
-      final expectedSolve = Solve(
-        uid: '',
+      final expectedSolve = Solve.create(
         timestamp: DateTime.parse('2023-08-23T19:17:21.071+02:00'),
         time: const Duration(milliseconds: 2050),
         scramble: "U' L2 D F2 D' B2 U' R D2 B' L' F' L2 R2 D' F L' F D'",

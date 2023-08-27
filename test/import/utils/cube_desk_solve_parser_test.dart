@@ -94,7 +94,7 @@ void main() {
     late List<Solve> solves;
 
     setUp(() {
-      solves = CubeDeskSolveParser(uid: '').parseSolves(textSolves);
+      solves = CubeDeskSolveParser.parseSolves(textSolves);
     });
 
     test('parses the right number of solves and skips solves other than 3x3',
@@ -104,8 +104,7 @@ void main() {
 
     test('parses solves without penalty correctly', () {
       final actualSolve = solves[0];
-      final expectedSolve = Solve(
-        uid: '',
+      final expectedSolve = Solve.create(
         timestamp: DateTime.parse('2023-07-22T10:55:03.998Z'),
         time: const Duration(milliseconds: 36509),
         scramble: "U' F2 U L2 U' L2 D' L2 B2 U2 F2 U' L' U2 R' U L2 B F D2 U'",
@@ -115,8 +114,7 @@ void main() {
 
     test('parses +2 solves correctly', () {
       final actualSolve = solves[1];
-      final expectedSolve = Solve(
-        uid: '',
+      final expectedSolve = Solve.create(
         timestamp: DateTime.parse('2023-07-22T10:53:56.696Z'),
         time: const Duration(milliseconds: 50538),
         scramble: "B2 F2 L2 U R2 D B2 D' B2 U2 L2 R' D L' B' F U' B2 R' F2 R'",
@@ -127,8 +125,7 @@ void main() {
 
     test('parses DNF solves correctly', () {
       final actualSolve = solves[2];
-      final expectedSolve = Solve(
-        uid: '',
+      final expectedSolve = Solve.create(
         timestamp: DateTime.parse('2023-07-22T10:52:25.826Z'),
         time: const Duration(milliseconds: 34559),
         scramble: "R2 F2 L2 U F2 D L2 U2 B2 L2 D L2 F' U2 L' F D' L2 B R B2 U",

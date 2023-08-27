@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kubrs_app/history/repository/history_repository.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 
@@ -9,37 +7,45 @@ part 'history_event.dart';
 part 'history_state.dart';
 
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
-  HistoryBloc({required this.historyRepository, required this.solveRepository})
-      : super(HistoryInitial()) {
+  HistoryBloc({required this.solveRepository}) : super(HistoryInitial()) {
     solveRepository
-        .getSolvesStream()
+        .getUpdateStream()
         .listen((_) => add(const RefreshHistory()));
     on<GetFirstHistory>((_, emit) async {
       if (state is! HistoryInitial) return;
       emit(HistoryLoading());
-      final history = await historyRepository.getFirstHistory();
-      emit(HistoryLoaded(history.solves, history.lastDocument));
+      final solves = await solveRepository.readFirstHistoryPage(
+        pageSize: pageSize,
+      );
+      emit(HistoryLoaded(solves));
     });
     on<GetNextHistory>((_, emit) async {
       if (state is! HistoryLoaded) return;
-      if (state.lastDocument == null) return;
-      final lastDocument = (state as HistoryLoaded).lastDocument;
       final solves = state.solves;
-      final nbSolves = solves.length;
-      emit(HistoryLoadingNext(solves));
-      final newHistory =
-          await historyRepository.getNextHistory(state.solves, lastDocument!);
-      if (nbSolves == newHistory.solves.length) {
-        emit(HistoryFullyLoaded(solves, lastDocument));
+      if (solves.isEmpty) {
+        emit(HistoryFullyLoaded(solves));
         return;
       }
-      emit(HistoryLoaded(newHistory.solves, newHistory.lastDocument));
+      emit(HistoryLoadingNext(solves));
+      final newSolves = await solveRepository.readNextHistoryPage(
+        pageSize: pageSize,
+        lastSolve: solves.last,
+      );
+      if (newSolves.isEmpty) {
+        emit(HistoryFullyLoaded(solves));
+        return;
+      }
+      emit(HistoryLoaded(solves..addAll(newSolves)));
     });
-    on<RefreshHistory>((_, emit) {
-      emit(HistoryInitial());
+    on<RefreshHistory>((_, emit) async {
+      emit(HistoryRefreshing(state.solves));
+      final solves = await solveRepository.readFirstHistoryPage(
+        pageSize: pageSize,
+      );
+      emit(HistoryLoaded(solves));
     });
   }
 
-  final HistoryRepository historyRepository;
+  static const int pageSize = 20;
   final SolveRepository solveRepository;
 }

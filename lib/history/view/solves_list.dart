@@ -23,8 +23,9 @@ class _SolvesListState extends State<SolvesList> {
   Widget build(BuildContext context) {
     return BlocBuilder<HistoryBloc, HistoryState>(
       builder: (context, state) {
+        final historyBloc = BlocProvider.of<HistoryBloc>(context);
         if (state is HistoryInitial) {
-          context.read<HistoryBloc>().add(const GetFirstHistory());
+          historyBloc.add(const GetFirstHistory());
         }
         if (state is HistoryInitial || state is HistoryLoading) {
           return const Center(
@@ -46,25 +47,28 @@ class _SolvesListState extends State<SolvesList> {
         final scrollPhysics = state is HistoryLoadingNext
             ? const BouncingScrollPhysics()
             : const BouncingScrollPhysics();
-        return ListView.separated(
-          itemCount: nbItems,
-          shrinkWrap: true,
-          physics: scrollPhysics,
-          controller: _scrollController,
-          itemBuilder: (context, index) {
-            if (index == nbItems - 1) {
-              if (state is HistoryLoadingNext) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+        return RefreshIndicator(
+          onRefresh: () => refreshHistory(historyBloc),
+          child: ListView.separated(
+            itemCount: nbItems,
+            shrinkWrap: true,
+            physics: scrollPhysics,
+            controller: _scrollController,
+            itemBuilder: (context, index) {
+              if (index == nbItems - 1) {
+                if (state is HistoryLoadingNext) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is HistoryFullyLoaded) {
+                  return const SizedBox(height: 16); // Bottom padding
+                }
               }
-              if (state is HistoryFullyLoaded) {
-                return const SizedBox(height: 16); // Bottom padding
-              }
-            }
-            return SolveTile(solve: solves[index]);
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 16),
+              return SolveTile(solve: solves[index]);
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+          ),
         );
       },
     );
@@ -89,5 +93,14 @@ class _SolvesListState extends State<SolvesList> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
+  }
+
+  Future<void> refreshHistory(HistoryBloc historyBloc) async {
+    historyBloc.add(const RefreshHistory());
+    return Future.doWhile(
+      () =>
+          historyBloc.state is! HistoryLoaded &&
+          historyBloc.state is! HistoryFullyLoaded,
+    );
   }
 }

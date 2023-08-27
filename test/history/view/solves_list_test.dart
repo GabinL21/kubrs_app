@@ -29,8 +29,7 @@ extension on WidgetTester {
 void main() {
   final mockSolves = List.generate(
     3,
-    (_) => Solve(
-      uid: '',
+    (_) => Solve.create(
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
       scramble: 'R',
@@ -39,8 +38,7 @@ void main() {
 
   final mockExtraSolves = List.generate(
     10,
-    (_) => Solve(
-      uid: '',
+    (_) => Solve.create(
       timestamp: DateTime(2000),
       time: const Duration(seconds: 10),
       scramble: 'R',
@@ -72,15 +70,14 @@ void main() {
 
     testWidgets('renders no solves text when history state is loaded and empty',
         (tester) async {
-      when(() => historyBloc.state)
-          .thenReturn(HistoryLoaded(List.empty(), null));
+      when(() => historyBloc.state).thenReturn(HistoryLoaded(List.empty()));
       await tester.pumpSolvesList(historyBloc);
       expect(find.text('No solves'), findsOneWidget);
     });
 
     testWidgets('renders solve tiles when history state is loaded',
         (tester) async {
-      when(() => historyBloc.state).thenReturn(HistoryLoaded(mockSolves, null));
+      when(() => historyBloc.state).thenReturn(HistoryLoaded(mockSolves));
       await tester.pumpSolvesList(historyBloc);
       expect(find.byType(SolveTile), findsNWidgets(mockSolves.length));
     });
@@ -94,8 +91,7 @@ void main() {
 
     testWidgets('fetches more solves when scrolled to the bottom',
         (tester) async {
-      when(() => historyBloc.state)
-          .thenReturn(HistoryLoaded(mockExtraSolves, null));
+      when(() => historyBloc.state).thenReturn(HistoryLoaded(mockExtraSolves));
       await tester.pumpSolvesList(historyBloc);
       await tester.drag(find.byType(SolvesList), const Offset(0, -2000));
       verify(() => historyBloc.add(const GetNextHistory())).called(1);
@@ -106,7 +102,7 @@ void main() {
         'when scrolled to the bottom and history is fully loaded',
         (tester) async {
       when(() => historyBloc.state)
-          .thenReturn(HistoryFullyLoaded(mockExtraSolves, null));
+          .thenReturn(HistoryFullyLoaded(mockExtraSolves));
       await tester.pumpSolvesList(historyBloc);
       await tester.drag(find.byType(SolvesList), const Offset(0, -2000));
       verifyNever(() => historyBloc.add(const GetNextHistory()));

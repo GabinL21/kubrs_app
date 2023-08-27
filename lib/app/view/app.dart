@@ -11,6 +11,8 @@ import 'package:kubrs_app/nav/bloc/navigation_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/session/bloc/session_bloc.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
+import 'package:kubrs_app/solve/repository/cache_solve_repository.dart';
+import 'package:kubrs_app/solve/repository/firestore_synced_solve_repository.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 import 'package:kubrs_app/user/repository/user_repository.dart';
@@ -35,7 +37,9 @@ class App extends StatelessWidget {
             create: (_) => UserRepository(),
           ),
           RepositoryProvider<SolveRepository>(
-            create: (_) => SolveRepository(),
+            create: (_) => FirestoreSyncedSolveRepository(
+              solveRepository: CacheSolveRepository(),
+            ),
           ),
         ],
         child: MultiBlocProvider(
@@ -91,7 +95,6 @@ class App extends StatelessWidget {
         BlocProvider(
           // Maintains the session start date time
           create: (_) => SessionBloc(
-            solveBloc: solveBloc,
             solveRepository: RepositoryProvider.of<SolveRepository>(context),
           ),
         ),

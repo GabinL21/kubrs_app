@@ -11,7 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         await authRepository.signInWithGoogle();
-        await authRepository.persistUserInFirestore();
+        await authRepository.persistUser();
         emit(Authenticated());
       } catch (e) {
         emit(AuthError(e.toString()));

@@ -7,6 +7,8 @@ abstract class SessionEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RefreshSessionSolves extends SessionEvent {
-  const RefreshSessionSolves();
+class SaveSessionSolve extends SessionEvent {
+  const SaveSessionSolve(this.solve);
+
+  final Solve solve;
 }
