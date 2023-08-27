@@ -50,13 +50,16 @@ void main() {
     );
 
     blocTest<HistoryBloc, HistoryState>(
-      'emits intial state when history is refreshed',
+      'emits refreshing and loaded state when history is refreshed',
       build: () => HistoryBloc(
         solveRepository: solveRepository,
       ),
       seed: () => HistoryLoaded(mockSolves),
       act: (bloc) => bloc.add(const RefreshHistory()),
-      expect: () => <HistoryState>[HistoryInitial()],
+      expect: () => <HistoryState>[
+        HistoryRefreshing(mockSolves),
+        HistoryLoaded(mockSolves),
+      ],
     );
   });
 }

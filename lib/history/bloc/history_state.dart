@@ -5,7 +5,7 @@ abstract class HistoryState extends Equatable {
   final List<Solve> solves;
 
   @override
-  List<Object> get props => [solves.hashCode];
+  List<Object> get props => [solves];
 }
 
 class HistoryInitial extends HistoryState {
@@ -26,4 +26,8 @@ class HistoryLoaded extends HistoryState {
 
 class HistoryFullyLoaded extends HistoryState {
   const HistoryFullyLoaded(super.solves);
+}
+
+class HistoryRefreshing extends HistoryState {
+  const HistoryRefreshing(super.solves);
 }

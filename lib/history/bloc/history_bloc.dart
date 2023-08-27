@@ -39,6 +39,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     });
     on<RefreshHistory>((_, emit) async {
       if (state is! HistoryLoaded && state is! HistoryFullyLoaded) return;
+      emit(HistoryRefreshing(state.solves));
       final solves = await solveRepository.readFirstHistoryPage(
         pageSize: pageSize,
       );
