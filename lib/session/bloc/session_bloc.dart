@@ -11,7 +11,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     required this.solveRepository,
   }) : super(SessionInitial()) {
     _listenToSolvesUpdateStream();
-    on<AddSessionSolve>((event, emit) async {
+    on<SaveSessionSolve>((event, emit) async {
       final solve = event.solve;
       final timestamp = solve.timestamp.millisecondsSinceEpoch;
       final solvesByTimestamp = state.solvesByTimestamp;
@@ -31,7 +31,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     solveRepository.getUpdateStream().listen(
           (solve) => {
             if (solve.timestamp.isAfter(sessionStart))
-              add(AddSessionSolve(solve)),
+              add(SaveSessionSolve(solve)),
           },
         );
   }
