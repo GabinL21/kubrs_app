@@ -16,3 +16,7 @@ class NavigationHistory extends NavigationState {
 class NavigationTimer extends NavigationState {
   const NavigationTimer() : super(1, const TimerPage());
 }
+
+class NavigationStats extends NavigationState {
+  const NavigationStats() : super(2, const StatsPage());
+}

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/history/view/history_page.dart';
+import 'package:kubrs_app/stats/view/stats_page.dart';
 import 'package:kubrs_app/timer/timer.dart';
 
 part 'navigation_event.dart';
@@ -16,6 +17,9 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
           break;
         case 1:
           emit(const NavigationTimer());
+          break;
+        case 2:
+          emit(const NavigationStats());
           break;
       }
     });
