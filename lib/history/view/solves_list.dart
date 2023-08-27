@@ -97,6 +97,10 @@ class _SolvesListState extends State<SolvesList> {
 
   Future<void> refreshHistory(HistoryBloc historyBloc) async {
     historyBloc.add(const RefreshHistory());
-    return Future.doWhile(() => historyBloc.state is! HistoryLoaded);
+    return Future.doWhile(
+      () =>
+          historyBloc.state is! HistoryLoaded &&
+          historyBloc.state is! HistoryFullyLoaded,
+    );
   }
 }
