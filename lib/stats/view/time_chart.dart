@@ -44,7 +44,6 @@ class TimeChart extends StatelessWidget {
             topTitles: AxisTitles(),
             bottomTitles: AxisTitles(),
             leftTitles: AxisTitles(),
-            rightTitles: AxisTitles(),
           ),
           gridData: const FlGridData(show: false),
           borderData: FlBorderData(show: false),
