@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
 class TimeChart extends StatelessWidget {
   const TimeChart({super.key, required this.solves});
@@ -26,13 +27,13 @@ class TimeChart extends StatelessWidget {
       ),
       child: LineChart(
         LineChartData(
-          minY: minTime - 3 < 0 ? 0 : minTime - 3,
-          maxY: maxTime + 3,
+          minY: minTime.floorToDouble(),
+          maxY: maxTime.ceilToDouble(),
           lineBarsData: [
             LineChartBarData(
               spots: spots,
               color: theme.colorScheme.tertiary,
-              barWidth: 4,
+              barWidth: 3,
               dotData: const FlDotData(show: false),
               isCurved: true,
               isStrokeCapRound: true,
@@ -41,11 +42,32 @@ class TimeChart extends StatelessWidget {
           ],
           titlesData: const FlTitlesData(
             topTitles: AxisTitles(),
+            bottomTitles: AxisTitles(),
             leftTitles: AxisTitles(),
+            rightTitles: AxisTitles(),
           ),
           gridData: const FlGridData(show: false),
           borderData: FlBorderData(show: false),
           backgroundColor: theme.colorScheme.surface,
+          lineTouchData: LineTouchData(
+            touchTooltipData: LineTouchTooltipData(
+              tooltipBgColor: theme.colorScheme.tertiary,
+              getTooltipItems: (touchedSpots) {
+                return touchedSpots.map(
+                  (LineBarSpot touchedSpot) {
+                    final duration =
+                        Duration(milliseconds: (touchedSpot.y * 1000).floor());
+                    return LineTooltipItem(
+                      DurationFormatter.format(duration),
+                      theme.textTheme.displaySmall!.copyWith(
+                        color: theme.colorScheme.onTertiary,
+                      ),
+                    );
+                  },
+                ).toList();
+              },
+            ),
+          ),
         ),
       ),
     );
