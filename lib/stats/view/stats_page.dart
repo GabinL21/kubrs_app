@@ -30,7 +30,7 @@ class StatsView extends StatelessWidget {
       builder: (context, state) {
         if (state is StatsInitial) {
           BlocProvider.of<StatsBloc>(context)
-              .add(LoadLastSevenDaysSolvesStats());
+              .add(const LoadLastSolvesStats(100));
         }
         if (state is! StatsLoaded) {
           return const Center(child: CircularProgressIndicator());

@@ -8,10 +8,9 @@ part 'stats_state.dart';
 
 class StatsBloc extends Bloc<StatsEvent, StatsState> {
   StatsBloc(this.solveRepository) : super(StatsInitial()) {
-    on<LoadLastSevenDaysSolvesStats>((event, emit) async {
+    on<LoadLastSolvesStats>((event, emit) async {
       emit(StatsLoading());
-      final solves = await solveRepository
-          .readSince(DateTime.now().subtract(const Duration(days: 7)));
+      final solves = await solveRepository.readLast(event.n, withDnf: false);
       final reversedSolves = solves.reversed.toList();
       emit(StatsLoaded(reversedSolves));
     });

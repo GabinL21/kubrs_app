@@ -7,4 +7,8 @@ sealed class StatsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class LoadLastSevenDaysSolvesStats extends StatsEvent {}
+final class LoadLastSolvesStats extends StatsEvent {
+  const LoadLastSolvesStats(this.n);
+
+  final int n;
+}

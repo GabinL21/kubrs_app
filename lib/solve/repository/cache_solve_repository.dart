@@ -43,6 +43,30 @@ class CacheSolveRepository extends SolveRepository {
   }
 
   @override
+  Future<List<Solve>> readSince(DateTime dateTime) async {
+    final db = await _futureDb;
+    final List<Map<String, dynamic>> solvesData = await db.query(
+      'solves',
+      where: 'timestamp >= ? AND deleted = 0',
+      whereArgs: [dateTime.millisecondsSinceEpoch],
+      orderBy: 'timestamp DESC',
+    );
+    return solvesData.map(_getSolveFromData).toList();
+  }
+
+  @override
+  Future<List<Solve>> readLast(int n, {bool withDnf = true}) async {
+    final db = await _futureDb;
+    final List<Map<String, dynamic>> solvesData = await db.query(
+      'solves',
+      where: withDnf ? 'deleted = 0' : 'deleted = 0 AND dnf = 0',
+      orderBy: 'timestamp DESC',
+      limit: n,
+    );
+    return solvesData.map(_getSolveFromData).toList();
+  }
+
+  @override
   Future<List<Solve>> readFirstHistoryPage({required int pageSize}) async {
     final db = await _futureDb;
     final List<Map<String, dynamic>> solvesData = await db.query(
@@ -66,18 +90,6 @@ class CacheSolveRepository extends SolveRepository {
       whereArgs: [lastSolve.timestamp.millisecondsSinceEpoch],
       orderBy: 'timestamp DESC',
       limit: pageSize,
-    );
-    return solvesData.map(_getSolveFromData).toList();
-  }
-
-  @override
-  Future<List<Solve>> readSince(DateTime dateTime) async {
-    final db = await _futureDb;
-    final List<Map<String, dynamic>> solvesData = await db.query(
-      'solves',
-      where: 'timestamp >= ? AND deleted = 0',
-      whereArgs: [dateTime.millisecondsSinceEpoch],
-      orderBy: 'timestamp DESC',
     );
     return solvesData.map(_getSolveFromData).toList();
   }

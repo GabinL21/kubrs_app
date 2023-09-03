@@ -26,7 +26,7 @@ class TimeChart extends StatelessWidget {
       ),
       child: LineChart(
         LineChartData(
-          minY: minTime - 3,
+          minY: minTime - 3 < 0 ? 0 : minTime - 3,
           maxY: maxTime + 3,
           lineBarsData: [
             LineChartBarData(
@@ -73,7 +73,7 @@ class TimeChart extends StatelessWidget {
   double get maxTime {
     return solves
             .map((solve) => solve.effectiveTime)
-            .min
+            .max
             .inMilliseconds
             .toDouble() /
         1000;

@@ -31,6 +31,12 @@ abstract class SyncedSolveRepository extends SolveRepository {
   }
 
   @override
+  Future<List<Solve>> readLast(int n, {bool withDnf = true}) async {
+    await update();
+    return solveRepository.readLast(n, withDnf: withDnf);
+  }
+
+  @override
   Future<List<Solve>> readFirstHistoryPage({required int pageSize}) async {
     await update();
     return solveRepository.readFirstHistoryPage(pageSize: pageSize);
