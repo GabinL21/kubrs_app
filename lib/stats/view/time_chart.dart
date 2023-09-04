@@ -83,6 +83,7 @@ class TimeChart extends StatelessWidget {
   }
 
   double get minTime {
+    if (solves.isEmpty) return 0;
     return solves
             .map((solve) => solve.effectiveTime)
             .min
@@ -92,6 +93,7 @@ class TimeChart extends StatelessWidget {
   }
 
   double get maxTime {
+    if (solves.isEmpty) return 10;
     return solves
             .map((solve) => solve.effectiveTime)
             .max
