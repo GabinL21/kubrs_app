@@ -25,9 +25,7 @@ class HistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.fromLTRB(40, 40, 40, 0),
-      child: Center(
-        child: SolvesList(),
-      ),
+      child: SolvesList(),
     );
   }
 }
