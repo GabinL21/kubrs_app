@@ -10,8 +10,8 @@ class SessionStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SessionBloc, SessionState>(
-      builder: (context, timerState) {
-        final solves = timerState.solves;
+      builder: (context, state) {
+        final solves = state.solves;
         final textStyle = _getTextStyle(context);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
