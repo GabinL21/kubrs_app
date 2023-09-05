@@ -35,9 +35,11 @@ class _SolvesListState extends State<SolvesList> {
         final solves = state.solves;
         final nbSolves = solves.length;
         if (nbSolves == 0) {
-          return Text(
-            'No solves',
-            style: Theme.of(context).textTheme.displayMedium,
+          return Center(
+            child: Text(
+              'No solves',
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
           );
         }
         final nbItems =

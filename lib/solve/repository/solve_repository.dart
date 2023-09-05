@@ -5,6 +5,8 @@ abstract class SolveRepository {
 
   Future<List<Solve>> readSince(DateTime dateTime);
 
+  Future<List<Solve>> readLast(int n, {bool withDnf = true});
+
   Future<List<Solve>> readFirstHistoryPage({required int pageSize});
 
   Future<List<Solve>> readNextHistoryPage({
