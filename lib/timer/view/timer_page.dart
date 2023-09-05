@@ -42,7 +42,7 @@ class TimerView extends StatelessWidget {
       guiBloc.add(ShowGui());
     }
     return Padding(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.fromLTRB(32, 32, 32, 16),
       child: Column(
         children: [
           _getHeader(context, timerState),
@@ -123,16 +123,11 @@ class TimerView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          if (solveState is SolveDone) _getSessionChart(),
           const Center(child: TimerText()),
           if (solveState is SolveDone) _getActionButtons(),
         ],
       ),
     );
-  }
-
-  Widget _getSessionChart() {
-    return const SizedBox(height: 10, width: 100, child: SessionChart());
   }
 
   Widget _getActionButtons() {
@@ -149,15 +144,30 @@ class TimerView extends StatelessWidget {
     );
   }
 
-  Widget _getFooter(TimerState timerState) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if (timerState is! TimerReseted && timerState is! TimerRunning)
-          const SessionStats(),
-        if (timerState is! TimerReseted && timerState is! TimerRunning)
-          const ScrambleVisualization(),
-      ],
+  Widget _getSessionChart() {
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+      child: SizedBox(height: 12, child: SessionChart()),
     );
+  }
+
+  Widget _getFooter(TimerState timerState) {
+    return Column(
+      children: _getFooterChildren(timerState),
+    );
+  }
+
+  List<Widget> _getFooterChildren(TimerState timerState) {
+    if (timerState is TimerReseted || timerState is TimerRunning) return [];
+    return [
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SessionStats(),
+          ScrambleVisualization(),
+        ],
+      ),
+      _getSessionChart(),
+    ];
   }
 }

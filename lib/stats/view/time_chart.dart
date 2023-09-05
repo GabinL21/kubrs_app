@@ -5,67 +5,74 @@ import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 
 class TimeChart extends StatelessWidget {
-  const TimeChart({super.key, required this.solves});
+  const TimeChart({
+    super.key,
+    required this.solves,
+    this.minimalist = false,
+    this.minSolves = 0,
+  });
 
   final List<Solve> solves;
+  final bool minimalist;
+  final int minSolves;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Theme.of(context).colorScheme.shadow,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    final surfaceColor =
+        minimalist ? Colors.transparent : theme.colorScheme.surface;
+    return LineChart(
+      LineChartData(
+        minX: 1,
+        maxX: solves.length > minSolves
+            ? solves.length.toDouble()
+            : minSolves.toDouble(),
+        minY: minTime.floorToDouble(),
+        maxY: maxTime.ceilToDouble(),
+        lineBarsData: [
+          LineChartBarData(
+            spots: spots,
+            color: theme.colorScheme.tertiary,
+            barWidth: 3,
+            dotData: const FlDotData(show: false),
+            isCurved: true,
+            isStrokeCapRound: true,
+            preventCurveOverShooting: true,
           ),
         ],
-      ),
-      child: LineChart(
-        LineChartData(
-          minY: minTime.floorToDouble(),
-          maxY: maxTime.ceilToDouble(),
-          lineBarsData: [
-            LineChartBarData(
-              spots: spots,
-              color: theme.colorScheme.tertiary,
-              barWidth: 3,
-              dotData: const FlDotData(show: false),
-              isCurved: true,
-              isStrokeCapRound: true,
-              preventCurveOverShooting: true,
-            ),
-          ],
-          titlesData: const FlTitlesData(
-            topTitles: AxisTitles(),
-            bottomTitles: AxisTitles(),
-            leftTitles: AxisTitles(),
-          ),
-          gridData: const FlGridData(show: false),
-          borderData: FlBorderData(show: false),
-          backgroundColor: theme.colorScheme.surface,
-          lineTouchData: LineTouchData(
-            touchTooltipData: LineTouchTooltipData(
-              tooltipBgColor: theme.colorScheme.tertiary,
-              getTooltipItems: (touchedSpots) {
-                return touchedSpots.map(
-                  (LineBarSpot touchedSpot) {
-                    final duration =
-                        Duration(milliseconds: (touchedSpot.y * 1000).floor());
-                    return LineTooltipItem(
-                      DurationFormatter.format(duration),
-                      theme.textTheme.displaySmall!.copyWith(
-                        color: theme.colorScheme.onTertiary,
-                      ),
-                    );
-                  },
-                ).toList();
-              },
-            ),
+        titlesData: FlTitlesData(
+          topTitles: const AxisTitles(),
+          bottomTitles: const AxisTitles(),
+          leftTitles: const AxisTitles(),
+          rightTitles: minimalist
+              ? const AxisTitles()
+              : const AxisTitles(
+                  sideTitles: SideTitles(
+                    reservedSize: 44,
+                    showTitles: true,
+                  ),
+                ),
+        ),
+        gridData: const FlGridData(show: false),
+        borderData: FlBorderData(show: false),
+        backgroundColor: surfaceColor,
+        lineTouchData: LineTouchData(
+          touchTooltipData: LineTouchTooltipData(
+            tooltipBgColor: theme.colorScheme.tertiary,
+            getTooltipItems: (touchedSpots) {
+              return touchedSpots.map(
+                (LineBarSpot touchedSpot) {
+                  final duration =
+                      Duration(milliseconds: (touchedSpot.y * 1000).floor());
+                  return LineTooltipItem(
+                    DurationFormatter.format(duration),
+                    theme.textTheme.displaySmall!.copyWith(
+                      color: theme.colorScheme.onTertiary,
+                    ),
+                  );
+                },
+              ).toList();
+            },
           ),
         ),
       ),
@@ -76,7 +83,7 @@ class TimeChart extends StatelessWidget {
     final spots = <FlSpot>[];
     for (var i = 0; i < solves.length; i++) {
       final time = solves[i].effectiveTime.inMilliseconds.toDouble() / 1000;
-      final spot = FlSpot(i.toDouble(), time);
+      final spot = FlSpot(i.toDouble() + 1, time);
       spots.add(spot);
     }
     return spots;

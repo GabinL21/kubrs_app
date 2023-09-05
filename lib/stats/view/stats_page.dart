@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kubrs_app/solve/model/solve.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/stats/bloc/stats_bloc.dart';
 import 'package:kubrs_app/stats/view/time_chart.dart';
@@ -26,6 +27,7 @@ class StatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocBuilder<StatsBloc, StatsState>(
       builder: (context, state) {
         if (state is StatsInitial) {
@@ -37,9 +39,26 @@ class StatsView extends StatelessWidget {
         }
         return Padding(
           padding: const EdgeInsets.all(32),
-          child: TimeChart(solves: state.solves),
+          child: _getTimeProgressionChart(state.solves, theme),
         );
       },
     );
+  }
+
+  Widget _getTimeProgressionChart(List<Solve> solves, ThemeData theme) {
+    return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: theme.colorScheme.shadow,
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: TimeChart(solves: solves));
   }
 }
