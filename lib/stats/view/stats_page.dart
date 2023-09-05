@@ -39,7 +39,14 @@ class StatsView extends StatelessWidget {
         }
         return Padding(
           padding: const EdgeInsets.all(32),
-          child: _getTimeProgressionChart(state.solves, theme),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Expanded(child: SizedBox()),
+              const SizedBox(height: 32),
+              Expanded(child: _getTimeProgressionChart(state.solves, theme)),
+            ],
+          ),
         );
       },
     );
@@ -51,7 +58,7 @@ class StatsView extends StatelessWidget {
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: <BoxShadow>[
+          boxShadow: [
             BoxShadow(
               color: theme.colorScheme.shadow,
               blurRadius: 10,

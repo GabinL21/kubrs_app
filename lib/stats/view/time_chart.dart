@@ -48,7 +48,7 @@ class TimeChart extends StatelessWidget {
               ? const AxisTitles()
               : const AxisTitles(
                   sideTitles: SideTitles(
-                    reservedSize: 44,
+                    reservedSize: 32,
                     showTitles: true,
                   ),
                 ),
