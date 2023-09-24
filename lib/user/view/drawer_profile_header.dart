@@ -28,8 +28,10 @@ class DrawerProfileHeader extends StatelessWidget {
           backgroundColor: theme.colorScheme.tertiary,
           child: const Icon(Icons.person),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 16),
         displayedUserName,
+        const SizedBox(height: 32),
+        Divider(color: theme.colorScheme.secondary),
       ],
     );
   }

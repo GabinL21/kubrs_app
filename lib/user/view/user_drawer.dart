@@ -11,7 +11,7 @@ class UserDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(32, 96, 32, 32),
+        padding: const EdgeInsets.fromLTRB(32, 64, 32, 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
