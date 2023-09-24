@@ -10,14 +10,21 @@ class DrawerProfileHeader extends StatelessWidget {
     final theme = Theme.of(context);
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        return _getHeaderContent(state, theme);
+        return _getProfileHeader(state, theme);
       },
     );
   }
 
-  Widget _getHeaderContent(UserState userState, ThemeData theme) {
-    final displayedUserName =
-        userState is UserLoaded ? userState.userName : 'Loading...';
-    return Text(displayedUserName, style: theme.textTheme.displayMedium);
+  Widget _getProfileHeader(UserState userState, ThemeData theme) {
+    final displayedUserName = Text(
+      userState is UserLoaded ? userState.userName : 'Loading...',
+      style: theme.textTheme.displayMedium,
+    );
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(color: theme.colorScheme.background),
+      margin: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+      accountName: displayedUserName,
+      accountEmail: Container(),
+    );
   }
 }

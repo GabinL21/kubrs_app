@@ -10,28 +10,28 @@ class UserDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(32, 96, 32, 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const DrawerProfileHeader(),
-            _getFooter(context),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const DrawerProfileHeader(),
+          _getFooter(context),
+        ],
       ),
     );
   }
 
   Widget _getFooter(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        DrawerImportButton(),
-        DrawerDonateButton(),
-        DrawerSignOutButton(),
-      ],
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(32, 0, 32, 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DrawerImportButton(),
+          DrawerDonateButton(),
+          DrawerSignOutButton(),
+        ],
+      ),
     );
   }
 }
