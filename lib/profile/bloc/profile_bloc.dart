@@ -10,7 +10,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LoadProfile>((event, emit) async {
       emit(ProfileLoading());
       final solveCount = await solveRepository.getSolveCount();
-      emit(ProfileLoaded(solveCount: solveCount));
+      final totalSolveTime = await solveRepository.getTotalSolveTime();
+      emit(
+        ProfileLoaded(
+          solveCount: solveCount,
+          totalSolveTime: totalSolveTime,
+        ),
+      );
     });
   }
 

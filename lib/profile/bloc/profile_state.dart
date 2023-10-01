@@ -12,7 +12,8 @@ final class ProfileInitial extends ProfileState {}
 final class ProfileLoading extends ProfileState {}
 
 final class ProfileLoaded extends ProfileState {
-  const ProfileLoaded({required this.solveCount});
+  const ProfileLoaded({required this.solveCount, required this.totalSolveTime});
 
   final int solveCount;
+  final int totalSolveTime;
 }

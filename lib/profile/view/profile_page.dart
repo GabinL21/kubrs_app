@@ -75,6 +75,7 @@ class ProfileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _getSolveCount(state, theme),
+                _getTotalSolveTime(state, theme),
               ],
             ),
           ],
@@ -90,5 +91,22 @@ class ProfileView extends StatelessWidget {
     }
     final solveCount = NumberFormat.compact().format(profileState.solveCount);
     return ProfileCard(label: label, value: solveCount);
+  }
+
+  Widget _getTotalSolveTime(ProfileState profileState, ThemeData theme) {
+    const label = 'Time Solving';
+    if (profileState is! ProfileLoaded) {
+      return const ProfileCard(label: label, value: '...');
+    }
+    final totalSolveTime = Duration(milliseconds: profileState.totalSolveTime);
+    String displayedValue;
+    if (totalSolveTime.inMinutes == 0) {
+      displayedValue = '${totalSolveTime.inSeconds}s';
+    } else if (totalSolveTime.inHours == 0) {
+      displayedValue = '${totalSolveTime.inMinutes}m';
+    } else {
+      displayedValue = '${totalSolveTime.inHours}h';
+    }
+    return ProfileCard(label: label, value: displayedValue);
   }
 }

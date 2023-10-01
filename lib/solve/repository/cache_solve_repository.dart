@@ -95,6 +95,22 @@ class CacheSolveRepository extends SolveRepository {
   }
 
   @override
+  Future<int> getSolveCount() async {
+    final db = await _futureDb;
+    final List<Map<String, dynamic>> data =
+        await db.query('solves', columns: ['COUNT(*) AS count']);
+    return data.first['count'] as int;
+  }
+
+  @override
+  Future<int> getTotalSolveTime() async {
+    final db = await _futureDb;
+    final List<Map<String, dynamic>> data =
+        await db.query('solves', columns: ['SUM(time) AS total_time']);
+    return data.first['total_time'] as int;
+  }
+
+  @override
   Stream<Solve> getUpdateStream() {
     return _solvesUpdateStreamController.stream;
   }
@@ -110,14 +126,6 @@ class CacheSolveRepository extends SolveRepository {
     final lastUpdateInMillis =
         solvesData.isEmpty ? 0 : solvesData.first['last_update'] as int;
     return DateTime.fromMillisecondsSinceEpoch(lastUpdateInMillis);
-  }
-
-  @override
-  Future<int> getSolveCount() async {
-    final db = await _futureDb;
-    final List<Map<String, dynamic>> data =
-        await db.query('solves', columns: ['COUNT(*) AS count']);
-    return data.first['count'] as int;
   }
 
   Map<String, dynamic> _getSolveData(Solve solve) {
