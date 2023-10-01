@@ -13,4 +13,10 @@ class DurationFormatter {
     }
     return textStr;
   }
+
+  static String compactFormat(Duration duration) {
+    if (duration.inMinutes == 0) return '${duration.inSeconds}s';
+    if (duration.inHours == 0) return '${duration.inMinutes}m';
+    return '${duration.inHours}h';
+  }
 }
