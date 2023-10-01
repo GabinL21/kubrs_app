@@ -17,4 +17,6 @@ abstract class SolveRepository {
   Stream<Solve> getUpdateStream();
 
   Future<DateTime> getLastUpdate();
+
+  Future<int> getSolveCount();
 }

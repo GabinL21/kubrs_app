@@ -63,6 +63,12 @@ abstract class SyncedSolveRepository extends SolveRepository {
     return solveRepository.getLastUpdate();
   }
 
+  @override
+  Future<int> getSolveCount() async {
+    await update();
+    return solveRepository.getSolveCount();
+  }
+
   void _listenToSolvesUpdateStream() {
     _listeningToSolvesUpdateStream = true;
     solveRepository

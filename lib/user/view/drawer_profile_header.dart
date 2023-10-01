@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/profile/view/profile_page.dart';
+import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
 class DrawerProfileHeader extends StatelessWidget {
@@ -42,9 +43,13 @@ class DrawerProfileHeader extends StatelessWidget {
   }
 
   void _navigateToProfilePage(BuildContext context, UserState state) {
+    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => ProfilePage(userState: state),
+        builder: (context) => ProfilePage(
+          userState: state,
+          solveRepository: solveRepository,
+        ),
       ),
     );
   }

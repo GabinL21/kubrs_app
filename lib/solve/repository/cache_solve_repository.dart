@@ -112,6 +112,14 @@ class CacheSolveRepository extends SolveRepository {
     return DateTime.fromMillisecondsSinceEpoch(lastUpdateInMillis);
   }
 
+  @override
+  Future<int> getSolveCount() async {
+    final db = await _futureDb;
+    final List<Map<String, dynamic>> data =
+        await db.query('solves', columns: ['COUNT(*) AS count']);
+    return data.first['count'] as int;
+  }
+
   Map<String, dynamic> _getSolveData(Solve solve) {
     return {
       'timestamp': solve.timestamp.millisecondsSinceEpoch,
