@@ -76,6 +76,7 @@ class ProfileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _getSolveCount(state, theme),
+                const SizedBox(width: 24),
                 _getTotalSolveTime(state, theme),
               ],
             ),
