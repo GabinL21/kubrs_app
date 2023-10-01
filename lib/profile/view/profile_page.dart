@@ -84,10 +84,11 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _getSolveCount(ProfileState profileState, ThemeData theme) {
+    const label = 'Total Solves';
     if (profileState is! ProfileLoaded) {
-      return const Center(child: CircularProgressIndicator());
+      return const ProfileCard(label: label, value: '...');
     }
     final solveCount = NumberFormat.compact().format(profileState.solveCount);
-    return ProfileCard(label: 'Total Solves', value: solveCount);
+    return ProfileCard(label: label, value: solveCount);
   }
 }
