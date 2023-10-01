@@ -59,6 +59,16 @@ abstract class SyncedSolveRepository extends SolveRepository {
   }
 
   @override
+  Future<int> getSolveCount() async {
+    return solveRepository.getSolveCount();
+  }
+
+  @override
+  Future<int> getTotalSolveTime() async {
+    return solveRepository.getTotalSolveTime();
+  }
+
+  @override
   Future<DateTime> getLastUpdate() {
     return solveRepository.getLastUpdate();
   }
