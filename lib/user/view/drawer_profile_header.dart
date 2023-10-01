@@ -12,7 +12,7 @@ class DrawerProfileHeader extends StatelessWidget {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return InkWell(
-          onTap: () => _navigateToProfilePage(context),
+          onTap: () => _navigateToProfilePage(context, state),
           child: _getHeaderContent(state, theme),
         );
       },
@@ -41,10 +41,10 @@ class DrawerProfileHeader extends StatelessWidget {
     );
   }
 
-  void _navigateToProfilePage(BuildContext context) {
+  void _navigateToProfilePage(BuildContext context, UserState state) {
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => const ProfilePage(),
+        builder: (context) => ProfilePage(userState: state),
       ),
     );
   }
