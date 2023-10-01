@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:kubrs_app/profile/bloc/profile_bloc.dart';
 import 'package:kubrs_app/profile/view/profile_card.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
+import 'package:kubrs_app/solve/utils/duration_formatter.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -99,14 +100,9 @@ class ProfileView extends StatelessWidget {
       return const ProfileCard(label: label, value: '...');
     }
     final totalSolveTime = Duration(milliseconds: profileState.totalSolveTime);
-    String displayedValue;
-    if (totalSolveTime.inMinutes == 0) {
-      displayedValue = '${totalSolveTime.inSeconds}s';
-    } else if (totalSolveTime.inHours == 0) {
-      displayedValue = '${totalSolveTime.inMinutes}m';
-    } else {
-      displayedValue = '${totalSolveTime.inHours}h';
-    }
-    return ProfileCard(label: label, value: displayedValue);
+    return ProfileCard(
+      label: label,
+      value: DurationFormatter.compactFormat(totalSolveTime),
+    );
   }
 }

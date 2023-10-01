@@ -47,5 +47,45 @@ void main() {
       const duration = Duration(milliseconds: 9995);
       expect(DurationFormatter.format(duration), equals('09.99'));
     });
+
+    test('compact formats duration less than 1 second correctly', () {
+      const duration = Duration(milliseconds: 500);
+      expect(DurationFormatter.compactFormat(duration), equals('0s'));
+    });
+
+    test('compact formats duration less than 1 minute correctly', () {
+      const duration = Duration(seconds: 30, milliseconds: 500);
+      expect(DurationFormatter.compactFormat(duration), equals('30s'));
+    });
+
+    test('compact formats duration less than 1 hour correctly', () {
+      const duration = Duration(minutes: 30, seconds: 25);
+      expect(DurationFormatter.compactFormat(duration), equals('30m'));
+    });
+
+    test('compact formats duration greater than 1 hour correctly', () {
+      const duration = Duration(hours: 15, minutes: 25);
+      expect(DurationFormatter.compactFormat(duration), equals('15h'));
+    });
+
+    test('compact formats duration greater than 24 hours correctly', () {
+      const duration = Duration(hours: 30, minutes: 25);
+      expect(DurationFormatter.compactFormat(duration), equals('30h'));
+    });
+
+    test('compact formats duration of 1 second correctly', () {
+      const duration = Duration(seconds: 1);
+      expect(DurationFormatter.compactFormat(duration), equals('1s'));
+    });
+
+    test('compact formats duration of 1 minute correctly', () {
+      const duration = Duration(minutes: 1);
+      expect(DurationFormatter.compactFormat(duration), equals('1m'));
+    });
+
+    test('compact formats duration of 1 hour correctly', () {
+      const duration = Duration(hours: 1);
+      expect(DurationFormatter.compactFormat(duration), equals('1h'));
+    });
   });
 }
