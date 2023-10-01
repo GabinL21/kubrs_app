@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/profile/bloc/profile_bloc.dart';
+import 'package:kubrs_app/profile/view/profile_card.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/user/bloc/user_bloc.dart';
 
@@ -39,9 +40,9 @@ class ProfileView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(48, 64, 48, 48),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _getHeader(userState, theme),
+          const SizedBox(height: 128),
           _getContent(context, theme),
         ],
       ),
@@ -69,7 +70,12 @@ class ProfileView extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _getSolveCount(state, theme),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _getSolveCount(state, theme),
+              ],
+            ),
           ],
         );
       },
@@ -81,6 +87,6 @@ class ProfileView extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
     final solveCount = profileState.solveCount;
-    return Text(solveCount.toString(), style: theme.textTheme.displayMedium);
+    return ProfileCard(label: 'Total Solves', value: solveCount.toString());
   }
 }
