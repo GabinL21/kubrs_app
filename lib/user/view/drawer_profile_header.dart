@@ -21,7 +21,7 @@ class DrawerProfileHeader extends StatelessWidget {
 
   Widget _getHeaderContent(UserState userState, ThemeData theme) {
     final circleAvatar = CircleAvatar(
-      radius: 32,
+      radius: 24,
       backgroundColor: theme.colorScheme.tertiary,
       child: const Icon(Icons.person),
     );
@@ -33,9 +33,9 @@ class DrawerProfileHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         circleAvatar,
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         displayedUserName,
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
         Divider(color: theme.colorScheme.secondary),
       ],
     );
