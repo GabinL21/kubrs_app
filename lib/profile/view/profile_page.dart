@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:kubrs_app/profile/bloc/profile_bloc.dart';
 import 'package:kubrs_app/profile/view/profile_card.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
@@ -86,7 +87,7 @@ class ProfileView extends StatelessWidget {
     if (profileState is! ProfileLoaded) {
       return const Center(child: CircularProgressIndicator());
     }
-    final solveCount = profileState.solveCount;
-    return ProfileCard(label: 'Total Solves', value: solveCount.toString());
+    final solveCount = NumberFormat.compact().format(profileState.solveCount);
+    return ProfileCard(label: 'Total Solves', value: solveCount);
   }
 }
