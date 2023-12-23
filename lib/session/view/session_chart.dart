@@ -13,7 +13,7 @@ class SessionChart extends StatelessWidget {
     return BlocBuilder<SessionBloc, SessionState>(
       builder: (context, state) {
         return TimeChart(
-          solves: state.solves,
+          solves: state.solves.where((s) => !s.dnf).toList(),
           minimalist: true,
           minSolves: minSolves,
         );
