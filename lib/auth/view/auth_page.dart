@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/auth/bloc/auth_bloc.dart';
 import 'package:kubrs_app/auth/view/sign_in_button.dart';
-import 'package:kubrs_app/timer/timer.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -21,9 +20,7 @@ class AuthView extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is Authenticated) {
-            _navigateToTimerPage(context);
-          } else if (state is AuthError) {
+          if (state is AuthError) {
             _showAuthenticationError(context);
           }
         },
@@ -35,14 +32,6 @@ class AuthView extends StatelessWidget {
           }
           return Container();
         },
-      ),
-    );
-  }
-
-  void _navigateToTimerPage(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<Widget>(
-        builder: (context) => const TimerPage(),
       ),
     );
   }
