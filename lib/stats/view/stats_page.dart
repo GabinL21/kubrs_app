@@ -32,7 +32,7 @@ class StatsView extends StatelessWidget {
       builder: (context, state) {
         if (state is StatsInitial) {
           BlocProvider.of<StatsBloc>(context)
-              .add(const LoadLastSolvesStats(100));
+              .add(const LoadLastSolvesStats(32));
         }
         if (state is! StatsLoaded) {
           return const Center(child: CircularProgressIndicator());
@@ -42,8 +42,6 @@ class StatsView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(child: SizedBox()),
-              const SizedBox(height: 32),
               Expanded(child: _getTimeProgressionChart(state.solves, theme)),
             ],
           ),
