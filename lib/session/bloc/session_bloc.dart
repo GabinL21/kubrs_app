@@ -29,10 +29,11 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
   void _listenToSolvesUpdateStream() {
     solveRepository.getUpdateStream().listen(
-          (solve) => {
-            if (solve.timestamp.isAfter(sessionStart))
-              add(SaveSessionSolve(solve)),
-          },
-        );
+      (solve) {
+        if (solve.timestamp.isAfter(sessionStart)) {
+          add(SaveSessionSolve(solve));
+        }
+      },
+    );
   }
 }

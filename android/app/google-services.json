@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "940539174983-9slaag8lq3cr42uk8ve7qibdm6j98ghq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.kubrs",
+            "certificate_hash": "038ae789ccd0769b42749327d74727cabc851cd7"
+          }
+        },
+        {
+          "client_id": "940539174983-i9u063l7d6e1f4gak1tf3c8kr8qf65ni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.kubrs",
+            "certificate_hash": "2a2c1f5ca24c84769bf20bb9e7d36572c3105e9f"
+          }
+        },
+        {
+          "client_id": "940539174983-pjep9f89604i5bkr8mssvmv2209e3v7n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.kubrs",
+            "certificate_hash": "d167a339d7db3bec342ea35e864f152dffd77954"
+          }
+        },
+        {
           "client_id": "940539174983-466f9qqekskdgp5qqptfc2p168nm1jjq.apps.googleusercontent.com",
           "client_type": 3
         }
