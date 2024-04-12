@@ -34,7 +34,7 @@ dependencies:
   url_launcher: ^6.1.14
 
 dev_dependencies:
-  bloc_test: ^9.1.4
+  bloc_test: ^9.1.7
   flutter_launcher_icons: "^0.13.1"
   flutter_test:
     sdk: flutter
