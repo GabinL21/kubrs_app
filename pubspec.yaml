@@ -18,7 +18,7 @@ dependencies:
   firebase_app_check: ^0.2.0
   firebase_auth: ^4.15.3
   firebase_core: ^2.16.0
-  fl_chart: ^0.63.0
+  fl_chart: ^0.65.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
