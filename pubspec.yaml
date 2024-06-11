@@ -21,7 +21,7 @@ dependencies:
   fl_chart: ^0.65.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.3.7
