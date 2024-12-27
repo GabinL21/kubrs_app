@@ -3,6 +3,7 @@ import 'package:kubrs_app/user/view/drawer_donate_button.dart';
 import 'package:kubrs_app/user/view/drawer_import_button.dart';
 import 'package:kubrs_app/user/view/drawer_profile_header.dart';
 import 'package:kubrs_app/user/view/drawer_sign_out_button.dart';
+import 'package:kubrs_app/user/view/drawer_trainer_button.dart';
 
 class UserDrawer extends StatelessWidget {
   const UserDrawer({super.key});
@@ -28,6 +29,7 @@ class UserDrawer extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        DrawerTrainerButton(),
         DrawerImportButton(),
         DrawerDonateButton(),
         DrawerSignOutButton(),
