@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/profile/bloc/profile_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
+import 'package:kubrs_app/trainer/utils/algorithm_loader.dart';
 
 class TrainerPage extends StatelessWidget {
   const TrainerPage({
@@ -30,6 +31,7 @@ class TrainerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AlgorithmLoader.loadAlgorithmGroups();
     return Container();
   }
 }
