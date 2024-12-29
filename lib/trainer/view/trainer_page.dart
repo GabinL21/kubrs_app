@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/trainer/bloc/algorithms_bloc.dart';
+import 'package:kubrs_app/trainer/bloc/pattern_scramble_bloc.dart';
 
 class TrainerPage extends StatelessWidget {
   const TrainerPage({
@@ -13,8 +14,15 @@ class TrainerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AlgorithmsBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AlgorithmsBloc>(
+          create: (context) => AlgorithmsBloc(),
+        ),
+        BlocProvider<PatternScrambleBloc>(
+          create: (context) => PatternScrambleBloc(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -39,8 +47,22 @@ class TrainerView extends StatelessWidget {
         }
         final algorithmGroups = state.algorithmGroups;
         final firstAlgorithm = algorithmGroups.first.algorithms.first;
-        return Center(
-          child: Text(firstAlgorithm.name),
+        return BlocBuilder<PatternScrambleBloc, PatternScrambleState>(
+          builder: (context, state) {
+            if (state is PatternScrambleInitial) {
+              BlocProvider.of<PatternScrambleBloc>(context).add(
+                GeneratePatternScrambleEvent(
+                  pattern: firstAlgorithm.pattern,
+                ),
+              );
+            }
+            if (state is! PatternScrambleLoaded) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Center(child: Text(state.scramble));
+          },
         );
       },
     );

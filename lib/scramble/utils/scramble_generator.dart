@@ -6,7 +6,11 @@ import 'package:flutter/foundation.dart';
 
 class ScrambleGenerator {
   static Future<String> generate() async {
-    final cube = _getRandomStateCube();
+    final randomStateCube = _getRandomStateCube();
+    return generateToCube(randomStateCube);
+  }
+
+  static Future<String> generateToCube(Cube cube) async {
     final solution = await compute(_solveCube, cube);
     if (solution == null) return 'Scramble failed to load';
     return solution.toString();
