@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/solve/repository/solve_repository.dart';
+import 'package:kubrs_app/trainer/bloc/algorithm_scramble_bloc.dart';
 import 'package:kubrs_app/trainer/bloc/algorithms_bloc.dart';
-import 'package:kubrs_app/trainer/bloc/pattern_scramble_bloc.dart';
 
 class TrainerPage extends StatelessWidget {
   const TrainerPage({
@@ -19,8 +19,8 @@ class TrainerPage extends StatelessWidget {
         BlocProvider<AlgorithmsBloc>(
           create: (context) => AlgorithmsBloc(),
         ),
-        BlocProvider<PatternScrambleBloc>(
-          create: (context) => PatternScrambleBloc(),
+        BlocProvider<AlgorithmScrambleBloc>(
+          create: (context) => AlgorithmScrambleBloc(),
         ),
       ],
       child: Scaffold(
@@ -47,16 +47,16 @@ class TrainerView extends StatelessWidget {
         }
         final algorithmGroups = state.algorithmGroups;
         final firstAlgorithm = algorithmGroups.first.algorithms.first;
-        return BlocBuilder<PatternScrambleBloc, PatternScrambleState>(
+        return BlocBuilder<AlgorithmScrambleBloc, AlgorithmScrambleState>(
           builder: (context, state) {
-            if (state is PatternScrambleInitial) {
-              BlocProvider.of<PatternScrambleBloc>(context).add(
-                GeneratePatternScrambleEvent(
-                  pattern: firstAlgorithm.pattern,
+            if (state is AlgorithmScrambleInitial) {
+              BlocProvider.of<AlgorithmScrambleBloc>(context).add(
+                GenerateAlgorithmScrambleEvent(
+                  algorithm: firstAlgorithm,
                 ),
               );
             }
-            if (state is! PatternScrambleLoaded) {
+            if (state is! AlgorithmScrambleLoaded) {
               return const Center(
                 child: CircularProgressIndicator(),
               );

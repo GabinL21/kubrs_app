@@ -39,6 +39,7 @@ class AlgorithmLoader {
         solution: algorithm['solution'] as String,
         pattern:
             _parseCubePattern(algorithm['pattern'] as Map<String, dynamic>),
+        scrambles: List<String>.from(algorithm['scrambles'] as List),
       );
     }).toList();
   }
