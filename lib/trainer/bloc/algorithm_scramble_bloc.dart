@@ -1,23 +1,19 @@
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:kubrs_app/trainer/model/algorithm.dart';
+import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/trainer/model/algorithm_group.dart';
 
-part 'algorithm_scramble_event.dart';
-part 'algorithm_scramble_state.dart';
+class AlgorithmScrambleBloc extends ScrambleBloc {
+  AlgorithmScrambleBloc(this.algorithmGroup) : super();
 
-class AlgorithmScrambleBloc
-    extends Bloc<AlgorithmScrambleEvent, AlgorithmScrambleState> {
-  AlgorithmScrambleBloc() : super(const AlgorithmScrambleInitial()) {
-    on<GenerateAlgorithmScrambleEvent>(
-      (event, emit) async {
-        emit(const AlgorithmScrambleLoading());
-        final scrambles = event.algorithm.scrambles;
-        final random = Random();
-        final scramble = scrambles[random.nextInt(scrambles.length)];
-        emit(AlgorithmScrambleLoaded(scramble));
-      },
-    );
+  @override
+  Future<String> generateScramble() async {
+    final random = Random();
+    final algorithmIndex = random.nextInt(algorithmGroup.algorithms.length);
+    final algorithm = algorithmGroup.algorithms[algorithmIndex];
+    final scrambleIndex = random.nextInt(algorithm.scrambles.length);
+    return algorithm.scrambles[scrambleIndex];
   }
+
+  final AlgorithmGroup algorithmGroup;
 }

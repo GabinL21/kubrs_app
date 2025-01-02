@@ -10,10 +10,14 @@ class ScrambleBloc extends Bloc<ScrambleEvent, ScrambleState> {
     on<GenerateScrambleEvent>(
       (event, emit) async {
         emit(const ScrambleLoading());
-        final scramble = await ScrambleGenerator.generate();
+        final scramble = await generateScramble();
         emit(ScrambleLoaded(scramble));
       },
     );
     add(GenerateScrambleEvent()); // Initialize the first scramble
+  }
+
+  Future<String> generateScramble() async {
+    return ScrambleGenerator.generate();
   }
 }

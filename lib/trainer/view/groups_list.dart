@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kubrs_app/trainer/bloc/algorithm_scramble_bloc.dart';
 import 'package:kubrs_app/trainer/bloc/algorithms_bloc.dart';
 import 'package:kubrs_app/trainer/view/group_tile.dart';
 
@@ -9,15 +8,8 @@ class GroupsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AlgorithmsBloc>(
-          create: (context) => AlgorithmsBloc(),
-        ),
-        BlocProvider<AlgorithmScrambleBloc>(
-          create: (context) => AlgorithmScrambleBloc(),
-        ),
-      ],
+    return BlocProvider<AlgorithmsBloc>(
+      create: (context) => AlgorithmsBloc(),
       child: _getGroupsList(context),
     );
   }
