@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kubrs_app/solve/repository/solve_repository.dart';
 import 'package:kubrs_app/trainer/view/trainer_page.dart';
 
 class DrawerTrainerButton extends StatelessWidget {
@@ -22,12 +20,9 @@ class DrawerTrainerButton extends StatelessWidget {
   }
 
   void _navigateToTrainerPage(BuildContext context) {
-    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => TrainerPage(
-          solveRepository: solveRepository,
-        ),
+        builder: (context) => const TrainerPage(),
       ),
     );
   }
