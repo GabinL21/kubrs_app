@@ -18,7 +18,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Ticker? _ticker;
 
   void _onReset(ResetTimer event, Emitter<TimerState> emit) {
-    emit(const TimerReseted());
+    emit(const TimerReset());
     _dispose();
   }
 

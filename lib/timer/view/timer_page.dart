@@ -36,7 +36,7 @@ class TimerView extends StatelessWidget {
     final timerState = context.select((TimerBloc bloc) => bloc.state);
     final solveState = context.select((SolveBloc bloc) => bloc.state);
     final guiBloc = BlocProvider.of<GuiBloc>(context);
-    if (timerState is TimerReseted || timerState is TimerRunning) {
+    if (timerState is TimerReset || timerState is TimerRunning) {
       guiBloc.add(HideGui());
     } else {
       guiBloc.add(ShowGui());
@@ -56,7 +56,7 @@ class TimerView extends StatelessWidget {
   Widget _getHeader(BuildContext context, TimerState timerState) {
     return Column(
       children: [
-        if (timerState is! TimerReseted && timerState is! TimerRunning)
+        if (timerState is! TimerReset && timerState is! TimerRunning)
           _getScrambleHeader(),
       ],
     );
@@ -158,7 +158,7 @@ class TimerView extends StatelessWidget {
   }
 
   List<Widget> _getFooterChildren(TimerState timerState) {
-    if (timerState is TimerReseted || timerState is TimerRunning) return [];
+    if (timerState is TimerReset || timerState is TimerRunning) return [];
     return [
       const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
