@@ -73,9 +73,7 @@ class App extends StatelessWidget {
   }
 
   Widget _getScaffold(BuildContext context) {
-    final solveBloc = SolveBloc(
-      solveRepository: RepositoryProvider.of<SolveRepository>(context),
-    );
+    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -90,13 +88,11 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           // Keeps the same solve even if you switch to another page
-          create: (_) => solveBloc,
+          create: (_) => SolveBloc(solveRepository: solveRepository),
         ),
         BlocProvider(
           // Maintains the session start date time
-          create: (_) => SessionBloc(
-            solveRepository: RepositoryProvider.of<SolveRepository>(context),
-          ),
+          create: (_) => SessionBloc(solveRepository: solveRepository),
         ),
       ],
       child: BlocBuilder<GuiBloc, GuiState>(
