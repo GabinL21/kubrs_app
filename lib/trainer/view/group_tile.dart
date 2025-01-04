@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/trainer/model/algorithm_group.dart';
+import 'package:kubrs_app/trainer/view/trainer_timer_page.dart';
 
 class GroupTile extends StatelessWidget {
   const GroupTile({super.key, required this.group});
@@ -9,7 +10,7 @@ class GroupTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => (),
+      onTap: () => _navigateToTrainerTimerPage(context),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
@@ -61,6 +62,14 @@ class GroupTile extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             fontSize: 14,
           ),
+    );
+  }
+
+  void _navigateToTrainerTimerPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(
+        builder: (context) => const TrainerTimerPage(),
+      ),
     );
   }
 }
