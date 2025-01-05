@@ -5,15 +5,11 @@ import 'package:cuber/cuber.dart';
 import 'package:flutter/foundation.dart';
 
 class ScrambleGenerator {
-  static Future<String> generate() async {
+  Future<String> generate() async {
     final randomStateCube = _getRandomStateCube();
-    return generateToCube(randomStateCube);
-  }
-
-  static Future<String> generateToCube(Cube cube) async {
-    final solution = await compute(_solveCube, cube);
-    if (solution == null) return 'Scramble failed to load';
-    return solution.toString();
+    final scramble = await compute(_solveCube, randomStateCube);
+    if (scramble == null) return 'Scramble failed to load';
+    return scramble.toString();
   }
 
   static Solution? _solveCube(Cube cube) {

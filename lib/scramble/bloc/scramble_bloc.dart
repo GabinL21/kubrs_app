@@ -6,7 +6,8 @@ part 'scramble_event.dart';
 part 'scramble_state.dart';
 
 class ScrambleBloc extends Bloc<ScrambleEvent, ScrambleState> {
-  ScrambleBloc() : super(const ScrambleInitial()) {
+  ScrambleBloc({required this.scrambleGenerator})
+      : super(const ScrambleInitial()) {
     on<GenerateScrambleEvent>(
       (event, emit) async {
         emit(const ScrambleLoading());
@@ -17,7 +18,9 @@ class ScrambleBloc extends Bloc<ScrambleEvent, ScrambleState> {
     add(GenerateScrambleEvent()); // Initialize the first scramble
   }
 
+  final ScrambleGenerator scrambleGenerator;
+
   Future<String> generateScramble() async {
-    return ScrambleGenerator.generate();
+    return scrambleGenerator.generate();
   }
 }

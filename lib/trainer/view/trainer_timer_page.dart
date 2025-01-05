@@ -5,12 +5,16 @@ import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/session/bloc/session_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/timer.dart';
+import 'package:kubrs_app/trainer/model/algorithm_group.dart';
+import 'package:kubrs_app/trainer/utils/trainer_scramble_generator.dart';
 
 import '../../solve/bloc/solve_bloc.dart';
 import '../repository/trainer_solve_repository.dart';
 
 class TrainerTimerPage extends StatelessWidget {
-  const TrainerTimerPage({super.key});
+  const TrainerTimerPage({super.key, required this.algorithmGroup});
+
+  final AlgorithmGroup algorithmGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,10 @@ class TrainerTimerPage extends StatelessWidget {
           create: (context) => SessionBloc(solveRepository: solveRepository),
         ),
         BlocProvider(
-          create: (context) => ScrambleBloc(),
+          create: (context) => ScrambleBloc(
+            scrambleGenerator:
+                TrainerScrambleGenerator(algorithmGroup: algorithmGroup),
+          ),
         ),
         BlocProvider(
           create: (context) => GuiBloc(),

@@ -68,7 +68,7 @@ class GroupTile extends StatelessWidget {
   void _navigateToTrainerTimerPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => const TrainerTimerPage(),
+        builder: (context) => TrainerTimerPage(algorithmGroup: group),
       ),
     );
   }
