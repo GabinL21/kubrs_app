@@ -62,6 +62,145 @@
           ]
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "2-Look OLL (Corners)",
+      "algorithms": [
+        {
+          "id": 4,
+          "name": "Antisune",
+          "solution": "R U2 R' U' R U' R'",
+          "pattern": {
+            "U": [0, 2, 2, 2, 2, 2, 0, 2, 0],
+            "F": [2, 0, 0],
+            "R": [0, 0, 2],
+            "B": [0, 0, 0],
+            "L": [2, 0, 0]
+          },
+          "scrambles": [
+            "U2 F U F2 U' F2 U F B2 U L2 U' R2 U L2 U B2 L2 F2 D2 L2",
+            "R U R2 U' R2 U R U F2 R2 F2 U' F2 R2 F2",
+            "U R' D' L D R' D' L B2 R2 U2 L2 F2 R2 D' R2",
+            "U B' D' F D B' D' F' R2 U F2 U2 R2 D' R2 U' L2 F2 U R2 D2",
+            "B' R2 B U F' U F U' D L2 D' R2 D L2 B2 U B2 D' R2"
+          ]
+        },
+        {
+          "id": 5,
+          "name": "H",
+          "solution": "R U R' U R U' R' U R U2 R'",
+          "pattern": {
+            "U": [0, 2, 0, 2, 2, 2, 0, 2, 0],
+            "F": [0, 0, 0],
+            "R": [2, 0, 2],
+            "B": [0, 0, 0],
+            "L": [2, 0, 2]
+          },
+          "scrambles": [
+            "L U F2 L' F2 L2 U' L U2 R2 D' L2 B2 U' D2 B2 R2 D' F2",
+            "U' L' U2 L U' B2 L D L' F2 U B2 D' R2 D F2 R2 U F2 R2",
+            "U2 F U2 F' U L2 B' U' B L2 U' F2 U F2 U' F2 D F2 D'",
+            "U' F2 R U L B2 L U' R B2 L2 D' R2 F2 U' F2 U L2 U L2",
+            "B U D' B' U B' U2 D B L2 B2 U B2 U' L2 B2 U2 L2 U' L2"
+          ]
+        },
+        {
+          "id": 6,
+          "name": "L",
+          "solution": "F R' F' r U R U' r'",
+          "pattern": {
+            "U": [2, 2, 0, 2, 2, 2, 0, 2, 2],
+            "F": [2, 0, 0],
+            "R": [2, 0, 0],
+            "B": [0, 0, 0],
+            "L": [0, 0, 0]
+          },
+          "scrambles": [
+            "U F D B2 D' F U2 F2 D' R2 U2 L2 B2 U' L2 U' R2 U2 F2 B2",
+            "U' B R2 B' L2 B R2 B R2 B2 U F2 U F2 U' B2 D F2 R2 B2",
+            "F' D' B2 D F D2 R2 U' B2 U2 R2 U' B2 D' R2 D'",
+            "U2 L B2 L' F2 L B2 L U2 B2 R2 U' L2 D' L2 B2 U' L2 D'",
+            "U R U' B2 U B2 U R' B2 U R2 U' B2 U2 B2 R2 D B2 D'"
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Pi",
+          "solution": "R U2 R2 U' R2 U' R2 U2 R",
+          "pattern": {
+            "U": [0, 2, 0, 2, 2, 2, 0, 2, 0],
+            "F": [0, 0, 2],
+            "R": [0, 0, 0],
+            "B": [0, 0, 2],
+            "L": [2, 0, 2]
+          },
+          "scrambles": [
+            "U' F D R2 D R2 B2 D' F U F2 U F2 D2 B2 D' R2 D' R2 F2 D'",
+            "B2 R D' L' B2 L' D R' B2 L2 B2 U' R2 D R2 L2 B2 U2 B2",
+            "B D L2 D L2 F2 D' B U B2 U B2 D2 F2 D' L2 D' L2 B2 D'",
+            "U2 B D L2 D L2 F2 D' B R2 L2 D L2 U' B2 U' F2 U L2 D2",
+            "U R U2 R2 F2 R' B2 D2 L F2 B2 R2 D' R2 D B2 U' L2 B2"
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Sune",
+          "solution": "R U R' U R U2 R'",
+          "pattern": {
+            "U": [0, 2, 0, 2, 2, 2, 2, 2, 0],
+            "F": [0, 0, 2],
+            "R": [2, 0, 0],
+            "B": [2, 0, 0],
+            "L": [0, 0, 2]
+          },
+          "scrambles": [
+            "B U2 B' U' B U' B' U' B2 L2 R2 U L2 U' L2 D L2 D' R2 B2",
+            "F U2 F' U' F U' F D' L2 U F2 U' L2 U F2 L2 D",
+            "U F' U B U' F U B U' B2 U B2 L2 B2 U L2 U' B2 L2",
+            "L U2 L' U' L U' L F2 B2 U' B2 U B2 D' B2 D F2 L2",
+            "U' F U2 F' U' F U' F U' L2 U R2 U' L2 U R2 F2"
+          ]
+        },
+        {
+          "id": 9,
+          "name": "T",
+          "solution": "r U R' U' r' F R F'",
+          "pattern": {
+            "U": [0, 2, 2, 2, 2, 2, 0, 2, 2],
+            "F": [2, 0, 0],
+            "R": [0, 0, 0],
+            "B": [2, 0, 0],
+            "L": [0, 0, 0]
+          },
+          "scrambles": [
+            "U2 F U' R2 U R2 U F L2 B2 U' L2 F2 U' B2 U2 B2 U R2 D'",
+            "R2 U R D' L2 D R' U' B2 U R2 U' F2 U R2 U' B2 R2",
+            "U' L D R2 D' L U2 R2 B2 L2 U R2 F2 D' R2 D2",
+            "F U F D F' U' F U' F2 U' F2 U F2 D' F2 U F2",
+            "B U B D B' U' B U' L2 U L2 U L2 U' F2 U F2 D' L2 B2"
+          ]
+        },
+        {
+          "id": 10,
+          "name": "U",
+          "solution": "R2 D R' U2 R D' R' U2 R'",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 0, 2, 0],
+            "F": [2, 0, 2],
+            "R": [0, 0, 0],
+            "B": [0, 0, 0],
+            "L": [0, 0, 0]
+          },
+          "scrambles": [
+            "U' F U' R2 U R2 U F U2 R2 D B2 L2 U L2 D' B2 R2 U F2",
+            "U2 F U' R2 U R2 U F L2 U' L2 U L2 D' F2 U2 F2 L2 D F2",
+            "U2 R' D' L2 D R U' B2 U B2 D' B2 D B2 R2 L2 D R2",
+            "U L D R2 D' L U' F2 L2 D2 F2 L2 U' F2 R2 D F2 U' F2",
+            "R U' B2 U B2 U R F2 U' F2 U F2 D' R2 U2 R2 F2 D R2"
+          ]
+        }
+      ]
     }
   ]
 }
