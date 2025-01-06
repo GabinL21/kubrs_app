@@ -2,25 +2,63 @@
   "groups": [
     {
       "id": 1,
-      "name": "2-Look PLL",
+      "name": "2-Look OLL (Edges)",
       "algorithms": [
         {
           "id": 1,
-          "name": "PLL (H)",
-          "solution": "M2 U M2 U2 M2 U M2",
+          "name": "Dot Shape",
+          "solution": "F R U R' U' F' f R U R' U' f'",
           "pattern": {
-            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
-            "F": [3, 4, 3],
-            "R": [5, 6, 5],
-            "B": [4, 3, 4],
-            "L": [6, 5, 6]
+            "U": [0, 0, 0, 0, 2, 0, 0, 0, 0],
+            "F": [0, 2, 0],
+            "R": [0, 2, 0],
+            "B": [0, 2, 0],
+            "L": [0, 2, 2]
           },
           "scrambles": [
-            "B F D2 B F D2 B2 L2 D2 L2 F2 R2 U2 B2 R2",
-            "F B D2 F B D2 F2 R2 D2 R2 B2 L2 U2 F2 L2",
-            "R L D2 R L D2 R2 B2 D2 B2 L2 F2 U2 R2 F2",
-            "U2 B F D2 B F D2 B2 L2 D2 L2 F2 R2 U2 B2 R2",
-            "U' R L D2 R L D2 R2 B2 D2 B2 L2 F2 U2 R2 F2"
+            "U2 L R' B2 D2 F L' R U R2 U F2 D2 B2 L2 U B2 L2 U2 L2",
+            "U' L F2 R' F' U2 R F' L F2 R2 U' B2 R2 F2 U L2 U' L2 D' B2",
+            "R' F2 L F U2 L' F R L2 D L2 U2 L2 F2 U' F2 L2 D' B2",
+            "U L R' B2 D2 F' L' R' F2 D B2 U B2 D2 L2 D' B2 U L2",
+            "F R2 U2 F L D2 R L B U2 D2 F2 D' L2 D F2 U2 L2 F2"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "I-Shape",
+          "solution": "F R U R' U' F'",
+          "pattern": {
+            "U": [0, 0, 0, 2, 2, 2, 0, 0, 0],
+            "F": [0, 2, 0],
+            "R": [0, 0, 0],
+            "B": [0, 2, 0],
+            "L": [0, 0, 2]
+          },
+          "scrambles": [
+            "U' R B2 L2 B R B2 L2 B L2 D' L2 B2 U' L2 U R2 U' L2 F2",
+            "U' F2 R' F' R' U' B2 R F R' U2 B2 R2 U' B2 U' F2 L2 D L2 B2",
+            "U F R2 F2 B L' B L' F U' R2 U L2 F2 B2 D' L2 D R2 F2",
+            "R U2 R B' D B R' U2 R' U L2 F2 U F2 D' B2 U B2 L2 D",
+            "R2 U' F D' R' D R F U2 B2 F2 L2 D' R2 D2 F2 L2 F2 U F2"
+          ]
+        },
+        {
+          "id": 3,
+          "name": "L-Shape",
+          "solution": "f R U R' U' f'",
+          "pattern": {
+            "U": [0, 0, 0, 0, 2, 2, 0, 2, 0],
+            "F": [0, 2, 0],
+            "R": [0, 0, 0],
+            "B": [0, 0, 0],
+            "L": [0, 2, 2]
+          },
+          "scrambles": [
+            "L B2 D' F R F' D B2 L U' F2 U L2 U L2 U' F2 U' L2",
+            "U' L' U B U L' U' D' B U' R2 B2 L2 U' R2 D F2 L2 U2 B2 L2",
+            "L2 F' D' L' U' L U D F U2 B2 U' B2 U' B2 U2 B2 U' L2",
+            "U' B2 U L' D B D' B' L B2 R2 D B2 D' R2 U B2 U' R2 B2",
+            "R' F2 R U F2 D B' R B' U R2 D L2 U2 D' R2 B2 D' F2 R2"
           ]
         }
       ]
