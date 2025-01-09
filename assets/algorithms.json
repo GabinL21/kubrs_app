@@ -201,6 +201,132 @@
           ]
         }
       ]
+    },
+    {
+      "id": 3,
+      "name": "2-Look PLL (Corners)",
+      "algorithms": [
+        {
+          "id": 11,
+          "name": "Diagonal",
+          "solution": "F R U' R' U' R U R' F' R U R' U' R' F R F'",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "B": [4, 0, 3],
+            "L": [5, 0, 6],
+            "R": [5, 0, 6],
+            "F": [4, 0, 3]
+          },
+          "scrambles": [
+            "L R U2 L R U R2 U2 F2 U' F2 R2 U2 R2 U F2 U2 L2",
+            "U B F R2 B' F' R2 U L2 D' R2 F2 R2 D L2 U B2 U2 R2",
+            "B F U2 B F' U' R2 U L2 D' L2 U' F2 D L2 D' R2",
+            "F B U2 F B U R2 U2 B2 D' B2 L2 D2 L2 U F2 U2 L2",
+            "U2 B F' U2 B' F U2 R2 B2 U B2 U2 R2 U' B2 U2 B2 R2"
+          ]
+        },
+        {
+          "id": 12,
+          "name": "Headlights",
+          "solution": "R U R' U' R' F R2 U' R' U' R U R' F'",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "B": [3, 0, 5],
+            "L": [6, 0, 6],
+            "R": [4, 0, 3],
+            "F": [4, 0, 5]
+          },
+          "scrambles": [
+            "L R U2 L R U B2 U R2 U' B2 F2 L2 U L2 U' B2 D",
+            "U2 R L U2 R L' U L2 U' L2 D F2 D' F2 R2 L2 F2 L2",
+            "U2 F B U2 F B' L2 U L2 U' B2 U F2 B2 R2 F2 D R2",
+            "R L U2 R L' F2 U F2 U' L2 U R2 L2 B2 R2 D B2",
+            "U' B F' R2 B F' U' B2 U' B2 F2 R2 U F2 D' L2 D F2 R2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "2-Look PLL (Edges)",
+      "algorithms": [
+        {
+          "id": 13,
+          "name": "PLL (H)",
+          "solution": "M2 U M2 U2 M2 U M2",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "B": [3, 4, 3],
+            "L": [6, 5, 6],
+            "R": [5, 6, 5],
+            "F": [4, 3, 4]
+          },
+          "scrambles": [
+            "U L R D2 L R D2 L2 F2 D2 F2 R2 B2 U2 L2 B2",
+            "L R D2 L R D2 L2 F2 D2 F2 R2 B2 U2 L2 B2",
+            "U' B F D2 B F D2 B2 L2 D2 L2 F2 R2 U2 B2 R2",
+            "U2 R L D2 R L D2 R2 B2 D2 B2 L2 F2 U2 R2 F2",
+            "L R D2 L R D2 L2 F2 D2 F2 R2 B2 U2 L2 B2"
+          ]
+        },
+        {
+          "id": 14,
+          "name": "PLL (Ua)",
+          "solution": "R U' R U R U R U' R' U' R2",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "B": [3, 3, 3],
+            "L": [6, 4, 6],
+            "R": [5, 6, 5],
+            "F": [4, 5, 4]
+          },
+          "scrambles": [
+            "B2 U' R2 B2 R2 U B' F R2 D2 L2 U2 B F L2 D2",
+            "L2 U' F2 L2 F2 U F2 L2 F2 U2 F2 U2 L2 F2 L2 U2 F2",
+            "B2 D' B2 R2 B2 D B F' R2 D2 L2 U2 B' F' L2 D2",
+            "U' B2 D' B2 R2 B2 D B F' R2 D2 L2 U2 B' F' L2 D2",
+            "U B2 D' B2 R2 B2 D B F' R2 D2 L2 U2 B' F' L2 D2"
+          ]
+        },
+        {
+          "id": 15,
+          "name": "PLL (Ub)",
+          "solution": "R2 U R U R' U' R' U' R' U R'",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "B": [3, 3, 3],
+            "L": [6, 5, 6],
+            "R": [5, 4, 5],
+            "F": [4, 6, 4]
+          },
+          "scrambles": [
+            "U2 B2 U R2 B2 R2 U R2 U2 R2 U2 B2 R2 B2 U2 B2",
+            "U F2 U L2 F2 L2 U L2 U2 L2 U2 F2 L2 F2 U2 F2",
+            "L2 U' B2 L2 B2 U L2 B2 U2 B2 L2 B2 U2 L2 B2 U2 L2",
+            "L2 U B2 L2 B2 U B2 U2 B2 U2 L2 B2 L2 U2 L2",
+            "U' L2 D' L2 F2 R2 U F D2 L2 R2 U2 B' L2 F2 U2 R2"
+          ]
+        },
+        {
+          "id": 16,
+          "name": "PLL (Z)",
+          "solution": "M' U M2 U M2 U M' U2 M2",
+          "pattern": {
+            "U": [2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "B": [5, 4, 5],
+            "L": [3, 6, 3],
+            "R": [4, 5, 4],
+            "F": [6, 3, 6]
+          },
+          "scrambles": [
+            "R L U2 R L' U B2 R2 B2 U R2 U B2 R2 B2 U R2",
+            "U' L R U2 L R' U F2 L2 F2 U L2 U F2 L2 F2 U L2",
+            "F B U2 F B' U R2 F2 R2 U F2 U R2 F2 R2 U F2",
+            "U F B U2 F B' U' F2 U' F2 U' F2 U' F2 U' F2 R2 F2 R2",
+            "B F U2 B F' U' B2 U' B2 U' B2 U' B2 U' B2 L2 B2 L2"
+          ]
+        }
+      ]
     }
   ]
 }
