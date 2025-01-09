@@ -47,10 +47,10 @@ class AlgorithmLoader {
   static CubePattern _parseCubePattern(Map<String, dynamic> pattern) {
     return CubePattern(
       uFace: List<int>.from(pattern['U'] as List),
-      fSide: List<int>.from(pattern['F'] as List),
-      rSide: List<int>.from(pattern['R'] as List),
       bSide: List<int>.from(pattern['B'] as List),
       lSide: List<int>.from(pattern['L'] as List),
+      rSide: List<int>.from(pattern['R'] as List),
+      fSide: List<int>.from(pattern['F'] as List),
     );
   }
 }

@@ -4,19 +4,19 @@ import 'package:equatable/equatable.dart';
 class CubePattern extends Equatable {
   const CubePattern({
     required this.uFace,
-    required this.fSide,
-    required this.rSide,
     required this.bSide,
     required this.lSide,
+    required this.rSide,
+    required this.fSide,
   });
 
   Cube toCube() {
     const uFaceDef = 'UUUUUUUUU';
+    final bFaceDef = 'BBBBBB${_digitListToDefinition(bSide)}';
+    final lFaceDef = 'LLLLLL${_digitListToDefinition(lSide)}';
     final rFaceDef = 'RRRRRR${_digitListToDefinition(rSide)}';
     final fFaceDef = 'FFFFFF${_digitListToDefinition(fSide)}';
     final dFaceDef = _digitListToDefinition(uFace);
-    final lFaceDef = 'LLLLLL${_digitListToDefinition(lSide)}';
-    final bFaceDef = 'BBBBBB${_digitListToDefinition(bSide)}';
     final cubeDefinition =
         uFaceDef + rFaceDef + fFaceDef + dFaceDef + lFaceDef + bFaceDef;
     return Cube.from(cubeDefinition);
@@ -46,13 +46,13 @@ class CubePattern extends Equatable {
   }
 
   final List<int> uFace;
-  final List<int> fSide;
-  final List<int> rSide;
   final List<int> bSide;
   final List<int> lSide;
+  final List<int> rSide;
+  final List<int> fSide;
 
   @override
   List<Object?> get props {
-    return [uFace, fSide, rSide, bSide, lSide];
+    return [uFace, bSide, lSide, rSide, fSide];
   }
 }

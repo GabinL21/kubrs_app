@@ -64,7 +64,7 @@ void _validateAlgorithmFormat(Map<String, dynamic> algorithm) {
 }
 
 void _validatePattern(Map<String, dynamic> pattern) {
-  expect(pattern.keys, containsAll(['U', 'F', 'R', 'B', 'L']));
+  expect(pattern.keys, containsAll(['U', 'B', 'L', 'R', 'F']));
   for (final face in pattern.keys) {
     final expectedLength = face == 'U' ? 9 : 3;
     expect(pattern[face], hasLength(expectedLength));
