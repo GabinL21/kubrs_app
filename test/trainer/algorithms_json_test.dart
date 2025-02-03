@@ -23,7 +23,7 @@ void main() {
 
     test('should have valid format', () {
       expect(jsonData, isA<Map<String, dynamic>>());
-      expect(jsonData['groups'], isA<List>());
+      expect(jsonData['groups'], isA<List<dynamic>>());
 
       for (final group in jsonData['groups']! as List<dynamic>) {
         _validateGroupFormat(group as Map<String, dynamic>);
@@ -44,7 +44,7 @@ void _validateGroupFormat(Map<String, dynamic> group) {
   expect(group, isA<Map<String, dynamic>>());
   expect(group['id'], isA<int>());
   expect(group['name'], isA<String>());
-  expect(group['algorithms'], isA<List>());
+  expect(group['algorithms'], isA<List<dynamic>>());
 
   for (final algorithm in group['algorithms']! as List<dynamic>) {
     _validateAlgorithmFormat(algorithm as Map<String, dynamic>);
@@ -57,7 +57,7 @@ void _validateAlgorithmFormat(Map<String, dynamic> algorithm) {
   expect(algorithm['name'], isA<String>());
   expect(algorithm['solution'], isA<String>());
   expect(algorithm['pattern'], isA<Map<String, dynamic>>());
-  expect(algorithm['scrambles'], isA<List>());
+  expect(algorithm['scrambles'], isA<List<dynamic>>());
 
   _validatePattern(algorithm['pattern']! as Map<String, dynamic>);
   _validateScrambles(algorithm['scrambles']! as List<dynamic>);

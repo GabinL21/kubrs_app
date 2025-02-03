@@ -3,13 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
 import 'package:kubrs_app/session/bloc/session_bloc.dart';
+import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/timer/bloc/timer_bloc.dart';
 import 'package:kubrs_app/timer/view/timer.dart';
 import 'package:kubrs_app/trainer/model/algorithm_group.dart';
+import 'package:kubrs_app/trainer/repository/trainer_solve_repository.dart';
 import 'package:kubrs_app/trainer/utils/trainer_scramble_generator.dart';
-
-import '../../solve/bloc/solve_bloc.dart';
-import '../repository/trainer_solve_repository.dart';
 
 class TrainerTimerPage extends StatelessWidget {
   const TrainerTimerPage({super.key, required this.algorithmGroup});
