@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kubrs_app/trainer/model/algorithm_group.dart';
 import 'package:kubrs_app/trainer/view/algorithms_list.dart';
 import 'package:kubrs_app/trainer/view/train_button.dart';
+import 'package:kubrs_app/trainer/view/trainer_timer_page.dart';
 
 class AlgorithmsPage extends StatelessWidget {
   const AlgorithmsPage({super.key, required this.algorithmGroup});
@@ -32,8 +33,19 @@ class AlgorithmsView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AlgorithmsList(group: algorithmGroup),
-          TrainButton(label: 'Train', onPressed: () => {}),
+          TrainButton(
+              label: 'Train',
+              onPressed: () => _navigateToTrainerTimerPage(context),
+          ),
         ],
+      ),
+    );
+  }
+
+  void _navigateToTrainerTimerPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(
+        builder: (context) => TrainerTimerPage(algorithmGroup: algorithmGroup),
       ),
     );
   }
