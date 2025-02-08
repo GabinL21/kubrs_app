@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kubrs_app/trainer/view/trainer_page.dart';
+import 'package:kubrs_app/trainer/view/groups_page.dart';
 
 class DrawerTrainerButton extends StatelessWidget {
   const DrawerTrainerButton({super.key});
@@ -22,7 +22,7 @@ class DrawerTrainerButton extends StatelessWidget {
   void _navigateToTrainerPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<Widget>(
-        builder: (context) => const TrainerPage(),
+        builder: (context) => const GroupsPage(),
       ),
     );
   }

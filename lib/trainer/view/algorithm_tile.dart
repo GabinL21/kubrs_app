@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:kubrs_app/trainer/model/algorithm_group.dart';
-import 'package:kubrs_app/trainer/view/algorithms_page.dart';
+import 'package:kubrs_app/trainer/model/algorithm.dart';
 
-class GroupTile extends StatelessWidget {
-  const GroupTile({super.key, required this.group});
+class AlgorithmTile extends StatelessWidget {
+  const AlgorithmTile({super.key, required this.algorithm});
 
-  final AlgorithmGroup group;
+  final Algorithm algorithm;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => _navigateToAlgorithmsPage(context),
-      child: Container(
+    return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
@@ -30,24 +27,23 @@ class GroupTile extends StatelessWidget {
             _getLeftColumn(context),
           ],
         ),
-      ),
-    );
+      );
   }
 
   Column _getLeftColumn(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _getGroupName(context),
+        _getAlgorithmName(context),
         const SizedBox(height: 4),
-        _getGroupSize(context),
+        _getAlgorithmSolution(context),
       ],
     );
   }
 
-  Text _getGroupName(BuildContext context) {
+  Text _getAlgorithmName(BuildContext context) {
     return Text(
-      group.name,
+      algorithm.name,
       style: Theme.of(context).textTheme.displayMedium?.copyWith(
             fontWeight: FontWeight.w700,
             fontSize: 18,
@@ -55,21 +51,13 @@ class GroupTile extends StatelessWidget {
     );
   }
 
-  Text _getGroupSize(BuildContext context) {
+  Text _getAlgorithmSolution(BuildContext context) {
     return Text(
-      '${group.algorithms.length} algorithms',
+      algorithm.solution,
       style: Theme.of(context).textTheme.displaySmall?.copyWith(
             color: Theme.of(context).colorScheme.secondary,
             fontSize: 14,
           ),
-    );
-  }
-
-  void _navigateToAlgorithmsPage(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<Widget>(
-        builder: (context) => AlgorithmsPage(algorithmGroup: group),
-      ),
     );
   }
 }

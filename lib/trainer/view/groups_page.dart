@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/trainer/view/groups_list.dart';
 
-class TrainerPage extends StatelessWidget {
-  const TrainerPage({
+class GroupsPage extends StatelessWidget {
+  const GroupsPage({
     super.key,
   });
 
