@@ -56,7 +56,7 @@ class TrainerTimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.fromLTRB(32, 32, 32, 16),
-      child: Timer(),
+      child: Timer(showStats: false),
     );
   }
 }

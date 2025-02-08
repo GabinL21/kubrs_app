@@ -14,7 +14,9 @@ import 'package:kubrs_app/timer/view/timer_gesture_detector.dart';
 import 'package:kubrs_app/timer/view/timer_text.dart';
 
 class Timer extends StatelessWidget {
-  const Timer({super.key});
+  const Timer({super.key, this.showStats = true});
+
+  final bool showStats;
 
   @override
   Widget build(BuildContext context) {
@@ -142,11 +144,11 @@ class Timer extends StatelessWidget {
   List<Widget> _getFooterChildren(TimerState timerState) {
     if (timerState is TimerReset || timerState is TimerRunning) return [];
     return [
-      const Row(
+      Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SessionStats(),
-          ScrambleVisualization(),
+          if (showStats) const SessionStats(),
+          const ScrambleVisualization(),
         ],
       ),
       _getSessionChart(),
