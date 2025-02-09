@@ -2,6 +2,20 @@ import 'package:cuber/cuber.dart' as cube;
 import 'package:flutter/material.dart';
 
 class ScrambleVisualizer {
+
+  ScrambleVisualizer.loading({this.size = 8}) {
+    cubeSquares = List.generate(54, (_) => CubeSquare(color: grey, size: size));
+  }
+
+  ScrambleVisualizer.fromScramble({required String scramble, this.size = 8}) {
+    final cube = Cube.getScrambledCube(scramble);
+    if (cube.isSolved) {
+      ScrambleVisualizer.loading(size: size);
+    } else {
+      cubeSquares = _getSquares(cube.colors, size);
+    }
+  }
+
   static Color grey = const Color.fromRGBO(132, 132, 132, 1);
   static Color white = const Color.fromRGBO(223, 223, 223, 1);
   static Color yellow = const Color.fromRGBO(234, 237, 114, 1);
@@ -10,43 +24,10 @@ class ScrambleVisualizer {
   static Color red = const Color.fromRGBO(249, 82, 82, 1);
   static Color orange = const Color.fromRGBO(242, 146, 58, 1);
 
-  static Widget getLoadingCube({double size = 8}) {
-    final cubeSquares =
-        List.generate(54, (_) => CubeSquare(color: grey, size: size));
-    return _getCube(
-      cubeSquares: cubeSquares,
-      key: 'scrambleVisualizationLoading',
-    );
-  }
+  List<CubeSquare> cubeSquares = [];
+  final double size;
 
-  static Widget getCube({required String scramble, double size = 8}) {
-    final cube = Cube.getScrambledCube(scramble);
-    final cubeSquares = _getSquares(cube.colors, size);
-    return _getCube(
-      cubeSquares: cubeSquares,
-      key: 'scrambleVisualizationLoaded',
-    );
-  }
-
-  static Widget getUpFace({required String scramble, double size = 10}) {
-    final cube = Cube.getScrambledCube(scramble);
-    if (cube.isSolved) _getErrorFace();
-    final upFaceColors = cube.colors.sublist(0, 9).toList();
-    final upFaceSquares = _getSquares(upFaceColors, size);
-    return _getFace(upFaceSquares, size);
-  }
-
-  static Widget _getErrorFace({double size = 10}) {
-    final upFaceSquares =
-        List.generate(9, (_) => CubeSquare(color: grey, size: size));
-    return _getFace(upFaceSquares, size);
-  }
-
-  static Widget _getCube({
-    required List<CubeSquare> cubeSquares,
-    required String key,
-    double size = 8,
-  }) {
+  Widget getCube() {
     final upFaceSquares = cubeSquares.sublist(0, 9).toList();
     final rightFaceSquares = cubeSquares.sublist(9, 18).toList();
     final frontFaceSquares = cubeSquares.sublist(18, 27).toList();
@@ -55,7 +36,7 @@ class ScrambleVisualizer {
     final bottomFaceSquares = cubeSquares.sublist(45, 54).toList();
     final space = 4 * size / 8;
     return Row(
-      key: Key(key),
+      key: const Key('scrambleVisualizationLoaded'),
       children: [
         _getFace(leftFaceSquares, size),
         SizedBox(width: space),
@@ -74,6 +55,11 @@ class ScrambleVisualizer {
         _getFace(bottomFaceSquares, size),
       ],
     );
+  }
+
+  Widget getUpFace() {
+    final upFaceSquares = cubeSquares.sublist(0, 9).toList();
+    return _getFace(upFaceSquares, size);
   }
 
   static Widget _getFace(List<CubeSquare> faceSquares, double size) {

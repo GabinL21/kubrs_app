@@ -32,7 +32,9 @@ class SolveTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _getLeftColumn(context),
-            ScrambleVisualizer.getUpFace(scramble: solve.scramble),
+            ScrambleVisualizer
+                .fromScramble(scramble: solve.scramble, size: 10)
+                .getUpFace(),
           ],
         ),
       ),
