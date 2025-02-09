@@ -1,5 +1,6 @@
 import 'package:cuber/cuber.dart' as cube;
 import 'package:flutter/material.dart';
+import 'package:kubrs_app/trainer/model/cube_pattern.dart';
 
 class ScrambleVisualizer {
 
@@ -14,6 +15,38 @@ class ScrambleVisualizer {
     } else {
       cubeSquares = _getSquares(cube.colors, size);
     }
+  }
+
+  ScrambleVisualizer.fromCubePattern({
+    required CubePattern cubePattern,
+    this.size = 8,
+  }) {
+    Color numberToColor(int number) {
+      switch (number) {
+        case 0:
+          return grey;
+        case 1:
+          return white;
+        case 2:
+          return yellow;
+        case 3:
+          return green;
+        case 4:
+          return blue;
+        case 5:
+          return red;
+        case 6:
+          return orange;
+        default:
+          return grey;
+      }
+    }
+    final upFaceSquares = cubePattern.uFace
+        .map((number) => CubeSquare(color: numberToColor(number), size: size))
+        .toList();
+    final otherFaces =
+      List.generate(45, (_) => CubeSquare(color: grey, size: size));
+    cubeSquares = upFaceSquares + otherFaces;
   }
 
   static Color grey = const Color.fromRGBO(132, 132, 132, 1);

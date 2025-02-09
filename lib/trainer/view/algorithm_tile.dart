@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
 import 'package:kubrs_app/trainer/model/algorithm.dart';
 
 class AlgorithmTile extends StatelessWidget {
@@ -22,7 +23,6 @@ class AlgorithmTile extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(12),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _getLeftColumn(context),
           ],
@@ -34,6 +34,10 @@ class AlgorithmTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        ScrambleVisualizer
+            .fromCubePattern(cubePattern: algorithm.pattern, size: 10)
+            .getUpFace(),
+        const SizedBox(height: 12),
         _getAlgorithmName(context),
         const SizedBox(height: 4),
         _getAlgorithmSolution(context),
