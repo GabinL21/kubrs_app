@@ -10,11 +10,7 @@ class ScrambleVisualizer {
 
   ScrambleVisualizer.fromScramble({required String scramble, this.size = 8}) {
     final cube = Cube.getScrambledCube(scramble);
-    if (cube.isSolved) {
-      ScrambleVisualizer.loading(size: size);
-    } else {
-      cubeSquares = _getSquares(cube.colors, size);
-    }
+    cubeSquares = _getSquares(cube.colors, size);
   }
 
   ScrambleVisualizer.fromCubePattern({
@@ -41,12 +37,31 @@ class ScrambleVisualizer {
           return grey;
       }
     }
-    final upFaceSquares = cubePattern.uFace
-        .map((number) => CubeSquare(color: numberToColor(number), size: size))
-        .toList();
-    final otherFaces =
-      List.generate(45, (_) => CubeSquare(color: grey, size: size));
-    cubeSquares = upFaceSquares + otherFaces;
+
+    CubeSquare numberToCubeSquare(int number) {
+      return CubeSquare(color: numberToColor(number), size: size);
+    }
+
+    // U Face
+    cubeSquares += cubePattern.uFace.map(numberToCubeSquare).toList();
+    // Fill other faces
+    cubeSquares += List.generate(45, (_) => numberToCubeSquare(0));
+    // R Face
+    cubeSquares[9] = numberToCubeSquare(cubePattern.rSide[0]);
+    cubeSquares[12] = numberToCubeSquare(cubePattern.rSide[1]);
+    cubeSquares[15] = numberToCubeSquare(cubePattern.rSide[2]);
+    // F Face
+    cubeSquares[18] = numberToCubeSquare(cubePattern.fSide[0]);
+    cubeSquares[19] = numberToCubeSquare(cubePattern.fSide[1]);
+    cubeSquares[20] = numberToCubeSquare(cubePattern.fSide[2]);
+    // L Face
+    cubeSquares[38] = numberToCubeSquare(cubePattern.lSide[0]);
+    cubeSquares[41] = numberToCubeSquare(cubePattern.lSide[1]);
+    cubeSquares[44] = numberToCubeSquare(cubePattern.lSide[2]);
+    // B Face
+    cubeSquares[51] = numberToCubeSquare(cubePattern.bSide[0]);
+    cubeSquares[52] = numberToCubeSquare(cubePattern.bSide[1]);
+    cubeSquares[53] = numberToCubeSquare(cubePattern.bSide[2]);
   }
 
   static Color grey = const Color.fromRGBO(132, 132, 132, 1);
@@ -66,7 +81,7 @@ class ScrambleVisualizer {
     final frontFaceSquares = cubeSquares.sublist(18, 27).toList();
     final downFaceSquares = cubeSquares.sublist(27, 36).toList();
     final leftFaceSquares = cubeSquares.sublist(36, 45).toList();
-    final bottomFaceSquares = cubeSquares.sublist(45, 54).toList();
+    final backFaceSquares = cubeSquares.sublist(45, 54).toList();
     final space = 4 * size / 8;
     return Row(
       key: const Key('scrambleVisualizationLoaded'),
@@ -85,7 +100,7 @@ class ScrambleVisualizer {
         SizedBox(width: space),
         _getFace(rightFaceSquares, size),
         SizedBox(width: space),
-        _getFace(bottomFaceSquares, size),
+        _getFace(backFaceSquares, size),
       ],
     );
   }
@@ -93,6 +108,42 @@ class ScrambleVisualizer {
   Widget getUpFace() {
     final upFaceSquares = cubeSquares.sublist(0, 9).toList();
     return _getFace(upFaceSquares, size);
+  }
+
+  Widget getUpFaceWithSides() {
+    final space = 4 * size / 8;
+    final upFaceSquares = cubeSquares.sublist(0, 9).toList();
+    final rFaceUpSideSquares = [
+      cubeSquares[9],
+      cubeSquares[12],
+      cubeSquares[15],
+    ];
+    cubeSquares.sublist(9, 12).toList();
+    final fFaceUpSideSquares = cubeSquares.sublist(18, 21).toList();
+    final lFaceUpSideSquares = [
+      cubeSquares[38],
+      cubeSquares[41],
+      cubeSquares[44],
+    ];
+    final bFaceUpSideSquares = cubeSquares.sublist(51, 54).toList();
+    return Row(
+      key: const Key('scrambleVisualizationLoaded'),
+      children: [
+        _getColumn(lFaceUpSideSquares, space / 2),
+        SizedBox(width: space),
+        Column(
+          children: [
+            _getRow(bFaceUpSideSquares, space / 2),
+            SizedBox(height: space),
+            _getFace(upFaceSquares, size),
+            SizedBox(height: space),
+            _getRow(fFaceUpSideSquares, space / 2),
+          ],
+        ),
+        SizedBox(width: space),
+        _getColumn(rFaceUpSideSquares, space / 2),
+      ],
+    );
   }
 
   static Widget _getFace(List<CubeSquare> faceSquares, double size) {
@@ -116,6 +167,20 @@ class ScrambleVisualizer {
         rowSquares[1],
         SizedBox(width: spaceBetween),
         rowSquares[2],
+      ],
+    );
+  }
+
+  static Widget _getColumn(
+      List<CubeSquare> columnSquares,
+      double spaceBetween) {
+    return Column(
+      children: [
+        columnSquares[0],
+        SizedBox(height: spaceBetween),
+        columnSquares[1],
+        SizedBox(height: spaceBetween),
+        columnSquares[2],
       ],
     );
   }
