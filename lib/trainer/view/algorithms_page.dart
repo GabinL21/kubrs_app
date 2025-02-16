@@ -32,10 +32,13 @@ class AlgorithmsView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AlgorithmsList(group: algorithmGroup),
+          Expanded(
+            child: AlgorithmsList(group: algorithmGroup),
+          ),
+          const SizedBox(height: 16),
           TrainButton(
-              label: 'Train',
-              onPressed: () => _navigateToTrainerTimerPage(context),
+            label: 'Train',
+            onPressed: () => _navigateToTrainerTimerPage(context),
           ),
         ],
       ),
