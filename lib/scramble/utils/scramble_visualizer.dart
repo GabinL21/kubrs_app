@@ -171,7 +171,9 @@ class ScrambleVisualizer {
   }
 
   static Widget _getColumn(
-      List<CubeSquare> columnSquares, double spaceBetween) {
+    List<CubeSquare> columnSquares,
+    double spaceBetween,
+  ) {
     return Column(
       children: [
         columnSquares[0],

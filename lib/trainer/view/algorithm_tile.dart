@@ -35,8 +35,9 @@ class AlgorithmTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ScrambleVisualizer.fromCubePattern(
-                cubePattern: algorithm.pattern, size: 10)
-            .getUpFaceWithSides(),
+          cubePattern: algorithm.pattern,
+          size: 10,
+        ).getUpFaceWithSides(),
         const SizedBox(height: 12),
         _getAlgorithmName(context),
         const SizedBox(height: 4),

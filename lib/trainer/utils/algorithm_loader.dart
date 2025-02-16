@@ -23,35 +23,38 @@ class AlgorithmLoader {
   static List<AlgorithmGroup> _parseAlgorithmGroups(
     Map<String, dynamic> jsonMap,
   ) {
-    return (jsonMap['groups'] as List).map((group) {
+    return (jsonMap['groups'] as List<dynamic>).map((group) {
+      final groupMap = group as Map<String, dynamic>;
       return AlgorithmGroup(
-        id: group['id'] as int,
-        name: group['name'] as String,
-        algorithms: _parseAlgorithms(group['algorithms'] as List),
+        id: groupMap['id'] as int,
+        name: groupMap['name'] as String,
+        algorithms: _parseAlgorithms(groupMap['algorithms'] as List<dynamic>),
       );
     }).toList();
   }
 
   static List<Algorithm> _parseAlgorithms(List<dynamic> algorithms) {
     return algorithms.map((algorithm) {
+      final algorithmMap = algorithm as Map<String, dynamic>;
       return Algorithm(
-        id: algorithm['id'] as int,
-        name: algorithm['name'] as String,
-        solution: algorithm['solution'] as String,
+        id: algorithmMap['id'] as int,
+        name: algorithmMap['name'] as String,
+        solution: algorithmMap['solution'] as String,
         pattern:
-            _parseCubePattern(algorithm['pattern'] as Map<String, dynamic>),
-        scrambles: List<String>.from(algorithm['scrambles'] as List),
+            _parseCubePattern(algorithmMap['pattern'] as Map<String, dynamic>),
+        scrambles:
+            List<String>.from(algorithmMap['scrambles'] as List<dynamic>),
       );
     }).toList();
   }
 
   static CubePattern _parseCubePattern(Map<String, dynamic> pattern) {
     return CubePattern(
-      uFace: List<int>.from(pattern['U'] as List),
-      bSide: List<int>.from(pattern['B'] as List),
-      lSide: List<int>.from(pattern['L'] as List),
-      rSide: List<int>.from(pattern['R'] as List),
-      fSide: List<int>.from(pattern['F'] as List),
+      uFace: List<int>.from(pattern['U'] as List<dynamic>),
+      bSide: List<int>.from(pattern['B'] as List<dynamic>),
+      lSide: List<int>.from(pattern['L'] as List<dynamic>),
+      rSide: List<int>.from(pattern['R'] as List<dynamic>),
+      fSide: List<int>.from(pattern['F'] as List<dynamic>),
     );
   }
 }

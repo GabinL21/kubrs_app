@@ -16,7 +16,7 @@ void main() {
 
     test('should have unique IDs', () {
       final ids = <int>{};
-      for (final group in jsonData['groups']! as List<dynamic>) {
+      for (final group in jsonData['groups'] as List<dynamic>) {
         _validateUniqueIds(group as Map<String, dynamic>, ids);
       }
     });
@@ -25,7 +25,7 @@ void main() {
       expect(jsonData, isA<Map<String, dynamic>>());
       expect(jsonData['groups'], isA<List<dynamic>>());
 
-      for (final group in jsonData['groups']! as List<dynamic>) {
+      for (final group in jsonData['groups'] as List<dynamic>) {
         _validateGroupFormat(group as Map<String, dynamic>);
       }
     });
@@ -33,8 +33,8 @@ void main() {
 }
 
 void _validateUniqueIds(Map<String, dynamic> group, Set<int> ids) {
-  for (final algorithm in group['algorithms']! as List<dynamic>) {
-    final id = algorithm['id']! as int;
+  for (final algorithm in group['algorithms'] as List<Map<String, dynamic>>) {
+    final id = algorithm['id'] as int;
     expect(ids.contains(id), isFalse, reason: 'Duplicate ID found: $id');
     ids.add(id);
   }
@@ -46,7 +46,7 @@ void _validateGroupFormat(Map<String, dynamic> group) {
   expect(group['name'], isA<String>());
   expect(group['algorithms'], isA<List<dynamic>>());
 
-  for (final algorithm in group['algorithms']! as List<dynamic>) {
+  for (final algorithm in group['algorithms'] as List<dynamic>) {
     _validateAlgorithmFormat(algorithm as Map<String, dynamic>);
   }
 }
@@ -59,8 +59,8 @@ void _validateAlgorithmFormat(Map<String, dynamic> algorithm) {
   expect(algorithm['pattern'], isA<Map<String, dynamic>>());
   expect(algorithm['scrambles'], isA<List<dynamic>>());
 
-  _validatePattern(algorithm['pattern']! as Map<String, dynamic>);
-  _validateScrambles(algorithm['scrambles']! as List<dynamic>);
+  _validatePattern(algorithm['pattern'] as Map<String, dynamic>);
+  _validateScrambles(algorithm['scrambles'] as List<dynamic>);
 }
 
 void _validatePattern(Map<String, dynamic> pattern) {
@@ -68,7 +68,7 @@ void _validatePattern(Map<String, dynamic> pattern) {
   for (final face in pattern.keys) {
     final expectedLength = face == 'U' ? 9 : 3;
     expect(pattern[face], hasLength(expectedLength));
-    for (final color in pattern[face]! as List<dynamic>) {
+    for (final dynamic color in pattern[face] as List<dynamic>) {
       expect(color, isA<int>());
       expect(color, greaterThanOrEqualTo(0));
       expect(color, lessThanOrEqualTo(6));
@@ -77,7 +77,7 @@ void _validatePattern(Map<String, dynamic> pattern) {
 }
 
 void _validateScrambles(List<dynamic> scrambles) {
-  for (final scramble in scrambles) {
+  for (final dynamic scramble in scrambles) {
     expect(scramble, isA<String>());
     expect(() => Cube.getScrambledCube(scramble as String), returnsNormally);
   }
