@@ -12,8 +12,8 @@ class TimerInitial extends TimerState {
   const TimerInitial() : super(Duration.zero);
 }
 
-class TimerReseted extends TimerState {
-  const TimerReseted() : super(Duration.zero);
+class TimerReset extends TimerState {
+  const TimerReset() : super(Duration.zero);
 }
 
 class TimerRunning extends TimerState {

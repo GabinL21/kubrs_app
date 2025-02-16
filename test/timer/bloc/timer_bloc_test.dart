@@ -12,17 +12,17 @@ void main() {
     );
 
     blocTest<TimerBloc, TimerState>(
-      'emits reset state when timer is reseted',
+      'emits reset state when timer is reset',
       build: TimerBloc.new,
       act: (bloc) => bloc.add(const ResetTimer()),
-      expect: () => const <TimerState>[TimerReseted()],
+      expect: () => const <TimerState>[TimerReset()],
     );
 
     blocTest<TimerBloc, TimerState>(
       'emits running state when timer is started',
       setUp: WidgetsFlutterBinding.ensureInitialized,
       build: TimerBloc.new,
-      seed: TimerReseted.new,
+      seed: TimerReset.new,
       act: (bloc) => bloc.add(const StartTimer()),
       expect: () => const <TimerState>[TimerRunning(Duration.zero)],
     );

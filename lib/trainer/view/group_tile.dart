@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kubrs_app/details/view/solve_details_page.dart';
-import 'package:kubrs_app/history/utils/date_time_formatter.dart';
-import 'package:kubrs_app/scramble/utils/scramble_visualizer.dart';
-import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
-import 'package:kubrs_app/solve/model/solve.dart';
+import 'package:kubrs_app/trainer/model/algorithm_group.dart';
+import 'package:kubrs_app/trainer/view/algorithms_page.dart';
 
-class SolveTile extends StatelessWidget {
-  const SolveTile({super.key, required this.solve});
+class GroupTile extends StatelessWidget {
+  const GroupTile({super.key, required this.group});
 
-  final Solve solve;
+  final AlgorithmGroup group;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _navigateToSolveDetails(context),
+      onTap: () => _navigateToAlgorithmsPage(context),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
@@ -32,21 +28,7 @@ class SolveTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _getLeftColumn(context),
-            ScrambleVisualizer.fromScramble(scramble: solve.scramble, size: 10)
-                .getUpFace(),
           ],
-        ),
-      ),
-    );
-  }
-
-  void _navigateToSolveDetails(BuildContext context) {
-    final solveBloc = BlocProvider.of<SolveBloc>(context);
-    Navigator.of(context).push(
-      MaterialPageRoute<Widget>(
-        builder: (context) => BlocProvider.value(
-          value: solveBloc,
-          child: SolveDetailsPage(solve: solve),
         ),
       ),
     );
@@ -56,16 +38,16 @@ class SolveTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _getTimeText(context),
+        _getGroupName(context),
         const SizedBox(height: 4),
-        _getTimestampText(context),
+        _getGroupSize(context),
       ],
     );
   }
 
-  Text _getTimeText(BuildContext context) {
+  Text _getGroupName(BuildContext context) {
     return Text(
-      solve.timeToDisplay,
+      group.name,
       style: Theme.of(context).textTheme.displayMedium?.copyWith(
             fontWeight: FontWeight.w700,
             fontSize: 18,
@@ -73,13 +55,21 @@ class SolveTile extends StatelessWidget {
     );
   }
 
-  Text _getTimestampText(BuildContext context) {
+  Text _getGroupSize(BuildContext context) {
     return Text(
-      DateTimeFormatter.format(solve.timestamp),
+      '${group.algorithms.length} algorithms',
       style: Theme.of(context).textTheme.displaySmall?.copyWith(
             color: Theme.of(context).colorScheme.secondary,
             fontSize: 14,
           ),
+    );
+  }
+
+  void _navigateToAlgorithmsPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(
+        builder: (context) => AlgorithmsPage(algorithmGroup: group),
+      ),
     );
   }
 }

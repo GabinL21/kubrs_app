@@ -9,6 +9,7 @@ import 'package:kubrs_app/gui/bloc/gui_bloc.dart';
 import 'package:kubrs_app/l10n/l10n.dart';
 import 'package:kubrs_app/nav/bloc/navigation_bloc.dart';
 import 'package:kubrs_app/scramble/bloc/scramble_bloc.dart';
+import 'package:kubrs_app/scramble/utils/scramble_generator.dart';
 import 'package:kubrs_app/session/bloc/session_bloc.dart';
 import 'package:kubrs_app/solve/bloc/solve_bloc.dart';
 import 'package:kubrs_app/solve/repository/cache_solve_repository.dart';
@@ -73,9 +74,7 @@ class App extends StatelessWidget {
   }
 
   Widget _getScaffold(BuildContext context) {
-    final solveBloc = SolveBloc(
-      solveRepository: RepositoryProvider.of<SolveRepository>(context),
-    );
+    final solveRepository = RepositoryProvider.of<SolveRepository>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -86,17 +85,15 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           // Keeps the same scramble even if you switch to another page
-          create: (_) => ScrambleBloc(),
+          create: (_) => ScrambleBloc(scrambleGenerator: ScrambleGenerator()),
         ),
         BlocProvider(
           // Keeps the same solve even if you switch to another page
-          create: (_) => solveBloc,
+          create: (_) => SolveBloc(solveRepository: solveRepository),
         ),
         BlocProvider(
           // Maintains the session start date time
-          create: (_) => SessionBloc(
-            solveRepository: RepositoryProvider.of<SolveRepository>(context),
-          ),
+          create: (_) => SessionBloc(solveRepository: solveRepository),
         ),
       ],
       child: BlocBuilder<GuiBloc, GuiState>(

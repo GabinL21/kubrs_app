@@ -46,15 +46,12 @@ class _SolvesListState extends State<SolvesList> {
             state is HistoryLoadingNext || state is HistoryFullyLoaded
                 ? nbSolves + 1
                 : nbSolves;
-        final scrollPhysics = state is HistoryLoadingNext
-            ? const BouncingScrollPhysics()
-            : const BouncingScrollPhysics();
         return RefreshIndicator(
           onRefresh: () => refreshHistory(historyBloc),
           child: ListView.separated(
             itemCount: nbItems,
             shrinkWrap: true,
-            physics: scrollPhysics,
+            physics: const BouncingScrollPhysics(),
             controller: _scrollController,
             itemBuilder: (context, index) {
               if (index == nbItems - 1) {

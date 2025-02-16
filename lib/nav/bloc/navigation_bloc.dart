@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kubrs_app/history/view/history_page.dart';
 import 'package:kubrs_app/stats/view/stats_page.dart';
-import 'package:kubrs_app/timer/timer.dart';
+import 'package:kubrs_app/timer/view/timer_page.dart';
 
 part 'navigation_event.dart';
 part 'navigation_state.dart';

@@ -36,7 +36,7 @@ class TimerText extends StatelessWidget {
 
   TextStyle? _getTimerTextStyle(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.displayLarge;
-    if (context.select((TimerBloc bloc) => bloc.state) is TimerReseted) {
+    if (context.select((TimerBloc bloc) => bloc.state) is TimerReset) {
       return textStyle?.copyWith(
         color: Theme.of(context).colorScheme.tertiary,
         fontSize: Theme.of(context).textTheme.displayLarge!.fontSize! * 1.10,

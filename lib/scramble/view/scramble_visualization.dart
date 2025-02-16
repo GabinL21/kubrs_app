@@ -16,8 +16,8 @@ class ScrambleVisualization extends StatelessWidget {
           switchInCurve: Curves.easeIn,
           switchOutCurve: Curves.easeOut,
           child: state is! ScrambleLoaded
-              ? ScrambleVisualizer.getLoadingCube()
-              : ScrambleVisualizer.getCube(scramble: scramble),
+              ? ScrambleVisualizer.loading().getCube()
+              : ScrambleVisualizer.fromScramble(scramble: scramble).getCube(),
         );
       },
     );
