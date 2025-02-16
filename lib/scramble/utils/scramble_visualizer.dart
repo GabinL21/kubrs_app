@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:kubrs_app/trainer/model/cube_pattern.dart';
 
 class ScrambleVisualizer {
-  ScrambleVisualizer.loading({this.size = 8}) {
+  ScrambleVisualizer.loading({this.size = 8}) : isLoading = true {
     cubeSquares = List.generate(54, (_) => CubeSquare(color: grey, size: size));
   }
 
-  ScrambleVisualizer.fromScramble({required String scramble, this.size = 8}) {
+  ScrambleVisualizer.fromScramble({required String scramble, this.size = 8})
+      : isLoading = false {
     final cube = Cube.getScrambledCube(scramble);
     cubeSquares = _getSquares(cube.colors, size);
   }
@@ -15,7 +16,7 @@ class ScrambleVisualizer {
   ScrambleVisualizer.fromCubePattern({
     required CubePattern cubePattern,
     this.size = 8,
-  }) {
+  }) : isLoading = true {
     Color numberToColor(int number) {
       switch (number) {
         case 0:
@@ -73,6 +74,7 @@ class ScrambleVisualizer {
 
   List<CubeSquare> cubeSquares = [];
   final double size;
+  final bool isLoading;
 
   Widget getCube() {
     final upFaceSquares = cubeSquares.sublist(0, 9).toList();
@@ -83,7 +85,11 @@ class ScrambleVisualizer {
     final backFaceSquares = cubeSquares.sublist(45, 54).toList();
     final space = 4 * size / 8;
     return Row(
-      key: const Key('scrambleVisualizationLoaded'),
+      key: Key(
+        isLoading
+            ? 'scrambleVisualizationLoading'
+            : 'scrambleVisualizationLoaded',
+      ),
       children: [
         _getFace(leftFaceSquares, size),
         SizedBox(width: space),

@@ -24,7 +24,12 @@ void main() {
                 "R": [5, 6, 5],
                 "B": [4, 3, 4],
                 "L": [6, 5, 6]
-              }
+              },
+              "scrambles": [
+                "U2 L R' B2 D2 F L' R U R2 U F2 D2 B2 L2 U B2 L2 U2 L2",
+                "U' L F2 R' F' U2 R F' L F2 R2 U' B2 R2 F2 U L2 U' L2 D' B2",
+                "R' F2 L F U2 L' F R L2 D L2 U2 L2 F2 U' F2 L2 D' B2"
+              ]
             }
           ]
         }

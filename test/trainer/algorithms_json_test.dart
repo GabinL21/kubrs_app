@@ -33,8 +33,8 @@ void main() {
 }
 
 void _validateUniqueIds(Map<String, dynamic> group, Set<int> ids) {
-  for (final algorithm in group['algorithms'] as List<Map<String, dynamic>>) {
-    final id = algorithm['id'] as int;
+  for (final algorithm in group['algorithms'] as List<dynamic>) {
+    final id = (algorithm as Map<String, dynamic>)['id'] as int;
     expect(ids.contains(id), isFalse, reason: 'Duplicate ID found: $id');
     ids.add(id);
   }
