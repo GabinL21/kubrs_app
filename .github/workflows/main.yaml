@@ -1,6 +1,6 @@
 name: kubrs_app
 
-on: [pull_request, push]
+on: push
 
 jobs:
   semantic-pull-request:
