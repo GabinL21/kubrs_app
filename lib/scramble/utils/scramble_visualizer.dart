@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kubrs_app/trainer/model/cube_pattern.dart';
 
 class ScrambleVisualizer {
-
   ScrambleVisualizer.loading({this.size = 8}) {
     cubeSquares = List.generate(54, (_) => CubeSquare(color: grey, size: size));
   }
@@ -172,8 +171,7 @@ class ScrambleVisualizer {
   }
 
   static Widget _getColumn(
-      List<CubeSquare> columnSquares,
-      double spaceBetween) {
+      List<CubeSquare> columnSquares, double spaceBetween) {
     return Column(
       children: [
         columnSquares[0],

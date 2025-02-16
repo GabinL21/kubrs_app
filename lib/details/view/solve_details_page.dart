@@ -69,8 +69,7 @@ class SolveDetailsView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ScrambleVisualizer
-            .fromScramble(scramble: solve.scramble, size: 24)
+        ScrambleVisualizer.fromScramble(scramble: solve.scramble, size: 24)
             .getUpFace(),
       ],
     );

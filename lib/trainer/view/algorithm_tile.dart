@@ -10,32 +10,32 @@ class AlgorithmTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow,
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            _getLeftColumn(context),
-          ],
-        ),
-      );
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Row(
+        children: [
+          _getLeftColumn(context),
+        ],
+      ),
+    );
   }
 
   Column _getLeftColumn(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ScrambleVisualizer
-            .fromCubePattern(cubePattern: algorithm.pattern, size: 10)
+        ScrambleVisualizer.fromCubePattern(
+                cubePattern: algorithm.pattern, size: 10)
             .getUpFaceWithSides(),
         const SizedBox(height: 12),
         _getAlgorithmName(context),

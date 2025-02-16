@@ -21,8 +21,8 @@ class AlgorithmLoader {
   }
 
   static List<AlgorithmGroup> _parseAlgorithmGroups(
-      Map<String, dynamic> jsonMap,
-    ) {
+    Map<String, dynamic> jsonMap,
+  ) {
     return (jsonMap['groups'] as List).map((group) {
       return AlgorithmGroup(
         id: group['id'] as int,
